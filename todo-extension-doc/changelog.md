@@ -4,6 +4,22 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-09] - Eksplorasi & Evolusi UX (4 Pola Tata Letak Interaktif)
+
+### Masukan Pengguna (User Request)
+- Pengguna memberikan arahan: *"desain nya ux nya juga boleh dirubah"*.
+- Mengidentifikasi kelemahan pada wireframe awal (seperti tab "New Task" terpisah yang menambah klik/frictional cost, serta tab "Calender" yang belum terintegrasi fungsional dengan daftar tugas).
+
+### Ditambahkan & Ditingkatkan (Added & Enhanced)
+- Menghadirkan **4 Pola Struktur UX (UX Layout Paradigms)** yang dapat diuji dan dialihkan secara langsung di browser:
+  1. **UX 1: Instant Inline (Gaya Things 3 / Linear):** Input langsung di atas daftar tugas (zero-friction), filter chip status (Semua/Aktif/Selesai), progress counter terintegrasi.
+  2. **UX 2: Integrated Calendar & Task Strip (Gaya Apple / Notion):** Kalender mingguan interaktif di bagian atas yang terhubung langsung dengan penyaringan tugas harian di bawahnya.
+  3. **UX 3: Refined 3-Tab (Sesuai Wireframe Awal):** Mempertahankan struktur 3 tab (`Task`, `Calender`, `New Task`) namun dengan transisi mulus, inline quick-add, dan micro-interactions yang rapi.
+  4. **UX 4: Compact Focus Capsule (Gaya Raycast):** Format ultra-kompak dengan tombol `+` cepat, progress dot, dan keyboard-first workflow.
+- Seluruh ke-4 pola UX ini dapat dipadukan secara bebas dengan **30 Preset Desain Minimalis Terang** di halaman preview interaktif `prototypes-preview.html`.
+
+---
+
 ## [2026-11-09] - Eksplorasi 30 Desain Minimalis Terang (Light Mode UX)
 
 ### Masukan & Referensi Pengguna (User Input & UX Wireframe)

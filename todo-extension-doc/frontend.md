@@ -1,13 +1,29 @@
 # Rancangan Front-End: Floating Widget To-Do List (Light Minimalist)
 
-## 1. Konsep & Prinsip UI/UX (Berdasarkan Sample Pengguna)
-- **Top-Right Floating Widget Card:** Menempel secara elegan di pojok kanan atas browser (tepat di bawah ekstensi toolbar), tidak memblokir seluruh layar, berukuran kompak (~340px - 380px lebar).
-- **Navigasi Header Tiga Tab:**
-  1. `Task`: Daftar tugas utama dengan circular checkbox dan underline divider.
-  2. `Calender`: Agenda jadwal atau tenggat waktu tugas.
-  3. `New Task`: Input cepat untuk menambahkan tugas baru.
-- **Estetika Minimalis Terang (Light Minimalist):** Menggunakan palet putih bersih, kertas hangat (warm ivory), abu-abu netral terkalibrasi, tipografi tajam, dan bayangan halus (diffused soft shadows) tanpa gradien ungu generik AI-slop.
-- **Isolasi Shadow DOM:** Seluruh komponen dirender dalam `Element.attachShadow({ mode: 'open' })` agar tidak terpengaruh CSS halaman web mana pun.
+## 1. Evolusi Konsep & 4 Pola Struktur UX (UX Layout Paradigms)
+
+Atas arahan pengguna bahwa UX dapat diubah dan dioptimalkan, kami merancang 4 paradigma struktur UX yang mengatasi kekurangan pada wireframe awal (seperti memisahkan pembuatan tugas ke tab berbeda yang memperlambat alur kerja):
+
+### 1.1. Pola UX 1: Instant Inline (Direkomendasikan - Gaya Things 3 & Linear)
+- **Karakter Alur Kerja:** *Zero-Friction Productivity*.
+- **Komponen:**
+  - Header: Logo brand + *progress meter* dinamis (`2 tersisa`) + tombol tutup.
+  - Input Section: Input bar instan langsung di bawah header (*"Tulis tugas baru lalu Enter..."*). Pengguna tidak perlu membuka tab baru hanya untuk mengetik.
+  - Filter Bar: Segmented filter chips (*Semua*, *Aktif*, *Selesai*).
+  - Task List: Checkbox melingkar, teks tugas, tombol hapus halus saat hover.
+
+### 1.2. Pola UX 2: Integrated Calendar & Task Strip (Gaya Apple Reminders & Notion)
+- **Karakter Alur Kerja:** Mengintegrasikan permintaan "Calender" secara fungsional.
+- **Komponen:**
+  - Bagian Atas: *Mini Date Strip* mingguan horizontal (Senin - Minggu) dengan indikator dot hari ini. Mengklik hari otomatis memfilter tugas untuk tanggal tersebut.
+  - Bagian Bawah: Daftar tugas untuk tanggal yang dipilih + input cepat.
+
+### 1.3. Pola UX 3: Refined 3-Tab Wireframe (Penyempurnaan Wireframe Awal)
+- **Karakter Alur Kerja:** Mempertahankan tata letak 3 tab (`Task`, `Calender`, `New Task`) dari sketsa pengguna namun disempurnakan dengan animasi transisi underline dan validasi instan.
+
+### 1.4. Pola UX 4: Compact Focus Capsule (Gaya Raycast)
+- **Karakter Alur Kerja:** Hemat ruang maksimal untuk browsing santai.
+- **Komponen:** Kartu ultra-ringkas dengan tombol quick-action popdown, fokus pada 3-5 tugas teratas.
 
 ---
 

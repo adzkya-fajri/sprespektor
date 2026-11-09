@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview Prototipe To-Do List Overlay (3 Desain)</title>
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* TOP CONTROLLER TOOLBAR */
+    .preview-header {
+      background: #111827;
+      border-bottom: 1px solid #1f2937;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .preview-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .preview-brand h1 {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #f9fafb;
+    }
+
+    .preview-brand .badge-tag {
+      font-size: 11px;
+      font-weight: 500;
+      background: #1e3a8a;
+      color: #93c5fd;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid #2563eb;
+    }
+
+    .preview-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .style-picker-label {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .picker-btn-group {
+      display: flex;
+      background: #1f2937;
+      padding: 3px;
+      border-radius: 8px;
+      gap: 2px;
+    }
+
+    .picker-btn {
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .picker-btn.active {
+      background: #3b82f6;
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .btn-toggle-drawer {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+
+    .btn-toggle-drawer:hover {
+      background: #1d4ed8;
+    }
+
+    /* MOCK HOST WEBPAGE SIMULATION */
+    .mock-webpage {
+      flex: 1;
+      padding: 40px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+    }
+
+    .mock-webpage .article-tag {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #3b82f6;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .mock-webpage h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+
+    .mock-webpage p {
+      color: #94a3b8;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .mock-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .mock-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .mock-card h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+
+    .mock-card p {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    /* FLOATING EXTENSION LAUNCHER ICON ON HOST PAGE */
+    .floating-ext-trigger {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: white;
+      border: none;
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      z-index: 50;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .floating-ext-trigger:hover {
+      transform: scale(1.08);
+    }
+
+    .floating-ext-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: #ef4444;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      border: 2px solid #0b0f19;
+    }
+
+    /* OVERLAY BACKDROP & DRAWER */
+    .overlay-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .overlay-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-container {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 400px;
+      max-width: 90vw;
+      height: 100vh;
+      z-index: 210;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 35px rgba(0,0,0,0.5);
+    }
+
+    .drawer-container.open {
+      transform: translateX(0);
+    }
+
+    /* ============================================================== */
+    /* THEME 1: MODERN SLATE CARD DECK (DEFAULT)                       */
+    /* ============================================================== */
+    .theme-slate {
+      background-color: #0f172a;
+      border-left: 1px solid #334155;
+      color: #f8fafc;
+    }
+
+    .theme-slate .drawer-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+    }
+
+    .theme-slate .header-title-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-slate .app-icon {
+      width: 28px;
+      height: 28px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #3b82f6;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .theme-slate .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #f8fafc;
+    }
+
+    .theme-slate .badge-counter {
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      border: 1px solid #334155;
+    }
+
+    .theme-slate .btn-close {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 18px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .theme-slate .btn-close:hover {
+      background: #1e293b;
+      color: #f8fafc;
+    }
+
+    .theme-slate .input-section {
+      padding: 16px 20px;
+      background: #0f172a;
+    }
+
+    .theme-slate .input-box {
+      display: flex;
+      align-items: center;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px 14px;
+      gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .theme-slate .input-box:focus-within {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .theme-slate .input-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #f8fafc;
+      font-size: 13.5px;
+      font-family: inherit;
+    }
+
+    .theme-slate .input-box input::placeholder {
+      color: #64748b;
+    }
+
+    .theme-slate .filter-bar {
+      display: flex;
+      gap: 6px;
+      padding: 0 20px 14px;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .theme-slate .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .theme-slate .tab-btn.active {
+      background: #1e293b;
+      color: #3b82f6;
+      border-color: #334155;
+      font-weight: 600;
+    }
+
+    .theme-slate .task-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .theme-slate .task-item {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .theme-slate .task-item:hover {
+      border-color: #475569;
+    }
+
+    .theme-slate .custom-checkbox {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #64748b;
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .theme-slate .custom-checkbox:checked {
+      background: #3b82f6;
+      border-color: #3b82f6;
+    }
+
+    .theme-slate .custom-checkbox:checked::before {
+      content: "✓";
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .theme-slate .task-text {
+      flex: 1;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      line-height: 1.4;
+      word-break: break-word;
+      transition: color 0.15s;
+    }
+
+    .theme-slate .task-item.completed .task-text {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+
+    .theme-slate .btn-delete-task {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 15px;
+      padding: 4px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s;
+    }
+
+    .theme-slate .task-item:hover .btn-delete-task {
+      opacity: 1;
+    }
+
+    .theme-slate .btn-delete-task:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .theme-slate .drawer-footer {
+      padding: 12px 20px;
+      border-top: 1px solid #1e293b;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: #64748b;
+    }
+
+    .theme-slate .drawer-footer code {
+      font-family: var(--font-mono);
+      background: #1e293b;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+      color: #94a3b8;
+    }
+
+    .theme-slate .btn-clear {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 11.5px;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .theme-slate .btn-clear:hover {
+      color: #ef4444;
+    }
+
+    /* ============================================================== */
+    /* THEME 2: TRANSLUCENT FROSTED GLASS (GLASSMORPHISM)              */
+    /* ============================================================== */
+    .theme-glass {
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-left: 1px solid rgba(255, 255, 255, 0.09);
+      color: #f1f5f9;
+      box-shadow: -15px 0 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .theme-glass .drawer-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .theme-glass .header-title-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-glass .app-icon {
+      width: 28px;
+      height: 28px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #60a5fa;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .theme-glass .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .theme-glass .badge-counter {
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .theme-glass .btn-close {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      font-size: 14px;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .theme-glass .btn-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    .theme-glass .input-section {
+      padding: 16px 20px;
+    }
+
+    .theme-glass .input-box {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 11px 14px;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .theme-glass .input-box:focus-within {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(96, 165, 250, 0.5);
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
+    }
+
+    .theme-glass .input-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-family: inherit;
+    }
+
+    .theme-glass .input-box input::placeholder {
+      color: #94a3b8;
+    }
+
+    .theme-glass .filter-bar {
+      display: flex;
+      gap: 6px;
+      padding: 0 20px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .theme-glass .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .theme-glass .tab-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #60a5fa;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .theme-glass .task-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .theme-glass .task-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.15s;
+    }
+
+    .theme-glass .task-item:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .theme-glass .custom-checkbox {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .theme-glass .custom-checkbox:checked {
+      background: #2563eb;
+      border-color: #60a5fa;
+      box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+    }
+
+    .theme-glass .custom-checkbox:checked::before {
+      content: "✓";
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .theme-glass .task-text {
+      flex: 1;
+      font-size: 13.5px;
+      color: #f1f5f9;
+      line-height: 1.4;
+      word-break: break-word;
+      transition: color 0.15s;
+    }
+
+    .theme-glass .task-item.completed .task-text {
+      text-decoration: line-through;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .theme-glass .btn-delete-task {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      font-size: 15px;
+      padding: 4px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s;
+    }
+
+    .theme-glass .task-item:hover .btn-delete-task {
+      opacity: 1;
+    }
+
+    .theme-glass .btn-delete-task:hover {
+      color: #f87171;
+    }
+
+    .theme-glass .drawer-footer {
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: #94a3b8;
+    }
+
+    .theme-glass .drawer-footer code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: #e2e8f0;
+    }
+
+    .theme-glass .btn-clear {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 11.5px;
+      cursor: pointer;
+    }
+
+    .theme-glass .btn-clear:hover {
+      color: #f87171;
+    }
+
+    /* ============================================================== */
+    /* THEME 3: RAYCAST / LINEAR MINIMALIST                           */
+    /* ============================================================== */
+    .theme-raycast {
+      background-color: #090d16;
+      border-left: 1px solid #1a2234;
+      color: #e2e8f0;
+    }
+
+    .theme-raycast .drawer-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid #1a2234;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .theme-raycast .header-title-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-raycast .app-icon {
+      width: 20px;
+      height: 20px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #38bdf8;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .theme-raycast .header-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #f1f5f9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    .theme-raycast .badge-counter {
+      background: #131b2e;
+      color: #38bdf8;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #1e293b;
+    }
+
+    .theme-raycast .btn-close {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 14px;
+      cursor: pointer;
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-raycast .btn-close:hover {
+      background: #1a2234;
+      color: #ffffff;
+    }
+
+    .theme-raycast .input-section {
+      padding: 12px 18px;
+      border-bottom: 1px solid #1a2234;
+    }
+
+    .theme-raycast .input-box {
+      display: flex;
+      align-items: center;
+      background: #131b2e;
+      border: 1px solid #232f48;
+      border-radius: 6px;
+      padding: 8px 12px;
+      gap: 8px;
+    }
+
+    .theme-raycast .input-box:focus-within {
+      border-color: #38bdf8;
+    }
+
+    .theme-raycast .input-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #f8fafc;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    .theme-raycast .input-box input::placeholder {
+      color: #475569;
+    }
+
+    .theme-raycast .filter-bar {
+      display: flex;
+      gap: 4px;
+      padding: 8px 18px;
+      border-bottom: 1px solid #1a2234;
+    }
+
+    .theme-raycast .tab-btn {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+    }
+
+    .theme-raycast .tab-btn.active {
+      background: #1a2234;
+      color: #38bdf8;
+    }
+
+    .theme-raycast .task-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .theme-raycast .task-item {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.1s;
+    }
+
+    .theme-raycast .task-item:hover {
+      background: #131b2e;
+      border-color: #1f2b45;
+    }
+
+    .theme-raycast .custom-checkbox {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid #475569;
+      border-radius: 3px;
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      flex-shrink: 0;
+    }
+
+    .theme-raycast .custom-checkbox:checked {
+      background: #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    .theme-raycast .custom-checkbox:checked::before {
+      content: "✓";
+      color: #090d16;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .theme-raycast .task-text {
+      flex: 1;
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .theme-raycast .task-item.completed .task-text {
+      text-decoration: line-through;
+      color: #475569;
+    }
+
+    .theme-raycast .btn-delete-task {
+      background: transparent;
+      border: none;
+      color: #475569;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 2px 4px;
+      opacity: 0;
+    }
+
+    .theme-raycast .task-item:hover .btn-delete-task {
+      opacity: 1;
+    }
+
+    .theme-raycast .btn-delete-task:hover {
+      color: #ef4444;
+    }
+
+    .theme-raycast .drawer-footer {
+      padding: 10px 18px;
+      border-top: 1px solid #1a2234;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: #475569;
+    }
+
+    .theme-raycast .drawer-footer code {
+      background: #131b2e;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: #94a3b8;
+    }
+
+    .theme-raycast .btn-clear {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      cursor: pointer;
+    }
+
+    .theme-raycast .btn-clear:hover {
+      color: #ef4444;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .empty-state.show {
+      display: flex;
+    }
+
+    .empty-state-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    .empty-state-text {
+      font-size: 13px;
+    }
+
+    /* CUSTOM SLEEK SCROLLBAR */
+    .task-scroll-area::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .task-scroll-area::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .task-scroll-area::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+    }
+
+    .task-scroll-area::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER CONTROLLER BAR -->
+  <header class="preview-header">
+    <div class="preview-brand">
+      <h1>Preview Prototipe To-Do List (In-Page Overlay)</h1>
+      <span class="badge-tag">Pilih & Uji Langsung</span>
+    </div>
+
+    <div class="preview-controls">
+      <span class="style-picker-label">Pilih Gaya Desain:</span>
+      <div class="picker-btn-group">
+        <button class="picker-btn active" onclick="switchTheme('slate', this)">Opsi 1: Modern Slate</button>
+        <button class="picker-btn" onclick="switchTheme('glass', this)">Opsi 2: Frosted Glass</button>
+        <button class="picker-btn" onclick="switchTheme('raycast', this)">Opsi 3: Raycast Minimalist</button>
+      </div>
+
+      <button class="btn-toggle-drawer" onclick="toggleDrawer()">
+        <span>Toggle Panel (Buka/Tutup)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- SIMULATED HOST WEBPAGE IN BACKGROUND -->
+  <main class="mock-webpage">
+    <div class="article-tag">Simulasi Halaman Web Host</div>
+    <h2>Membangun Browser Extension Modern dengan Manifest V3</h2>
+    <p>
+      Halaman ini mensimulasikan konten website aktif tempat ekstensi To-Do List Anda bekerja. Saat ekstensi diaktifkan melalui toolbar atau floating button di pojok kanan bawah, panel overlay akan meluncur masuk menimpa layar tanpa merusak layout website ini.
+    </p>
+    <p>
+      Silakan klik tombol <strong>"Toggle Panel"</strong> di header atau tombol bulat biru di kanan bawah untuk membuka/menutup panel. Anda dapat mencoba mengetik tugas baru, mencentang checkbox untuk melihat animasi coret, memfilter status (Semua / Aktif / Selesai), serta mengganti tema tampilan di atas secara langsung.
+    </p>
+
+    <div class="mock-card-grid">
+      <div class="mock-card">
+        <h3>🛡️ Terisolasi via Shadow DOM</h3>
+        <p>Gaya tampilan To-Do List tidak akan pernah terpengaruh oleh CSS website host (seperti Bootstrap, Tailwind, atau warna global website).</p>
+      </div>
+      <div class="mock-card">
+        <h3>⚡ Cepat & Ringan</h3>
+        <p>100% Vanilla JS dan CSS modern tanpa dependency atau bundle overhead, menjamin response time instan.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- FLOATING TRIGGER BUTTON (SEPERTI DI WEBPAGE) -->
+  <button class="floating-ext-trigger" onclick="toggleDrawer()" title="Buka To-Do List Overlay">
+    <span>✓</span>
+    <span class="floating-ext-badge" id="floating-badge-count">2</span>
+  </button>
+
+  <!-- BACKDROP OVERLAY -->
+  <div class="overlay-backdrop open" id="backdrop" onclick="toggleDrawer()"></div>
+
+  <!-- THE OVERLAY DRAWER PANEL (SHADOW SIMULATOR) -->
+  <aside class="drawer-container theme-slate open" id="drawer">
+    <!-- Header -->
+    <div class="drawer-header">
+      <div class="header-title-box">
+        <div class="app-icon">✓</div>
+        <span class="header-title">Tugas Saya</span>
+        <span class="badge-counter" id="active-counter-text">2 aktif</span>
+      </div>
+      <button class="btn-close" onclick="toggleDrawer()" title="Tutup panel (Esc)">✕</button>
+    </div>
+
+    <!-- Quick Add Input -->
+    <div class="input-section">
+      <div class="input-box">
+        <input 
+          type="text" 
+          id="todo-input" 
+          placeholder="Tulis tugas baru lalu tekan Enter..." 
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="tab-btn active" data-filter="all" onclick="setFilter('all', this)">Semua</button>
+      <button class="tab-btn" data-filter="active" onclick="setFilter('active', this)">Aktif</button>
+      <button class="tab-btn" data-filter="completed" onclick="setFilter('completed', this)">Selesai</button>
+    </div>
+
+    <!-- Task Scroll Area -->
+    <div class="task-scroll-area" id="task-container">
+      <!-- Generated via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state">
+      <div class="empty-state-icon">📝</div>
+      <div class="empty-state-text">Tidak ada tugas pada filter ini</div>
+    </div>
+
+    <!-- Footer Stats & Hint -->
+    <div class="drawer-footer">
+      <span>Tekan <code>Esc</code> untuk menutup</span>
+      <button class="btn-clear" onclick="clearCompleted()">Hapus selesai</button>
+    </div>
+  </aside>
+
+  <!-- JAVASCRIPT LOGIC UNTUK DEMO & INTERAKSI -->
+  <script>
+    // Initial Mock State
+    let todos = [
+      { id: 1, text: "Review arsitektur Manifest V3 untuk Chrome Extension", completed: false },
+      { id: 2, text: "Uji coba transisi animasi Shadow DOM drawer", completed: false },
+      { id: 3, text: "Konfigurasi local storage chrome.storage.local", completed: true }
+    ];
+
+    let currentFilter = 'all';
+
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+    const inputEl = document.getElementById('todo-input');
+    const taskContainer = document.getElementById('task-container');
+    const emptyState = document.getElementById('empty-state');
+    const activeCounterText = document.getElementById('active-counter-text');
+    const floatingBadgeCount = document.getElementById('floating-badge-count');
+
+    // Switch between the 3 visual themes
+    function switchTheme(themeName, btn) {
+      drawer.classList.remove('theme-slate', 'theme-glass', 'theme-raycast');
+      drawer.classList.add('theme-' + themeName);
+
+      document.querySelectorAll('.picker-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    // Toggle drawer open/close
+    function toggleDrawer() {
+      const isOpen = drawer.classList.contains('open');
+      if (isOpen) {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+      } else {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        setTimeout(() => inputEl.focus(), 250);
+      }
+    }
+
+    // Render task items
+    function renderTasks() {
+      taskContainer.innerHTML = '';
+      
+      const filtered = todos.filter(t => {
+        if (currentFilter === 'active') return !t.completed;
+        if (currentFilter === 'completed') return t.completed;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.classList.add('show');
+      } else {
+        emptyState.classList.remove('show');
+      }
+
+      filtered.forEach(todo => {
+        const item = document.createElement('div');
+        item.className = 'task-item' + (todo.completed ? ' completed' : '');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'custom-checkbox';
+        checkbox.checked = todo.completed;
+        checkbox.addEventListener('change', () => toggleTodo(todo.id));
+
+        const textSpan = document.createElement('span');
+        textSpan.className = 'task-text';
+        textSpan.textContent = todo.text;
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-delete-task';
+        delBtn.innerHTML = '✕';
+        delBtn.title = 'Hapus tugas';
+        delBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteTodo(todo.id);
+        });
+
+        item.appendChild(checkbox);
+        item.appendChild(textSpan);
+        item.appendChild(delBtn);
+
+        taskContainer.appendChild(item);
+      });
+
+      updateBadgeCounters();
+    }
+
+    function updateBadgeCounters() {
+      const activeCount = todos.filter(t => !t.completed).length;
+      activeCounterText.textContent = `${activeCount} aktif`;
+      floatingBadgeCount.textContent = activeCount;
+    }
+
+    function toggleTodo(id) {
+      todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+      renderTasks();
+    }
+
+    function deleteTodo(id) {
+      todos = todos.filter(t => t.id !== id);
+      renderTasks();
+    }
+
+    function clearCompleted() {
+      todos = todos.filter(t => !t.completed);
+      renderTasks();
+    }
+
+    function setFilter(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderTasks();
+    }
+
+    // Input Enter listener
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = inputEl.value.trim();
+        if (val) {
+          todos.unshift({
+            id: Date.now(),
+            text: val,
+            completed: false
+          });
+          inputEl.value = '';
+          renderTasks();
+        }
+      }
+    });
+
+    // Escape listener
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) {
+        toggleDrawer();
+      }
+    });
+
+    // Initial render
+    renderTasks();
+  </script>
+</body>
+</html>

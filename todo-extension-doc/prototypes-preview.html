@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do Overlay: Penjadwalan Waktu & Badge Hari Relatif (-9 hr / Hari ini)</title>
+  <title>To-Do Overlay: Input Tanggal Kalender Akurat & Badge Hari Relatif</title>
   <style>
     :root {
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -396,7 +396,7 @@
       border-color: #ef4444;
     }
 
-    /* EXPANDABLE INPUT FORM WITH DATE & WEEK SCHEDULER */
+    /* EXPANDABLE INPUT FORM WITH EXACT DATE PICKER */
     .expandable-input-drawer {
       max-height: 0;
       opacity: 0;
@@ -408,7 +408,7 @@
     }
 
     .expandable-input-drawer.open {
-      max-height: 110px;
+      max-height: 125px;
       opacity: 1;
       padding: 10px 16px;
     }
@@ -455,42 +455,51 @@
       user-select: none;
     }
 
-    /* DATE & WEEK PICKER CHIPS */
-    .date-schedule-chips {
+    /* EXACT DATE INPUT & SHORTCUT ROW */
+    .exact-date-picker-row {
       display: flex;
       align-items: center;
-      gap: 5px;
-      overflow-x: auto;
-      padding-bottom: 2px;
+      gap: 6px;
+      font-size: 11px;
     }
 
-    .date-schedule-chips::-webkit-scrollbar {
-      display: none;
+    .exact-date-input {
+      background: var(--w-bg, #ffffff);
+      border: 1px solid var(--w-divider, #cbd5e1);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 11.5px;
+      color: var(--w-text, #0f172a);
+      outline: none;
+      font-family: inherit;
+      cursor: pointer;
     }
 
-    .schedule-chip {
+    .exact-date-input:focus {
+      border-color: var(--w-accent, #3b82f6);
+    }
+
+    .date-shortcut-btn {
       background: var(--w-bg, #ffffff);
       border: 1px solid var(--w-divider, #e2e8f0);
       color: #64748b;
       font-size: 10.5px;
-      font-weight: 500;
-      padding: 3px 8px;
-      border-radius: 6px;
+      padding: 3px 7px;
+      border-radius: 5px;
       cursor: pointer;
-      white-space: nowrap;
       transition: all 0.15s;
     }
 
-    .schedule-chip:hover {
+    .date-shortcut-btn:hover {
       border-color: var(--w-accent, #3b82f6);
-      color: var(--w-text, #0f172a);
+      color: var(--w-accent, #3b82f6);
     }
 
-    .schedule-chip.active {
-      background: var(--w-accent, #3b82f6);
-      color: #ffffff;
-      border-color: var(--w-accent, #3b82f6);
-      font-weight: 600;
+    .date-preview-hint {
+      font-size: 10.5px;
+      color: #94a3b8;
+      margin-left: auto;
+      font-family: var(--font-mono);
     }
 
     /* FILTER BAR */
@@ -825,9 +834,9 @@
     <div class="controller-section">
       <div class="controller-title">
         <span>To-Do Overlay</span>
-        <span class="badge-tag">Date Scheduling & Relative Badges</span>
+        <span class="badge-tag">Input Tanggal Akurat</span>
       </div>
-      <span style="font-size:12px; color:#94a3b8;">(Badge hari otomatis: <strong>-9 hr</strong>, <strong>Hari ini</strong>, <strong>Besok</strong>, dll)</span>
+      <span style="font-size:12px; color:#94a3b8;">(Ketik tugas & pilih tanggal kalender presisi)</span>
     </div>
 
     <!-- THEME SELECTION -->
@@ -882,7 +891,7 @@
 
       <!-- FLOATING WIDGET AT TOP-RIGHT -->
       <div class="topright-widget-anchor">
-        <div class="info-tag-floating" id="liveThemeTag">UX 3: Schedulable | 01. Things 3 Clean White</div>
+        <div class="info-tag-floating" id="liveThemeTag">UX 3: Accurate Date Picker | 01. Things 3 Clean White</div>
 
         <!-- REFINED UX 3 WIDGET -->
         <div class="todo-widget theme-01" id="mainWidget">
@@ -903,11 +912,11 @@
               </nav>
             </div>
 
-            <!-- "+" TOGGLE BUTTON (MENGGANTIKAN FORM TERBUKA) -->
+            <!-- "+" TOGGLE BUTTON -->
             <button class="btn-add-toggle" id="btnAddToggle" onclick="toggleInputDrawer()" title="Tambah tugas baru (+)">+</button>
           </div>
 
-          <!-- 2. EXPANDABLE INPUT FORM DENGAN PEMILIH HARI / MINGGU -->
+          <!-- 2. EXPANDABLE INPUT FORM DENGAN EXACT DATE PICKER -->
           <div class="expandable-input-drawer" id="inputDrawer">
             <form onsubmit="handleAddTask(event)">
               <div class="inline-input-wrapper">
@@ -920,15 +929,18 @@
                 <span class="enter-badge-hint">↵ Enter</span>
               </div>
 
-              <!-- DATE & WEEK CHIPS -->
-              <div class="date-schedule-chips">
-                <span style="font-size:10px; color:#94a3b8; margin-right:2px;">Waktu:</span>
-                <button type="button" class="schedule-chip active" data-offset="0" onclick="selectScheduleChip(this, 0)">Hari ini</button>
-                <button type="button" class="schedule-chip" data-offset="1" onclick="selectScheduleChip(this, 1)">Besok</button>
-                <button type="button" class="schedule-chip" data-offset="7" onclick="selectScheduleChip(this, 7)">Mgg 1</button>
-                <button type="button" class="schedule-chip" data-offset="14" onclick="selectScheduleChip(this, 14)">Mgg 2</button>
-                <button type="button" class="schedule-chip" data-offset="21" onclick="selectScheduleChip(this, 21)">Mgg 3</button>
-                <button type="button" class="schedule-chip" data-offset="28" onclick="selectScheduleChip(this, 28)">Mgg 4</button>
+              <!-- EXACT DATE INPUT & SHORTCUTS -->
+              <div class="exact-date-picker-row">
+                <span style="color:#64748b;">📅</span>
+                <input 
+                  type="date" 
+                  id="exactDatePicker" 
+                  class="exact-date-input" 
+                  onchange="updateDatePreview()" 
+                />
+                <button type="button" class="date-shortcut-btn" onclick="setQuickDate(0)">Hari ini</button>
+                <button type="button" class="date-shortcut-btn" onclick="setQuickDate(1)">Besok</button>
+                <span class="date-preview-hint" id="datePreviewHint">(Hari ini)</span>
               </div>
             </form>
           </div>
@@ -960,7 +972,7 @@
           <div id="panel-calender-view" class="calender-panel-view">
             <div class="cal-header-row">
               <span>November 2026</span>
-              <span style="font-size:11px; color:#94a3b8;">Bulan Ini (4 Minggu)</span>
+              <span style="font-size:11px; color:#94a3b8;">Kalender Tugas</span>
             </div>
 
             <div class="cal-week-grid">
@@ -977,21 +989,21 @@
               <div class="agenda-card">
                 <div>
                   <strong>read the md</strong>
-                  <div style="font-size:10.5px; color:#0284c7;">Hari ini (Jatuh tempo sekarang)</div>
+                  <div style="font-size:10.5px; color:#0284c7;">Hari ini (10 Nov 2026)</div>
                 </div>
                 <span class="agenda-time">Hari ini</span>
               </div>
               <div class="agenda-card">
                 <div>
                   <strong>read the md</strong>
-                  <div style="font-size:10.5px; color:#dc2626;">Terlewat 9 hari lalu (-9 hr)</div>
+                  <div style="font-size:10.5px; color:#dc2626;">Terlewat (-9 hr) (01 Nov 2026)</div>
                 </div>
                 <span class="agenda-time" style="color:#dc2626;">-9 hr</span>
               </div>
               <div class="agenda-card">
                 <div>
                   <strong>review manifest v3 architecture</strong>
-                  <div style="font-size:10.5px; color:#16a34a;">Minggu depan (+3 hr)</div>
+                  <div style="font-size:10.5px; color:#16a34a;">+3 hr (13 Nov 2026)</div>
                 </div>
                 <span class="agenda-time" style="color:#16a34a;">+3 hr</span>
               </div>
@@ -1005,19 +1017,33 @@
 
   <!-- JAVASCRIPT STATE & LOGIC -->
   <script>
-    // Today base calculation
     const now = new Date();
-    const todayTimestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const todayDateStr = formatDateToISO(now);
     const DAY_MS = 24 * 60 * 60 * 1000;
 
-    let selectedScheduleOffsetDays = 0; // Default: Hari ini
+    function formatDateToISO(d) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
 
-    // Initial tasks matching user's scenario
+    function parseISODate(isoStr) {
+      const [year, month, day] = isoStr.split("-").map(Number);
+      return new Date(year, month - 1, day);
+    }
+
+    // Past date (9 days ago)
+    const nineDaysAgo = new Date(now.getTime() - (9 * DAY_MS));
+    const threeDaysLater = new Date(now.getTime() + (3 * DAY_MS));
+    const tomorrowDate = new Date(now.getTime() + (1 * DAY_MS));
+
+    // Tasks with ISO date strings
     let taskData = [
-      { id: 1, text: "read the md", dueTimestamp: todayTimestamp, completed: false }, // Hari ini
-      { id: 2, text: "read the md", dueTimestamp: todayTimestamp - (9 * DAY_MS), completed: false }, // -9 hr (overdue)
-      { id: 3, text: "review manifest v3 architecture", dueTimestamp: todayTimestamp + (3 * DAY_MS), completed: true }, // +3 hr
-      { id: 4, text: "setup shadow dom drawer injection", dueTimestamp: todayTimestamp + (1 * DAY_MS), completed: true } // Besok
+      { id: 1, text: "read the md", dueDate: todayDateStr, completed: false }, // Hari ini
+      { id: 2, text: "read the md", dueDate: formatDateToISO(nineDaysAgo), completed: false }, // -9 hr
+      { id: 3, text: "review manifest v3 architecture", dueDate: formatDateToISO(threeDaysLater), completed: true }, // +3 hr
+      { id: 4, text: "setup shadow dom drawer injection", dueDate: formatDateToISO(tomorrowDate), completed: true } // Besok
     ];
 
     let currentFilter = "all";
@@ -1031,12 +1057,20 @@
     const inputDrawer = document.getElementById("inputDrawer");
     const btnAddToggle = document.getElementById("btnAddToggle");
     const quickTaskInput = document.getElementById("quickTaskInput");
+    const exactDatePicker = document.getElementById("exactDatePicker");
+    const datePreviewHint = document.getElementById("datePreviewHint");
 
-    // Relative Day Calculator matching user request (misal: "-9 hr", "Hari ini", "Besok", "+3 hr")
-    function calculateRelativeBadge(dueTimestamp, isCompleted) {
-      if (!dueTimestamp) return { label: "Hari ini", cls: "rel-today" };
+    // Initialize exact date picker with today
+    exactDatePicker.value = todayDateStr;
 
-      const diffDays = Math.round((dueTimestamp - todayTimestamp) / DAY_MS);
+    // Calculate relative badge accurately from ISO date string
+    function calculateRelativeBadge(dateStr, isCompleted) {
+      if (!dateStr) return { label: "Hari ini", cls: "rel-today" };
+
+      const targetDate = parseISODate(dateStr);
+      const todayDate = parseISODate(todayDateStr);
+      const diffTime = targetDate.getTime() - todayDate.getTime();
+      const diffDays = Math.round(diffTime / DAY_MS);
 
       if (isCompleted) {
         return { label: "Selesai", cls: "rel-completed" };
@@ -1049,9 +1083,19 @@
       } else if (diffDays > 1) {
         return { label: `+${diffDays} hr`, cls: "rel-future" };
       } else {
-        // Overdue / past days (misal: -9 hr)
-        return { label: `${diffDays} hr`, cls: "rel-overdue" };
+        return { label: `${diffDays} hr`, cls: "rel-overdue" }; // e.g. -9 hr
       }
+    }
+
+    function updateDatePreview() {
+      const rel = calculateRelativeBadge(exactDatePicker.value, false);
+      datePreviewHint.textContent = `(${rel.label})`;
+    }
+
+    function setQuickDate(offsetDays) {
+      const target = new Date(now.getTime() + (offsetDays * DAY_MS));
+      exactDatePicker.value = formatDateToISO(target);
+      updateDatePreview();
     }
 
     // Toggle Input Drawer on "+" Button Click
@@ -1065,15 +1109,10 @@
         switchTab("task");
         inputDrawer.classList.add("open");
         btnAddToggle.classList.add("active");
+        exactDatePicker.value = todayDateStr;
+        updateDatePreview();
         setTimeout(() => quickTaskInput.focus(), 150);
       }
-    }
-
-    // Schedule Chip Click
-    function selectScheduleChip(btn, offsetDays) {
-      selectedScheduleOffsetDays = offsetDays;
-      document.querySelectorAll(".schedule-chip").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
     }
 
     function switchTab(tabName) {
@@ -1097,7 +1136,7 @@
       mainWidget.classList.add("theme-" + themeId);
       themeSelect.value = themeId;
       const opt = themeSelect.options[themeSelect.selectedIndex];
-      liveThemeTag.textContent = `UX 3: Schedulable | ${opt.textContent}`;
+      liveThemeTag.textContent = `UX 3: Accurate Date Picker | ${opt.textContent}`;
     }
 
     function prevTheme() {
@@ -1146,8 +1185,8 @@
         textSpan.className = "task-text-label";
         textSpan.textContent = task.text;
 
-        // CALCULATE RELATIVE BADGE
-        const rel = calculateRelativeBadge(task.dueTimestamp, task.completed);
+        // CALCULATE RELATIVE BADGE ACCURATELY
+        const rel = calculateRelativeBadge(task.dueDate, task.completed);
         const badgeSpan = document.createElement("span");
         badgeSpan.className = `task-rel-badge ${rel.cls}`;
         badgeSpan.textContent = rel.label;
@@ -1194,12 +1233,13 @@
     function handleAddTask(e) {
       e.preventDefault();
       const val = quickTaskInput.value.trim();
+      const chosenDate = exactDatePicker.value || todayDateStr;
+
       if (val) {
-        const targetDue = todayTimestamp + (selectedScheduleOffsetDays * DAY_MS);
         taskData.unshift({
           id: Date.now(),
           text: val,
-          dueTimestamp: targetDue,
+          dueDate: chosenDate,
           completed: false
         });
         quickTaskInput.value = "";
@@ -1227,6 +1267,7 @@
     });
 
     // Init
+    updateDatePreview();
     renderTasks();
   </script>
 </body>

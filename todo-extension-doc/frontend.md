@@ -27,7 +27,7 @@ Atas arahan pengguna bahwa UX dapat diubah dan dioptimalkan, kami merancang 4 pa
 - **Interaksi Expandable Input (Tombol `+`) & Penjadwalan Waktu:**
   - Input field tersembunyi secara default untuk menjaga tampilan tetap lega.
   - Saat tombol `+` di header diklik, area input meluncur terbuka halus (*smooth slide-down transition*) dengan autofocus kursor langsung aktif.
-  - Terdapat pilihan waktu cepat: *Hari ini*, *Besok*, *Minggu ke-1 s/d ke-4 bulan ini*, serta input kalender tanggal.
+  - Terdapat input tanggal kalender akurat (`<input type="date">`) dengan visual minimalis dan default tanggal hari ini, serta shortcut cepat (*Hari ini*, *Besok*).
   - Pengguna mengetik tugas lalu menekan `Enter` untuk menyimpan, atau `Esc` / klik tombol `+` lagi untuk menutup form.
 - **Komponen Tab `Task`:**
   - **Filter Chip:** `Semua`, `Aktif`, `Selesai` untuk organisasi cepat.

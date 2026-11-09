@@ -4,6 +4,21 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-09] - Input Tanggal Akurat (Native Calendar Date Picker)
+
+### Masukan Pengguna (User Request)
+- Evaluasi pengguna: *"untuk waktunya itu di tentukan dengan mengimput tanggal agar waktunya akurat"*.
+- Fitur yang dibangun:
+  1. **Input Tanggal Kalender Akurat (Exact Date Picker):**
+     - Mengganti estimasi minggu dengan komponen input tanggal presisi (`<input type="date">`) yang didesain minimalis dan menyatu dengan tema.
+     - Default terisi otomatis dengan tanggal hari ini.
+     - Pengguna dapat memilih tanggal spesifik apa pun (baik dalam bulan ini maupun bulan lainnya) secara akurat melalui kalender pop-up native.
+  2. **Kalkulasi Hari Relatif Presisi:**
+     - Selisih hari dihitung secara matematis berdasarkan selang waktu 24 jam antara tanggal kalender yang diinput dengan hari ini.
+     - Menghasilkan badge akurat: `Hari ini`, `Besok`, `+N hr`, atau `-N hr` (misal: `-9 hr`).
+
+---
+
 ## [2026-11-09] - Fitur Penjadwalan Waktu & Badge Hari Relatif (-9 hr / Hari ini)
 
 ### Masukan Pengguna (User Request)

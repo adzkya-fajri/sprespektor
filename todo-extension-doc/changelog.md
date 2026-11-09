@@ -4,6 +4,17 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Dokumentasi Komprehensif Struktur Database & Model Data
+
+### Dokumentasi & Penjelasan (Documentation Update)
+- Menjabarkan secara lengkap struktur basis data lokal berbasis `chrome.storage.local`:
+  - Definisi antarmuka TypeScript untuk `TodoItem`, `UserSettings`, dan `StorageSchema`.
+  - Spesifikasi field `dueDate` berformat ISO 8601 (`YYYY-MM-DD`) untuk mendukung penjadwalan presisi.
+  - Dokumentasi mekanisme komputasi dinamis hari relatif di sisi klien (badge `-9 hr`, `Hari ini`, `Besok`, `+N hr` dihitung *on-the-fly* tanpa membebani storage).
+  - Alur siklus hidup operasi CRUD (Create, Read, Update, Delete) dan sinkronisasi multi-tab.
+
+---
+
 ## [2026-11-09] - Input Tanggal Akurat (Native Calendar Date Picker)
 
 ### Masukan Pengguna (User Request)

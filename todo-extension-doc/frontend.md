@@ -21,16 +21,19 @@ Atas arahan pengguna bahwa UX dapat diubah dan dioptimalkan, kami merancang 4 pa
 ### 1.3. Pola UX 3: Refined Dual-Tab (Task & Calender - Terpilih & Disempurnakan)
 - **Karakter Alur Kerja:** Menggabungkan kesederhanaan wireframe pengguna dengan kepadatan informasi produktivitas yang dinamis dan hidup (tidak terasa sepi).
 - **Struktur Header:**
-  - Kiri: Logo brand (▲) + Status hari/tanggal.
-  - Tengah: Dua tab fungsional: **`Task`** (dengan badge counter real-time `Task (2)`) dan **`Calender`**. Tab `New Task` dieliminasi untuk memangkas *frictional cost*.
-  - Kanan: Progress meter visual (*completion percentage*) + tombol tutup `✕`.
+  - Kiri: Logo brand (▲)
+  - Tengah: Dua tab fungsional: **`Task`** (dengan badge counter real-time `Task (2)`) dan **`Calender`**.
+  - Kanan: Tombol aksi **`+`** (tambah tugas cepat) dan tombol tutup **`✕`**. Badge "50% selesai" dieliminasi sesuai arahan pengguna agar header tetap bersih dan minimalis.
+- **Interaksi Expandable Input (Tombol `+`):**
+  - Input field tersembunyi secara default untuk menjaga tampilan tetap lega.
+  - Saat tombol `+` di header diklik, area input meluncur terbuka halus (*smooth slide-down transition*) dengan autofocus kursor langsung aktif.
+  - Pengguna mengetik tugas lalu menekan `Enter` untuk menyimpan, atau `Esc` / klik tombol `+` lagi untuk menutup form.
 - **Komponen Tab `Task`:**
-  - **Inline Quick-Add Input:** Terintegrasi tepat di bawah tab (*"Tulis tugas baru... tekan Enter ↵"*). Menambah tugas instan tanpa harus berpindah tab.
   - **Filter Chip:** `Semua`, `Aktif`, `Selesai` untuk organisasi cepat.
-  - **Task List Rows:** Checkbox lingkaran (*circular check*), teks tugas dengan animasi coret (*strikethrough*), tag konteks waktu (*Hari ini*), dan tombol aksi hapus/prioritas saat hover.
+  - **Task List Rows:** Checkbox lingkaran (*circular check*), teks tugas dengan animasi coret (*strikethrough*), tag konteks waktu (*Hari ini*), dan tombol aksi hapus saat hover.
   - **Footer:** Tombol *Bersihkan Selesai* dan pintasan shortcut `Esc`.
 - **Komponen Tab `Calender`:**
-  - Mini kalender grid interaktif mingguan/bulanan dan timeline agenda tugas berdasarkan tanggal jatuh tempo.
+  - Mini kalender grid interaktif mingguan dan timeline agenda tugas.
 
 ### 1.4. Pola UX 4: Compact Focus Capsule (Gaya Raycast)
 - **Karakter Alur Kerja:** Hemat ruang maksimal untuk browsing santai.

@@ -4,6 +4,20 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-09] - Penyempurnaan UX: Tombol "+" Toggle Input & Penghapusan Badge "50% Selesai"
+
+### Masukan Pengguna (User Request)
+- Evaluasi pengguna: *"untuk bagian New Task kita buat akan muncul untuk bagian isian nya ketika tombol + di tekan dan untuk bagian 50% selesai kita hapus"*.
+- Perubahan yang diterapkan:
+  1. **Menghapus Badge Progres "50% Selesai":** Header menjadi jauh lebih bersih, minimalis, dan tidak terdistraksi elemen statistik yang berlebihan.
+  2. **Interaksi Expandable Input via Tombol "+":**
+     - Menyematkan tombol icon `+` modern di header (di samping tombol tutup `✕`).
+     - Input field tersembunyi secara default untuk memaksimalkan ruang tampilan tugas.
+     - Saat tombol `+` diklik, bar input meluncur turun (*smooth slide-down*) dengan fokus kursor otomatis (*autofocus*).
+     - Menekan tombol `Enter` menyimpan tugas, dan menekan `Esc` atau tombol `+` lagi menutup form input.
+
+---
+
 ## [2026-11-09] - Penyempurnaan UX 3: Eliminasi Tab "New Task" & Peningkatan Kepadatan Visual
 
 ### Masukan Pengguna (User Feedback)

@@ -24,13 +24,14 @@ Atas arahan pengguna bahwa UX dapat diubah dan dioptimalkan, kami merancang 4 pa
   - Kiri: Logo brand (▲) yang sejajar vertikal secara presisi dengan teks tab.
   - Tengah: Dua tab fungsional terdistribusi rata: **`Task`** (dengan badge counter real-time `Task 2`) dan **`Calender`**, dengan garis indikator bawah yang rapi.
   - Kanan: Tombol aksi **`+`** (tambah tugas cepat) di pojok kanan. Tombol `✕` telah dihapus total untuk menjaga kemurnian estetika minimalis.
-- **Interaksi Expandable Input (Tombol `+`):**
+- **Interaksi Expandable Input (Tombol `+`) & Penjadwalan Waktu:**
   - Input field tersembunyi secara default untuk menjaga tampilan tetap lega.
   - Saat tombol `+` di header diklik, area input meluncur terbuka halus (*smooth slide-down transition*) dengan autofocus kursor langsung aktif.
+  - Terdapat pilihan waktu cepat: *Hari ini*, *Besok*, *Minggu ke-1 s/d ke-4 bulan ini*, serta input kalender tanggal.
   - Pengguna mengetik tugas lalu menekan `Enter` untuk menyimpan, atau `Esc` / klik tombol `+` lagi untuk menutup form.
 - **Komponen Tab `Task`:**
   - **Filter Chip:** `Semua`, `Aktif`, `Selesai` untuk organisasi cepat.
-  - **Task List Rows:** Checkbox lingkaran (*circular check*), teks tugas dengan animasi coret (*strikethrough*), tag konteks waktu (*Hari ini*), dan tombol aksi hapus saat hover.
+  - **Task List Rows:** Checkbox lingkaran (*circular check*), teks tugas dengan animasi coret (*strikethrough*), dan **Badge Hari Relatif Dinamis** di samping kanan (`Hari ini`, `Besok`, `-9 hr`, `+3 hr`) yang otomatis dihitung berdasarkan selisih tanggal.
   - **Footer:** Tombol *Bersihkan Selesai* dan pintasan shortcut `Esc`.
 - **Komponen Tab `Calender`:**
   - Mini kalender grid interaktif mingguan dan timeline agenda tugas.

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do Overlay: Sempurna Aligned Header & Clean Dual-Tab</title>
+  <title>To-Do Overlay: Penjadwalan Waktu & Badge Hari Relatif (-9 hr / Hari ini)</title>
   <style>
     :root {
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -268,7 +268,7 @@
     /* THE WIDGET CONTAINER & REFINED ALIGNED HEADER                  */
     /* ============================================================== */
     .todo-widget {
-      width: 350px;
+      width: 360px;
       border-radius: var(--w-radius, 12px);
       background-color: var(--w-bg, #ffffff);
       border: var(--w-border, 1px solid #e2e8f0);
@@ -396,7 +396,7 @@
       border-color: #ef4444;
     }
 
-    /* EXPANDABLE INPUT FORM (MUNCUL HANYA SAAT "+" DIKLIK) */
+    /* EXPANDABLE INPUT FORM WITH DATE & WEEK SCHEDULER */
     .expandable-input-drawer {
       max-height: 0;
       opacity: 0;
@@ -408,7 +408,7 @@
     }
 
     .expandable-input-drawer.open {
-      max-height: 70px;
+      max-height: 110px;
       opacity: 1;
       padding: 10px 16px;
     }
@@ -422,6 +422,7 @@
       border-radius: 7px;
       padding: 7px 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 8px;
     }
 
     .inline-input-wrapper:focus-within {
@@ -452,6 +453,44 @@
       border-radius: 4px;
       border: 1px solid #e2e8f0;
       user-select: none;
+    }
+
+    /* DATE & WEEK PICKER CHIPS */
+    .date-schedule-chips {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .date-schedule-chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .schedule-chip {
+      background: var(--w-bg, #ffffff);
+      border: 1px solid var(--w-divider, #e2e8f0);
+      color: #64748b;
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .schedule-chip:hover {
+      border-color: var(--w-accent, #3b82f6);
+      color: var(--w-text, #0f172a);
+    }
+
+    .schedule-chip.active {
+      background: var(--w-accent, #3b82f6);
+      color: #ffffff;
+      border-color: var(--w-accent, #3b82f6);
+      font-weight: 600;
     }
 
     /* FILTER BAR */
@@ -572,13 +611,44 @@
       opacity: 0.7;
     }
 
-    .task-due-tag {
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: var(--w-tag-bg, #f1f5f9);
-      color: var(--w-tag-color, #64748b);
+    /* DYNAMIC RELATIVE DAYS BADGE (-9 hr, Hari ini, Besok, +3 hr) */
+    .task-rel-badge {
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 2.5px 7px;
+      border-radius: 5px;
       white-space: nowrap;
+      transition: all 0.15s;
+      line-height: 1.2;
+    }
+
+    .task-rel-badge.rel-today {
+      background: var(--w-badge-bg, #e0f2fe);
+      color: var(--w-accent, #0284c7);
+      font-weight: 600;
+    }
+
+    .task-rel-badge.rel-tomorrow {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .task-rel-badge.rel-future {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #64748b;
+    }
+
+    .task-rel-badge.rel-overdue {
+      background: #fee2e2;
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    .task-rel-badge.rel-completed {
+      background: #f1f5f9;
+      color: #94a3b8;
+      text-decoration: none;
     }
 
     .btn-row-del {
@@ -755,9 +825,9 @@
     <div class="controller-section">
       <div class="controller-title">
         <span>To-Do Overlay</span>
-        <span class="badge-tag">Aligned Header</span>
+        <span class="badge-tag">Date Scheduling & Relative Badges</span>
       </div>
-      <span style="font-size:12px; color:#94a3b8;">(Header rata sempurna & tombol ✕ dihilangkan)</span>
+      <span style="font-size:12px; color:#94a3b8;">(Badge hari otomatis: <strong>-9 hr</strong>, <strong>Hari ini</strong>, <strong>Besok</strong>, dll)</span>
     </div>
 
     <!-- THEME SELECTION -->
@@ -812,12 +882,12 @@
 
       <!-- FLOATING WIDGET AT TOP-RIGHT -->
       <div class="topright-widget-anchor">
-        <div class="info-tag-floating" id="liveThemeTag">UX 3: Aligned Header | 01. Things 3 Clean White</div>
+        <div class="info-tag-floating" id="liveThemeTag">UX 3: Schedulable | 01. Things 3 Clean White</div>
 
         <!-- REFINED UX 3 WIDGET -->
         <div class="todo-widget theme-01" id="mainWidget">
 
-          <!-- 1. PERFECTLY ALIGNED HEADER (LOGO + TABS DI KIRI, TOMBOL "+" DI KANAN, "✕" DIHAPUS) -->
+          <!-- 1. PERFECTLY ALIGNED HEADER -->
           <div class="widget-header-row">
             <div class="header-left-group">
               <div class="brand-logo-symbol">▲</div>
@@ -833,11 +903,11 @@
               </nav>
             </div>
 
-            <!-- TOMBOL "+" TUNGGAL DI KANAN (TOMBOL ✕ DIHILANGKAN) -->
+            <!-- "+" TOGGLE BUTTON (MENGGANTIKAN FORM TERBUKA) -->
             <button class="btn-add-toggle" id="btnAddToggle" onclick="toggleInputDrawer()" title="Tambah tugas baru (+)">+</button>
           </div>
 
-          <!-- 2. EXPANDABLE INPUT FORM (MUNCUL SAAT "+" DIKLIK) -->
+          <!-- 2. EXPANDABLE INPUT FORM DENGAN PEMILIH HARI / MINGGU -->
           <div class="expandable-input-drawer" id="inputDrawer">
             <form onsubmit="handleAddTask(event)">
               <div class="inline-input-wrapper">
@@ -848,6 +918,17 @@
                   autocomplete="off" 
                 />
                 <span class="enter-badge-hint">↵ Enter</span>
+              </div>
+
+              <!-- DATE & WEEK CHIPS -->
+              <div class="date-schedule-chips">
+                <span style="font-size:10px; color:#94a3b8; margin-right:2px;">Waktu:</span>
+                <button type="button" class="schedule-chip active" data-offset="0" onclick="selectScheduleChip(this, 0)">Hari ini</button>
+                <button type="button" class="schedule-chip" data-offset="1" onclick="selectScheduleChip(this, 1)">Besok</button>
+                <button type="button" class="schedule-chip" data-offset="7" onclick="selectScheduleChip(this, 7)">Mgg 1</button>
+                <button type="button" class="schedule-chip" data-offset="14" onclick="selectScheduleChip(this, 14)">Mgg 2</button>
+                <button type="button" class="schedule-chip" data-offset="21" onclick="selectScheduleChip(this, 21)">Mgg 3</button>
+                <button type="button" class="schedule-chip" data-offset="28" onclick="selectScheduleChip(this, 28)">Mgg 4</button>
               </div>
             </form>
           </div>
@@ -879,7 +960,7 @@
           <div id="panel-calender-view" class="calender-panel-view">
             <div class="cal-header-row">
               <span>November 2026</span>
-              <span style="font-size:11px; color:#94a3b8;">Minggu ke-45</span>
+              <span style="font-size:11px; color:#94a3b8;">Bulan Ini (4 Minggu)</span>
             </div>
 
             <div class="cal-week-grid">
@@ -895,17 +976,24 @@
             <div class="agenda-timeline">
               <div class="agenda-card">
                 <div>
-                  <strong>Review Dokumen MD</strong>
-                  <div style="font-size:10.5px; color:#94a3b8;">Hari ini, Siang</div>
+                  <strong>read the md</strong>
+                  <div style="font-size:10.5px; color:#0284c7;">Hari ini (Jatuh tempo sekarang)</div>
                 </div>
-                <span class="agenda-time">14:00</span>
+                <span class="agenda-time">Hari ini</span>
               </div>
               <div class="agenda-card">
                 <div>
-                  <strong>Rilis Chrome Extension MV3</strong>
-                  <div style="font-size:10.5px; color:#94a3b8;">Besok Pagi</div>
+                  <strong>read the md</strong>
+                  <div style="font-size:10.5px; color:#dc2626;">Terlewat 9 hari lalu (-9 hr)</div>
                 </div>
-                <span class="agenda-time">09:30</span>
+                <span class="agenda-time" style="color:#dc2626;">-9 hr</span>
+              </div>
+              <div class="agenda-card">
+                <div>
+                  <strong>review manifest v3 architecture</strong>
+                  <div style="font-size:10.5px; color:#16a34a;">Minggu depan (+3 hr)</div>
+                </div>
+                <span class="agenda-time" style="color:#16a34a;">+3 hr</span>
               </div>
             </div>
           </div>
@@ -917,11 +1005,19 @@
 
   <!-- JAVASCRIPT STATE & LOGIC -->
   <script>
+    // Today base calculation
+    const now = new Date();
+    const todayTimestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const DAY_MS = 24 * 60 * 60 * 1000;
+
+    let selectedScheduleOffsetDays = 0; // Default: Hari ini
+
+    // Initial tasks matching user's scenario
     let taskData = [
-      { id: 1, text: "read the md", tag: "Hari ini", completed: false },
-      { id: 2, text: "read the md", tag: "Penting", completed: false },
-      { id: 3, text: "review manifest v3 architecture", tag: "Selesai", completed: true },
-      { id: 4, text: "setup shadow dom drawer injection", tag: "Selesai", completed: true }
+      { id: 1, text: "read the md", dueTimestamp: todayTimestamp, completed: false }, // Hari ini
+      { id: 2, text: "read the md", dueTimestamp: todayTimestamp - (9 * DAY_MS), completed: false }, // -9 hr (overdue)
+      { id: 3, text: "review manifest v3 architecture", dueTimestamp: todayTimestamp + (3 * DAY_MS), completed: true }, // +3 hr
+      { id: 4, text: "setup shadow dom drawer injection", dueTimestamp: todayTimestamp + (1 * DAY_MS), completed: true } // Besok
     ];
 
     let currentFilter = "all";
@@ -936,6 +1032,28 @@
     const btnAddToggle = document.getElementById("btnAddToggle");
     const quickTaskInput = document.getElementById("quickTaskInput");
 
+    // Relative Day Calculator matching user request (misal: "-9 hr", "Hari ini", "Besok", "+3 hr")
+    function calculateRelativeBadge(dueTimestamp, isCompleted) {
+      if (!dueTimestamp) return { label: "Hari ini", cls: "rel-today" };
+
+      const diffDays = Math.round((dueTimestamp - todayTimestamp) / DAY_MS);
+
+      if (isCompleted) {
+        return { label: "Selesai", cls: "rel-completed" };
+      }
+
+      if (diffDays === 0) {
+        return { label: "Hari ini", cls: "rel-today" };
+      } else if (diffDays === 1) {
+        return { label: "Besok", cls: "rel-tomorrow" };
+      } else if (diffDays > 1) {
+        return { label: `+${diffDays} hr`, cls: "rel-future" };
+      } else {
+        // Overdue / past days (misal: -9 hr)
+        return { label: `${diffDays} hr`, cls: "rel-overdue" };
+      }
+    }
+
     // Toggle Input Drawer on "+" Button Click
     function toggleInputDrawer() {
       const isOpen = inputDrawer.classList.contains("open");
@@ -949,6 +1067,13 @@
         btnAddToggle.classList.add("active");
         setTimeout(() => quickTaskInput.focus(), 150);
       }
+    }
+
+    // Schedule Chip Click
+    function selectScheduleChip(btn, offsetDays) {
+      selectedScheduleOffsetDays = offsetDays;
+      document.querySelectorAll(".schedule-chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
     }
 
     function switchTab(tabName) {
@@ -972,7 +1097,7 @@
       mainWidget.classList.add("theme-" + themeId);
       themeSelect.value = themeId;
       const opt = themeSelect.options[themeSelect.selectedIndex];
-      liveThemeTag.textContent = `UX 3: Aligned Header | ${opt.textContent}`;
+      liveThemeTag.textContent = `UX 3: Schedulable | ${opt.textContent}`;
     }
 
     function prevTheme() {
@@ -1021,12 +1146,14 @@
         textSpan.className = "task-text-label";
         textSpan.textContent = task.text;
 
-        const tagSpan = document.createElement("span");
-        tagSpan.className = "task-due-tag";
-        tagSpan.textContent = task.tag || "Hari ini";
+        // CALCULATE RELATIVE BADGE
+        const rel = calculateRelativeBadge(task.dueTimestamp, task.completed);
+        const badgeSpan = document.createElement("span");
+        badgeSpan.className = `task-rel-badge ${rel.cls}`;
+        badgeSpan.textContent = rel.label;
 
         titleGroup.appendChild(textSpan);
-        titleGroup.appendChild(tagSpan);
+        titleGroup.appendChild(badgeSpan);
 
         const delBtn = document.createElement("button");
         delBtn.className = "btn-row-del";
@@ -1068,10 +1195,11 @@
       e.preventDefault();
       const val = quickTaskInput.value.trim();
       if (val) {
+        const targetDue = todayTimestamp + (selectedScheduleOffsetDays * DAY_MS);
         taskData.unshift({
           id: Date.now(),
           text: val,
-          tag: "Baru",
+          dueTimestamp: targetDue,
           completed: false
         });
         quickTaskInput.value = "";

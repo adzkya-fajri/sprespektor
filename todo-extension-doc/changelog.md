@@ -4,6 +4,23 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-09] - Fitur Penjadwalan Waktu & Badge Hari Relatif (-9 hr / Hari ini)
+
+### Masukan Pengguna (User Request)
+- Evaluasi pengguna: *"untuk bagian tambah nya bisa menentukan waktu juga, dengan beberapa minggu dalam bulan ini, dan untuk bagian yang di samping ini mengikuti hari misal -9 hr atau hari ini"*.
+- Fitur yang dibangun:
+  1. **Pemilihan Waktu & Minggu pada Form Tambah Tugas:**
+     - Pada form expandable `+`, disediakan pemilih tanggal/minggu instan (*quick date chips: Hari ini, Besok, Minggu 1–4 bulan ini*) serta input tanggal kustom.
+  2. **Badge Hari Relatif Dinamis (Relative Days Counter):**
+     - Badge di samping kanan teks tugas kini menghitung selisih hari secara real-time terhadap hari ini:
+       - Hari ini: `Hari ini`
+       - Besok: `Besok`
+       - Masa depan: `+N hr` (misal: `+3 hr`)
+       - Terlewat / Overdue: `-N hr` (misal: `-9 hr` dengan aksen merah/peringatan)
+     - Menggantikan label statis sebelumnya dengan indikator tenggat waktu yang cerdas dan fungsional.
+
+---
+
 ## [2026-11-09] - Penyempurnaan Header: Penghapusan Tombol "✕" & Perataan Visual Tab
 
 ### Masukan Pengguna (User Request)

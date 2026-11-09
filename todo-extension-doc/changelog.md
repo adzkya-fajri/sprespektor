@@ -4,6 +4,18 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-09] - Penyempurnaan Header: Penghapusan Tombol "✕" & Perataan Visual Tab
+
+### Masukan Pengguna (User Request)
+- Evaluasi visual berbasis tangkapan layar anotasi: *"bagian hijau diratakan dan bagian merah di hilangkan"*.
+- Perubahan yang diterapkan:
+  1. **Menghilangkan Tombol Tutup "✕" (Bagian Merah):** Tombol `✕` di pojok kanan atas resmi dihapus agar header tampil jauh lebih bersih, ringkas, dan fokus. Penutupan panel dapat dilakukan via klik ikon toolbar browser, klik di luar widget, atau tombol keyboard `Esc`.
+  2. **Perataan Sempurna Elemen Header (Bagian Hijau):**
+     - Menyelaraskan *vertical baseline* dan *horizontal alignment* antara logo brand (▲), navigasi tab (`Task 2`, `Calender`), dan tombol action `+`.
+     - Distribusi jarak (*spacing & balance*) ditata ulang secara proporsional dan rata tengah simetris.
+
+---
+
 ## [2026-11-09] - Penyempurnaan UX: Tombol "+" Toggle Input & Penghapusan Badge "50% Selesai"
 
 ### Masukan Pengguna (User Request)

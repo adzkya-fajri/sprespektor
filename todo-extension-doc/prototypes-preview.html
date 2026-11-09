@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do Overlay: Expandable "+" Input & Clean Dual-Tab</title>
+  <title>To-Do Overlay: Sempurna Aligned Header & Clean Dual-Tab</title>
   <style>
     :root {
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -265,7 +265,7 @@
     }
 
     /* ============================================================== */
-    /* THE WIDGET CONTAINER & REFINED DUAL-TAB                        */
+    /* THE WIDGET CONTAINER & REFINED ALIGNED HEADER                  */
     /* ============================================================== */
     .todo-widget {
       width: 350px;
@@ -279,33 +279,41 @@
       font-family: var(--w-font, var(--font-sans));
     }
 
-    /* HEADER */
+    /* PERFECTLY ALIGNED HEADER */
     .widget-header-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px 8px;
+      padding: 10px 16px;
       border-bottom: var(--w-header-border, 1px solid #f1f5f9);
+      min-height: 48px;
+    }
+
+    .header-left-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .brand-logo-symbol {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       background: var(--w-logo-bg, #f1f5f9);
-      border-radius: 5px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
       font-size: 13px;
       color: var(--w-accent, #3b82f6);
+      flex-shrink: 0;
     }
 
     /* DUAL TABS (TASK & CALENDER) */
     .dual-tabs-nav {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
     }
 
     .dual-tab-btn {
@@ -316,12 +324,13 @@
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
-      padding: 6px 2px;
+      padding: 4px 2px 6px;
       position: relative;
       display: flex;
       align-items: center;
       gap: 6px;
       transition: color 0.15s;
+      line-height: 1;
     }
 
     .dual-tab-btn:hover {
@@ -336,10 +345,10 @@
     .dual-tab-btn.active::after {
       content: "";
       position: absolute;
-      bottom: -2px;
+      bottom: -4px;
       left: 0;
       width: 100%;
-      height: 2px;
+      height: 2.5px;
       background: var(--w-indicator-color, var(--w-accent, #0f172a));
       border-radius: 2px;
     }
@@ -351,29 +360,26 @@
       border-radius: 999px;
       background: var(--w-badge-bg, #f1f5f9);
       color: var(--w-badge-text, var(--w-accent, #3b82f6));
+      display: inline-block;
+      line-height: 1.2;
     }
 
-    .header-actions-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* PLUS (+) TOGGLE BUTTON */
+    /* PLUS (+) TOGGLE BUTTON ON FAR RIGHT */
     .btn-add-toggle {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 6px;
       background: var(--w-btn-add-bg, #f1f5f9);
       border: 1px solid var(--w-btn-add-border, #e2e8f0);
       color: var(--w-accent, #3b82f6);
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      flex-shrink: 0;
     }
 
     .btn-add-toggle:hover {
@@ -390,21 +396,7 @@
       border-color: #ef4444;
     }
 
-    .btn-close-widget {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      cursor: pointer;
-      font-size: 14px;
-      padding: 2px;
-      border-radius: 4px;
-    }
-
-    .btn-close-widget:hover {
-      color: #ef4444;
-    }
-
-    /* EXPANDABLE INPUT FORM (MUNCUL HANYA SAAT "+" DITEKAN) */
+    /* EXPANDABLE INPUT FORM (MUNCUL HANYA SAAT "+" DIKLIK) */
     .expandable-input-drawer {
       max-height: 0;
       opacity: 0;
@@ -695,7 +687,7 @@
     }
 
     /* ============================================================== */
-    /* 30 DESIGN THEMES (RICH TOKENS)                                 */
+    /* DESIGN THEME TOKENS                                            */
     /* ============================================================== */
     .theme-01 { /* Things 3 */
       --w-bg: #ffffff; --w-text: #1c1c1e; --w-border: 1px solid #e5e5ea;
@@ -763,9 +755,9 @@
     <div class="controller-section">
       <div class="controller-title">
         <span>To-Do Overlay</span>
-        <span class="badge-tag">Clean Dual-Tab & "+" Toggle</span>
+        <span class="badge-tag">Aligned Header</span>
       </div>
-      <span style="font-size:12px; color:#94a3b8;">(Klik tombol <strong>+</strong> di header panel untuk memunculkan input)</span>
+      <span style="font-size:12px; color:#94a3b8;">(Header rata sempurna & tombol ✕ dihilangkan)</span>
     </div>
 
     <!-- THEME SELECTION -->
@@ -820,33 +812,32 @@
 
       <!-- FLOATING WIDGET AT TOP-RIGHT -->
       <div class="topright-widget-anchor">
-        <div class="info-tag-floating" id="liveThemeTag">UX 3: Clean Dual-Tab | 01. Things 3 Clean White</div>
+        <div class="info-tag-floating" id="liveThemeTag">UX 3: Aligned Header | 01. Things 3 Clean White</div>
 
         <!-- REFINED UX 3 WIDGET -->
         <div class="todo-widget theme-01" id="mainWidget">
 
-          <!-- 1. HEADER (BRAND LOGO + 2 TABS + PLUS (+) TOGGLE + CLOSE) -->
+          <!-- 1. PERFECTLY ALIGNED HEADER (LOGO + TABS DI KIRI, TOMBOL "+" DI KANAN, "✕" DIHAPUS) -->
           <div class="widget-header-row">
-            <div class="brand-logo-symbol">▲</div>
+            <div class="header-left-group">
+              <div class="brand-logo-symbol">▲</div>
 
-            <nav class="dual-tabs-nav">
-              <button class="dual-tab-btn active" id="tab-btn-task" onclick="switchTab('task')">
-                <span>Task</span>
-                <span class="tab-counter-badge" id="task-tab-badge">2</span>
-              </button>
-              <button class="dual-tab-btn" id="tab-btn-calender" onclick="switchTab('calender')">
-                <span>Calender</span>
-              </button>
-            </nav>
-
-            <div class="header-actions-right">
-              <!-- TOMBOL PLUS (+) EXPAND INPUT -->
-              <button class="btn-add-toggle" id="btnAddToggle" onclick="toggleInputDrawer()" title="Tambah tugas baru (+)">+</button>
-              <button class="btn-close-widget" title="Tutup panel (Esc)">✕</button>
+              <nav class="dual-tabs-nav">
+                <button class="dual-tab-btn active" id="tab-btn-task" onclick="switchTab('task')">
+                  <span>Task</span>
+                  <span class="tab-counter-badge" id="task-tab-badge">2</span>
+                </button>
+                <button class="dual-tab-btn" id="tab-btn-calender" onclick="switchTab('calender')">
+                  <span>Calender</span>
+                </button>
+              </nav>
             </div>
+
+            <!-- TOMBOL "+" TUNGGAL DI KANAN (TOMBOL ✕ DIHILANGKAN) -->
+            <button class="btn-add-toggle" id="btnAddToggle" onclick="toggleInputDrawer()" title="Tambah tugas baru (+)">+</button>
           </div>
 
-          <!-- 2. EXPANDABLE INPUT FORM (TERSEMBUNYI, MUNCUL SAAT "+" DIKLIK) -->
+          <!-- 2. EXPANDABLE INPUT FORM (MUNCUL SAAT "+" DIKLIK) -->
           <div class="expandable-input-drawer" id="inputDrawer">
             <form onsubmit="handleAddTask(event)">
               <div class="inline-input-wrapper">
@@ -953,7 +944,6 @@
         btnAddToggle.classList.remove("active");
         quickTaskInput.blur();
       } else {
-        // Ensure we are on Task tab
         switchTab("task");
         inputDrawer.classList.add("open");
         btnAddToggle.classList.add("active");
@@ -982,7 +972,7 @@
       mainWidget.classList.add("theme-" + themeId);
       themeSelect.value = themeId;
       const opt = themeSelect.options[themeSelect.selectedIndex];
-      liveThemeTag.textContent = `UX 3: Clean Dual-Tab | ${opt.textContent}`;
+      liveThemeTag.textContent = `UX 3: Aligned Header | ${opt.textContent}`;
     }
 
     function prevTheme() {
@@ -1086,7 +1076,6 @@
         });
         quickTaskInput.value = "";
         renderTasks();
-        // Optional: keep input open or close after add
         quickTaskInput.focus();
       }
     }
@@ -1103,7 +1092,6 @@
       renderTasks();
     }
 
-    // Keyboard shortcut Esc to close drawer
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && inputDrawer.classList.contains("open")) {
         toggleInputDrawer();

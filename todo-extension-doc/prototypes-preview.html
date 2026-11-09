@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preview Prototipe To-Do List Overlay (3 Desain)</title>
+  <title>Katalog 30 Desain Minimalis Terang: Floating To-Do List</title>
   <style>
     :root {
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-serif: "New York", Georgia, Cambria, "Times New Roman", serif;
     }
 
     * {
@@ -18,1285 +19,1714 @@
 
     body {
       font-family: var(--font-sans);
-      background-color: #0b0f19;
-      color: #e2e8f0;
+      background-color: #0e131f;
+      color: #334155;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
     }
 
-    /* TOP CONTROLLER TOOLBAR */
-    .preview-header {
-      background: #111827;
-      border-bottom: 1px solid #1f2937;
-      padding: 12px 24px;
+    /* TOP MASTER CONTROLLER BAR */
+    .top-controller-bar {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 999;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      color: #f1f5f9;
     }
 
-    .preview-brand {
+    .controller-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .preview-brand h1 {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: #f9fafb;
+    .controller-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .preview-brand .badge-tag {
+    .badge-30 {
+      background: #3b82f6;
+      color: white;
       font-size: 11px;
-      font-weight: 500;
-      background: #1e3a8a;
-      color: #93c5fd;
-      padding: 2px 8px;
-      border-radius: 9999px;
-      border: 1px solid #2563eb;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
     }
 
-    .preview-controls {
+    .view-mode-switch {
       display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .style-picker-label {
-      font-size: 13px;
-      color: #94a3b8;
-    }
-
-    .picker-btn-group {
-      display: flex;
-      background: #1f2937;
+      background: #0f172a;
       padding: 3px;
       border-radius: 8px;
+      border: 1px solid #334155;
       gap: 2px;
     }
 
-    .picker-btn {
+    .btn-view-mode {
       background: transparent;
       border: none;
-      color: #9ca3af;
-      padding: 6px 14px;
+      color: #94a3b8;
+      padding: 5px 12px;
       font-size: 12px;
       font-weight: 500;
       border-radius: 6px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.15s;
     }
 
-    .picker-btn.active {
-      background: #3b82f6;
-      color: #ffffff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    }
-
-    .btn-toggle-drawer {
+    .btn-view-mode.active {
       background: #2563eb;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 500;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .controller-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-filter-select, .theme-dropdown-select {
+      background: #0f172a;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      padding: 6px 12px;
+      font-size: 12.5px;
       border-radius: 6px;
+      outline: none;
       cursor: pointer;
+    }
+
+    .category-filter-select:focus, .theme-dropdown-select:focus {
+      border-color: #3b82f6;
+    }
+
+    .controller-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-quick-nav {
+      background: #334155;
+      color: #f8fafc;
+      border: none;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-quick-nav:hover {
+      background: #475569;
+    }
+
+    /* VIEW MODE 1: LIVE IN-SITU BROWSER SCREEN */
+    #view-insitu {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: #202124;
+      min-height: calc(100vh - 56px);
+      overflow: hidden;
+    }
+
+    /* BROWSER CHROME TOOLBAR SIMULATION */
+    .simulated-browser-bar {
+      background: #292a2d;
+      border-bottom: 1px solid #3c4043;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #9aa0a6;
+      font-size: 13px;
+    }
+
+    .browser-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .sim-tab {
+      background: #202124;
+      color: #e8eaed;
+      padding: 6px 14px;
+      font-size: 12px;
+      border-radius: 8px 8px 0 0;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.15s;
     }
 
-    .btn-toggle-drawer:hover {
-      background: #1d4ed8;
-    }
-
-    /* MOCK HOST WEBPAGE SIMULATION */
-    .mock-webpage {
+    .browser-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       flex: 1;
-      padding: 40px 60px;
-      max-width: 900px;
-      margin: 0 auto;
-      width: 100%;
+    }
+
+    .url-bar-sim {
+      background: #202124;
+      border-radius: 20px;
+      padding: 6px 16px;
+      flex: 1;
+      max-width: 600px;
+      color: #bdc1c6;
+      font-size: 12.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ext-icons-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ext-icon-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #3b82f6;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .ext-badge-num {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #ef4444;
+      color: white;
+      font-size: 10px;
+      padding: 1px 4px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    /* SIMULATED GOOGLE NEW TAB CANVAS */
+    .simulated-google-page {
+      flex: 1;
+      background: radial-gradient(circle at center, #2e3b2e 0%, #1e261e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 80px;
       position: relative;
     }
 
-    .mock-webpage .article-tag {
-      font-size: 12px;
-      text-transform: uppercase;
+    .google-logo-sim {
+      font-size: 64px;
       font-weight: 600;
-      color: #3b82f6;
-      letter-spacing: 0.05em;
-      margin-bottom: 8px;
+      letter-spacing: -2px;
+      color: #ffffff;
+      margin-bottom: 24px;
+      user-select: none;
     }
 
-    .mock-webpage h2 {
-      font-size: 32px;
-      font-weight: 700;
-      color: #f8fafc;
-      margin-bottom: 16px;
-      line-height: 1.25;
-    }
-
-    .mock-webpage p {
-      color: #94a3b8;
-      font-size: 16px;
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-
-    .mock-card-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 32px;
-    }
-
-    .mock-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    .mock-card h3 {
-      font-size: 16px;
-      color: #f1f5f9;
-      margin-bottom: 8px;
-    }
-
-    .mock-card p {
-      font-size: 14px;
-      margin-bottom: 0;
-    }
-
-    /* FLOATING EXTENSION LAUNCHER ICON ON HOST PAGE */
-    .floating-ext-trigger {
-      position: fixed;
-      right: 24px;
-      bottom: 24px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: #2563eb;
-      color: white;
-      border: none;
-      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      z-index: 50;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .floating-ext-trigger:hover {
-      transform: scale(1.08);
-    }
-
-    .floating-ext-badge {
-      position: absolute;
-      top: -2px;
-      right: -2px;
-      background: #ef4444;
-      color: white;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 9999px;
-      border: 2px solid #0b0f19;
-    }
-
-    /* OVERLAY BACKDROP & DRAWER */
-    .overlay-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(2px);
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-    }
-
-    .overlay-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .drawer-container {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 400px;
-      max-width: 90vw;
-      height: 100vh;
-      z-index: 210;
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      box-shadow: -10px 0 35px rgba(0,0,0,0.5);
-    }
-
-    .drawer-container.open {
-      transform: translateX(0);
-    }
-
-    /* ============================================================== */
-    /* THEME 1: MODERN SLATE CARD DECK (DEFAULT)                       */
-    /* ============================================================== */
-    .theme-slate {
-      background-color: #0f172a;
-      border-left: 1px solid #334155;
-      color: #f8fafc;
-    }
-
-    .theme-slate .drawer-header {
-      padding: 18px 20px;
-      border-bottom: 1px solid #1e293b;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #0f172a;
-    }
-
-    .theme-slate .header-title-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .theme-slate .app-icon {
-      width: 28px;
-      height: 28px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #3b82f6;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .theme-slate .header-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #f8fafc;
-    }
-
-    .theme-slate .badge-counter {
-      background: #1e293b;
-      color: #94a3b8;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 9999px;
-      border: 1px solid #334155;
-    }
-
-    .theme-slate .btn-close {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 18px;
-      cursor: pointer;
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-    }
-
-    .theme-slate .btn-close:hover {
-      background: #1e293b;
-      color: #f8fafc;
-    }
-
-    .theme-slate .input-section {
-      padding: 16px 20px;
-      background: #0f172a;
-    }
-
-    .theme-slate .input-box {
-      display: flex;
-      align-items: center;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 10px 14px;
-      gap: 10px;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .theme-slate .input-box:focus-within {
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-    }
-
-    .theme-slate .input-box input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #f8fafc;
-      font-size: 13.5px;
-      font-family: inherit;
-    }
-
-    .theme-slate .input-box input::placeholder {
-      color: #64748b;
-    }
-
-    .theme-slate .filter-bar {
-      display: flex;
-      gap: 6px;
-      padding: 0 20px 14px;
-      background: #0f172a;
-      border-bottom: 1px solid #1e293b;
-    }
-
-    .theme-slate .tab-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: #94a3b8;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .theme-slate .tab-btn.active {
-      background: #1e293b;
-      color: #3b82f6;
-      border-color: #334155;
-      font-weight: 600;
-    }
-
-    .theme-slate .task-scroll-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .theme-slate .task-item {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: border-color 0.15s, transform 0.15s;
-    }
-
-    .theme-slate .task-item:hover {
-      border-color: #475569;
-    }
-
-    .theme-slate .custom-checkbox {
-      appearance: none;
-      width: 18px;
-      height: 18px;
-      border: 2px solid #64748b;
-      border-radius: 4px;
-      background: transparent;
-      cursor: pointer;
-      display: grid;
-      place-content: center;
-      transition: all 0.15s;
-      flex-shrink: 0;
-    }
-
-    .theme-slate .custom-checkbox:checked {
-      background: #3b82f6;
-      border-color: #3b82f6;
-    }
-
-    .theme-slate .custom-checkbox:checked::before {
-      content: "✓";
-      color: white;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .theme-slate .task-text {
-      flex: 1;
-      font-size: 13.5px;
-      color: #e2e8f0;
-      line-height: 1.4;
-      word-break: break-word;
-      transition: color 0.15s;
-    }
-
-    .theme-slate .task-item.completed .task-text {
-      text-decoration: line-through;
-      color: #64748b;
-    }
-
-    .theme-slate .btn-delete-task {
-      background: transparent;
-      border: none;
-      color: #64748b;
-      cursor: pointer;
-      font-size: 15px;
-      padding: 4px;
-      border-radius: 4px;
-      opacity: 0;
-      transition: opacity 0.15s, color 0.15s;
-    }
-
-    .theme-slate .task-item:hover .btn-delete-task {
-      opacity: 1;
-    }
-
-    .theme-slate .btn-delete-task:hover {
-      color: #ef4444;
-      background: rgba(239, 68, 68, 0.1);
-    }
-
-    .theme-slate .drawer-footer {
+    .google-search-sim {
+      width: 100%;
+      max-width: 540px;
+      background: #303134;
+      border: 1px solid #5f6368;
+      border-radius: 24px;
       padding: 12px 20px;
-      border-top: 1px solid #1e293b;
-      background: #0f172a;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 11.5px;
-      color: #64748b;
-    }
-
-    .theme-slate .drawer-footer code {
-      font-family: var(--font-mono);
-      background: #1e293b;
-      padding: 2px 5px;
-      border-radius: 4px;
-      border: 1px solid #334155;
-      color: #94a3b8;
-    }
-
-    .theme-slate .btn-clear {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 11.5px;
-      cursor: pointer;
-      transition: color 0.15s;
-    }
-
-    .theme-slate .btn-clear:hover {
-      color: #ef4444;
-    }
-
-    /* ============================================================== */
-    /* THEME 2: TRANSLUCENT FROSTED GLASS (GLASSMORPHISM)              */
-    /* ============================================================== */
-    .theme-glass {
-      background: rgba(15, 23, 42, 0.78);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border-left: 1px solid rgba(255, 255, 255, 0.09);
-      color: #f1f5f9;
-      box-shadow: -15px 0 40px rgba(0, 0, 0, 0.6);
-    }
-
-    .theme-glass .drawer-header {
-      padding: 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .theme-glass .header-title-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .theme-glass .app-icon {
-      width: 28px;
-      height: 28px;
-      background: rgba(59, 130, 246, 0.15);
-      border: 1px solid rgba(59, 130, 246, 0.35);
-      color: #60a5fa;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
+      color: #9aa0a6;
       font-size: 14px;
-    }
-
-    .theme-glass .header-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #ffffff;
-      letter-spacing: -0.01em;
-    }
-
-    .theme-glass .badge-counter {
-      background: rgba(255, 255, 255, 0.08);
-      color: #cbd5e1;
-      font-size: 11px;
-      font-weight: 500;
-      padding: 3px 8px;
-      border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .theme-glass .btn-close {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #cbd5e1;
-      font-size: 14px;
-      cursor: pointer;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-    }
-
-    .theme-glass .btn-close:hover {
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-    }
-
-    .theme-glass .input-section {
-      padding: 16px 20px;
-    }
-
-    .theme-glass .input-box {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 11px 14px;
-      gap: 10px;
-      transition: all 0.2s;
-    }
-
-    .theme-glass .input-box:focus-within {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(96, 165, 250, 0.5);
-      box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
-    }
-
-    .theme-glass .input-box input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #ffffff;
-      font-size: 13.5px;
-      font-family: inherit;
-    }
-
-    .theme-glass .input-box input::placeholder {
-      color: #94a3b8;
-    }
-
-    .theme-glass .filter-bar {
-      display: flex;
-      gap: 6px;
-      padding: 0 20px 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .theme-glass .tab-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: #94a3b8;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .theme-glass .tab-btn.active {
-      background: rgba(255, 255, 255, 0.12);
-      color: #60a5fa;
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    .theme-glass .task-scroll-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .theme-glass .task-item {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 10px;
-      padding: 12px 14px;
       display: flex;
       align-items: center;
       gap: 12px;
-      transition: all 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      margin-bottom: 24px;
     }
 
-    .theme-glass .task-item:hover {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 255, 255, 0.12);
-    }
-
-    .theme-glass .custom-checkbox {
-      appearance: none;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 5px;
-      background: transparent;
-      cursor: pointer;
-      display: grid;
-      place-content: center;
-      transition: all 0.15s;
-      flex-shrink: 0;
-    }
-
-    .theme-glass .custom-checkbox:checked {
-      background: #2563eb;
-      border-color: #60a5fa;
-      box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
-    }
-
-    .theme-glass .custom-checkbox:checked::before {
-      content: "✓";
-      color: white;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .theme-glass .task-text {
-      flex: 1;
-      font-size: 13.5px;
-      color: #f1f5f9;
-      line-height: 1.4;
-      word-break: break-word;
-      transition: color 0.15s;
-    }
-
-    .theme-glass .task-item.completed .task-text {
-      text-decoration: line-through;
-      color: rgba(255, 255, 255, 0.4);
-    }
-
-    .theme-glass .btn-delete-task {
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      font-size: 15px;
-      padding: 4px;
-      border-radius: 4px;
-      opacity: 0;
-      transition: opacity 0.15s, color 0.15s;
-    }
-
-    .theme-glass .task-item:hover .btn-delete-task {
-      opacity: 1;
-    }
-
-    .theme-glass .btn-delete-task:hover {
-      color: #f87171;
-    }
-
-    .theme-glass .drawer-footer {
-      padding: 14px 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    .google-shortcuts-sim {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 11.5px;
-      color: #94a3b8;
+      gap: 20px;
     }
 
-    .theme-glass .drawer-footer code {
-      font-family: var(--font-mono);
-      background: rgba(255, 255, 255, 0.08);
-      padding: 2px 5px;
-      border-radius: 4px;
-      color: #e2e8f0;
-    }
-
-    .theme-glass .btn-clear {
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 11.5px;
-      cursor: pointer;
-    }
-
-    .theme-glass .btn-clear:hover {
-      color: #f87171;
-    }
-
-    /* ============================================================== */
-    /* THEME 3: RAYCAST / LINEAR MINIMALIST                           */
-    /* ============================================================== */
-    .theme-raycast {
-      background-color: #090d16;
-      border-left: 1px solid #1a2234;
-      color: #e2e8f0;
-    }
-
-    .theme-raycast .drawer-header {
-      padding: 14px 18px;
-      border-bottom: 1px solid #1a2234;
+    .shortcut-item {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .theme-raycast .header-title-box {
-      display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 8px;
     }
 
-    .theme-raycast .app-icon {
+    .shortcut-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #303134;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e8eaed;
+      font-size: 18px;
+    }
+
+    .shortcut-name {
+      font-size: 11.5px;
+      color: #bdc1c6;
+    }
+
+    /* LIVE FLOATING WIDGET ANCHORED AT TOP-RIGHT (AS PER USER SCREENSHOT) */
+    .topright-widget-anchor {
+      position: absolute;
+      top: 14px;
+      right: 24px;
+      z-index: 500;
+    }
+
+    .current-theme-pill-tag {
+      position: absolute;
+      top: -24px;
+      right: 0;
+      font-size: 11px;
+      background: rgba(0,0,0,0.7);
+      color: #93c5fd;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* THE CORE WIDGET CARD STYLES */
+    .todo-widget {
+      width: 350px;
+      border-radius: var(--w-radius, 8px);
+      background-color: var(--w-bg, #ffffff);
+      border: var(--w-border, 1px solid #e2e8f0);
+      box-shadow: var(--w-shadow, 0 10px 30px rgba(0, 0, 0, 0.12));
+      color: var(--w-text, #1e293b);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      font-family: var(--w-font, var(--font-sans));
+    }
+
+    /* WIDGET HEADER */
+    .todo-widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--w-header-pad, 12px 16px 8px);
+      border-bottom: var(--w-header-border, 1px solid transparent);
+      background: var(--w-header-bg, transparent);
+    }
+
+    .brand-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-logo-symbol {
       width: 20px;
       height: 20px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #38bdf8;
-      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 11px;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--w-logo-color, var(--w-accent, #0f172a));
+      border-radius: var(--w-logo-radius, 4px);
+      background: var(--w-logo-bg, transparent);
     }
 
-    .theme-raycast .header-title {
-      font-size: 13.5px;
-      font-weight: 600;
-      color: #f1f5f9;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      font-family: var(--font-mono);
-    }
-
-    .theme-raycast .badge-counter {
-      background: #131b2e;
-      color: #38bdf8;
-      font-size: 10px;
-      font-family: var(--font-mono);
-      padding: 2px 6px;
-      border-radius: 4px;
-      border: 1px solid #1e293b;
-    }
-
-    .theme-raycast .btn-close {
-      background: transparent;
-      border: none;
-      color: #64748b;
-      font-size: 14px;
-      cursor: pointer;
-      width: 26px;
-      height: 26px;
-      border-radius: 4px;
+    /* TABS */
+    .widget-tabs-nav {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: var(--w-tab-gap, 16px);
+      position: relative;
     }
 
-    .theme-raycast .btn-close:hover {
-      background: #1a2234;
-      color: #ffffff;
-    }
-
-    .theme-raycast .input-section {
-      padding: 12px 18px;
-      border-bottom: 1px solid #1a2234;
-    }
-
-    .theme-raycast .input-box {
-      display: flex;
-      align-items: center;
-      background: #131b2e;
-      border: 1px solid #232f48;
-      border-radius: 6px;
-      padding: 8px 12px;
-      gap: 8px;
-    }
-
-    .theme-raycast .input-box:focus-within {
-      border-color: #38bdf8;
-    }
-
-    .theme-raycast .input-box input {
-      flex: 1;
+    .widget-tab-btn {
       background: transparent;
       border: none;
-      outline: none;
-      color: #f8fafc;
-      font-size: 13px;
+      color: var(--w-tab-color, #64748b);
+      font-size: var(--w-tab-size, 13px);
+      font-weight: var(--w-tab-weight, 600);
       font-family: inherit;
+      cursor: pointer;
+      padding: var(--w-tab-pad, 6px 2px);
+      position: relative;
+      transition: color 0.15s;
     }
 
-    .theme-raycast .input-box input::placeholder {
-      color: #475569;
+    .widget-tab-btn:hover {
+      color: var(--w-text, #0f172a);
     }
 
-    .theme-raycast .filter-bar {
-      display: flex;
-      gap: 4px;
-      padding: 8px 18px;
-      border-bottom: 1px solid #1a2234;
+    .widget-tab-btn.active {
+      color: var(--w-tab-active-color, var(--w-accent, #0f172a));
+      font-weight: var(--w-tab-active-weight, 700);
     }
 
-    .theme-raycast .tab-btn {
+    .widget-tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: var(--w-indicator-h, 2px);
+      background: var(--w-indicator-color, var(--w-accent, #0f172a));
+      border-radius: 2px;
+    }
+
+    .widget-btn-close {
       background: transparent;
       border: none;
-      color: #64748b;
-      font-size: 11.5px;
-      font-weight: 500;
-      padding: 3px 8px;
-      border-radius: 4px;
+      color: #94a3b8;
       cursor: pointer;
-      font-family: var(--font-mono);
+      font-size: 14px;
+      padding: 4px;
+      border-radius: 4px;
+      transition: color 0.15s;
     }
 
-    .theme-raycast .tab-btn.active {
-      background: #1a2234;
-      color: #38bdf8;
+    .widget-btn-close:hover {
+      color: #ef4444;
     }
 
-    .theme-raycast .task-scroll-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 8px 12px;
+    /* TAB CONTENT PANELS */
+    .widget-content-body {
+      padding: var(--w-body-pad, 10px 16px 14px);
+    }
+
+    .tab-panel-view {
+      display: none;
+    }
+
+    .tab-panel-view.active {
+      display: block;
+    }
+
+    /* TASK LIST ITEMS */
+    .task-items-list {
+      list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: var(--w-item-gap, 2px);
     }
 
-    .theme-raycast .task-item {
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 6px;
-      padding: 8px 10px;
+    .task-item-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      transition: background 0.1s;
+      padding: var(--w-row-pad, 10px 4px);
+      border-bottom: var(--w-divider, 1px solid #e2e8f0);
+      gap: 12px;
+      transition: background 0.15s;
     }
 
-    .theme-raycast .task-item:hover {
-      background: #131b2e;
-      border-color: #1f2b45;
+    .task-item-row:last-child {
+      border-bottom: var(--w-last-divider, var(--w-divider, 1px solid #e2e8f0));
     }
 
-    .theme-raycast .custom-checkbox {
-      appearance: none;
-      width: 14px;
-      height: 14px;
-      border: 1.5px solid #475569;
-      border-radius: 3px;
-      background: transparent;
-      cursor: pointer;
-      display: grid;
-      place-content: center;
+    .task-item-row:hover {
+      background: var(--w-row-hover, transparent);
+    }
+
+    /* CIRCULAR CHECKBOX (AS PER USER SCREENSHOT) */
+    .circle-checkbox-wrapper {
+      position: relative;
+      width: var(--w-chk-size, 18px);
+      height: var(--w-chk-size, 18px);
       flex-shrink: 0;
+      cursor: pointer;
     }
 
-    .theme-raycast .custom-checkbox:checked {
-      background: #38bdf8;
-      border-color: #38bdf8;
+    .circle-checkbox-wrapper input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
     }
 
-    .theme-raycast .custom-checkbox:checked::before {
+    .circle-checkbox-custom {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--w-chk-radius, 50%);
+      border: var(--w-chk-border, 1.8px solid #94a3b8);
+      background: var(--w-chk-bg, transparent);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .circle-checkbox-wrapper input:checked ~ .circle-checkbox-custom {
+      border-color: var(--w-chk-checked-border, var(--w-accent, #3b82f6));
+      background: var(--w-chk-checked-bg, var(--w-accent, #3b82f6));
+    }
+
+    .circle-checkbox-wrapper input:checked ~ .circle-checkbox-custom::after {
       content: "✓";
-      color: #090d16;
-      font-size: 10px;
+      color: var(--w-chk-check-color, #ffffff);
+      font-size: 11px;
       font-weight: 800;
     }
 
-    .theme-raycast .task-text {
+    .task-text-label {
       flex: 1;
-      font-size: 13px;
-      color: #cbd5e1;
-      line-height: 1.35;
-      word-break: break-word;
+      font-size: var(--w-text-size, 13.5px);
+      color: var(--w-text, #1e293b);
+      line-height: 1.4;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+      font-weight: var(--w-item-weight, 400);
     }
 
-    .theme-raycast .task-item.completed .task-text {
-      text-decoration: line-through;
-      color: #475569;
+    .task-item-row.completed .task-text-label {
+      text-decoration: var(--w-strike, line-through);
+      color: var(--w-completed-color, #94a3b8);
+      opacity: var(--w-completed-opacity, 0.7);
     }
 
-    .theme-raycast .btn-delete-task {
+    .btn-row-del {
       background: transparent;
       border: none;
-      color: #475569;
-      cursor: pointer;
+      color: #94a3b8;
       font-size: 13px;
-      padding: 2px 4px;
+      cursor: pointer;
       opacity: 0;
+      transition: opacity 0.15s, color 0.15s;
+      padding: 2px 4px;
     }
 
-    .theme-raycast .task-item:hover .btn-delete-task {
+    .task-item-row:hover .btn-row-del {
       opacity: 1;
     }
 
-    .theme-raycast .btn-delete-task:hover {
+    .btn-row-del:hover {
       color: #ef4444;
     }
 
-    .theme-raycast .drawer-footer {
-      padding: 10px 18px;
-      border-top: 1px solid #1a2234;
+    /* WIDGET FOOTER META */
+    .widget-meta-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-top: 12px;
       font-size: 11px;
-      font-family: var(--font-mono);
-      color: #475569;
+      color: var(--w-meta-color, #94a3b8);
+      padding-top: 4px;
     }
 
-    .theme-raycast .drawer-footer code {
-      background: #131b2e;
-      padding: 1px 4px;
-      border-radius: 3px;
-      color: #94a3b8;
-    }
-
-    .theme-raycast .btn-clear {
+    .btn-inline-add {
       background: transparent;
       border: none;
-      color: #64748b;
+      color: var(--w-accent, #3b82f6);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* CALENDAR TAB CONTENT */
+    .calender-mini-view {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 4px;
+    }
+
+    .calender-header-month {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--w-text, #0f172a);
+    }
+
+    .calender-strip-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+
+    .cal-day-cell {
+      padding: 6px 2px;
+      border-radius: 6px;
       font-size: 11px;
-      font-family: var(--font-mono);
+      background: var(--w-cal-cell-bg, #f8fafc);
+      color: var(--w-text, #334155);
       cursor: pointer;
     }
 
-    .theme-raycast .btn-clear:hover {
-      color: #ef4444;
+    .cal-day-cell.active-today {
+      background: var(--w-accent, #3b82f6);
+      color: #ffffff;
+      font-weight: 700;
     }
 
-    /* EMPTY STATE */
-    .empty-state {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      text-align: center;
-      color: #64748b;
-    }
-
-    .empty-state.show {
+    .cal-agenda-list {
+      margin-top: 6px;
       display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .empty-state-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
-      opacity: 0.8;
+    .cal-agenda-item {
+      font-size: 11.5px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: var(--w-cal-agenda-bg, #f1f5f9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .empty-state-text {
+    /* NEW TASK FORM PANEL */
+    .new-task-form-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 4px;
+    }
+
+    .new-task-input {
+      width: 100%;
+      background: var(--w-input-bg, #f8fafc);
+      border: var(--w-input-border, 1px solid #cbd5e1);
+      border-radius: var(--w-input-radius, 6px);
+      padding: 9px 12px;
       font-size: 13px;
+      color: var(--w-text, #0f172a);
+      outline: none;
+      font-family: inherit;
     }
 
-    /* CUSTOM SLEEK SCROLLBAR */
-    .task-scroll-area::-webkit-scrollbar {
-      width: 6px;
+    .new-task-input:focus {
+      border-color: var(--w-accent, #3b82f6);
     }
 
-    .task-scroll-area::-webkit-scrollbar-track {
-      background: transparent;
+    .btn-create-task {
+      background: var(--w-btn-bg, var(--w-accent, #0f172a));
+      color: var(--w-btn-text, #ffffff);
+      border: none;
+      border-radius: var(--w-btn-radius, 6px);
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      align-self: flex-end;
     }
 
-    .task-scroll-area::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
+    /* VIEW MODE 2: 30-GRID SHOWCASE */
+    #view-grid {
+      display: none;
+      padding: 40px 30px 80px;
+      background: #0f172a;
+      flex: 1;
     }
 
-    .task-scroll-area::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
+    .grid-intro-header {
+      max-width: 1200px;
+      margin: 0 auto 30px;
+      color: #f8fafc;
+    }
+
+    .grid-intro-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .grid-intro-header p {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .showcase-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 28px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .grid-card-wrapper {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .grid-card-wrapper:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    .grid-card-header-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #e2e8f0;
+    }
+
+    .grid-card-num-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .grid-num-badge {
+      background: #0f172a;
+      color: #60a5fa;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #334155;
+    }
+
+    .btn-apply-theme {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-apply-theme:hover {
+      background: #1d4ed8;
+    }
+
+    .grid-card-tags {
+      font-size: 11px;
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    /* ============================================================== */
+    /* 30 DISTINCT LIGHT MINIMALIST THEME DEFINITIONS                  */
+    /* ============================================================== */
+
+    /* 01. Things 3 Clean White */
+    .theme-01 {
+      --w-bg: #ffffff;
+      --w-text: #1c1c1e;
+      --w-border: 1px solid #e5e5ea;
+      --w-shadow: 0 12px 36px rgba(0,0,0,0.08);
+      --w-radius: 12px;
+      --w-accent: #007aff;
+      --w-divider: 1px solid #f2f2f7;
+      --w-chk-border: 1.8px solid #c7c7cc;
+      --w-chk-radius: 50%;
+      --w-indicator-color: #007aff;
+      --w-tab-color: #8e8e93;
+      --w-tab-active-color: #1c1c1e;
+    }
+
+    /* 02. Notion Workspace Light */
+    .theme-02 {
+      --w-bg: #ffffff;
+      --w-text: #37352f;
+      --w-border: 1px solid #e9e9e7;
+      --w-shadow: 0 8px 24px rgba(15, 15, 15, 0.05);
+      --w-radius: 6px;
+      --w-accent: #37352f;
+      --w-divider: 1px solid #f1f1ef;
+      --w-chk-border: 1.8px solid #d3d3d0;
+      --w-chk-radius: 3px;
+      --w-chk-checked-bg: #2eaadc;
+      --w-indicator-color: #37352f;
+      --w-tab-color: #787774;
+      --w-tab-active-color: #37352f;
+    }
+
+    /* 03. Linear Clean Light */
+    .theme-03 {
+      --w-bg: #fcfcfc;
+      --w-text: #1b1c1d;
+      --w-border: 1px solid #e2e4e9;
+      --w-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      --w-radius: 8px;
+      --w-accent: #5e6ad2;
+      --w-divider: 1px solid #f0f1f4;
+      --w-chk-border: 1.5px solid #d0d3dc;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #5e6ad2;
+      --w-indicator-color: #5e6ad2;
+      --w-tab-color: #717684;
+      --w-tab-active-color: #1b1c1d;
+    }
+
+    /* 04. Apple Reminders Light */
+    .theme-04 {
+      --w-bg: #fdfdfd;
+      --w-text: #000000;
+      --w-border: 1px solid #e5e5ea;
+      --w-shadow: 0 10px 30px rgba(0,0,0,0.07);
+      --w-radius: 14px;
+      --w-accent: #007aff;
+      --w-divider: 1px solid #e5e5ea;
+      --w-chk-border: 2px solid #007aff;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #007aff;
+      --w-indicator-color: #007aff;
+      --w-tab-color: #8e8e93;
+      --w-tab-active-color: #007aff;
+    }
+
+    /* 05. Craft.do Document Card */
+    .theme-05 {
+      --w-bg: #ffffff;
+      --w-text: #1a1a1a;
+      --w-border: 1px solid #ebebeb;
+      --w-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+      --w-radius: 16px;
+      --w-accent: #2563eb;
+      --w-divider: 1px solid #f5f5f5;
+      --w-chk-border: 1.8px solid #cccccc;
+      --w-chk-radius: 50%;
+      --w-indicator-color: #2563eb;
+      --w-tab-color: #888888;
+      --w-tab-active-color: #1a1a1a;
+    }
+
+    /* 06. Bear Notes Warm Paper */
+    .theme-06 {
+      --w-bg: #faf8f5;
+      --w-text: #3e3832;
+      --w-border: 1px solid #ebdccb;
+      --w-shadow: 0 8px 24px rgba(110, 85, 55, 0.07);
+      --w-radius: 8px;
+      --w-accent: #d9534f;
+      --w-divider: 1px solid #f0e6d8;
+      --w-chk-border: 1.8px solid #cbb8a2;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #d9534f;
+      --w-indicator-color: #d9534f;
+      --w-tab-color: #8c7f73;
+      --w-tab-active-color: #3e3832;
+    }
+
+    /* 07. X (Twitter) Light Minimal */
+    .theme-07 {
+      --w-bg: #ffffff;
+      --w-text: #0f1419;
+      --w-border: 1px solid #eff3f4;
+      --w-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      --w-radius: 16px;
+      --w-accent: #1d9bf0;
+      --w-divider: 1px solid #eff3f4;
+      --w-chk-border: 2px solid #536471;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #1d9bf0;
+      --w-indicator-color: #1d9bf0;
+      --w-tab-color: #536471;
+      --w-tab-active-color: #0f1419;
+    }
+
+    /* 08. Raycast Quick Light */
+    .theme-08 {
+      --w-bg: #f8f9fa;
+      --w-text: #1f2328;
+      --w-border: 1px solid #dce0e5;
+      --w-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
+      --w-radius: 10px;
+      --w-accent: #ff6363;
+      --w-divider: 1px solid #e9ecef;
+      --w-chk-border: 1.8px solid #adb5bd;
+      --w-chk-radius: 4px;
+      --w-chk-checked-bg: #ff6363;
+      --w-indicator-color: #ff6363;
+      --w-tab-color: #6c757d;
+      --w-tab-active-color: #1f2328;
+    }
+
+    /* 09. Muji / Japanese Zen Paper */
+    .theme-09 {
+      --w-bg: #faf7f2;
+      --w-text: #2d2b28;
+      --w-border: 1px solid #e6ded1;
+      --w-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      --w-radius: 4px;
+      --w-accent: #7a7062;
+      --w-divider: 1px solid #ede5d8;
+      --w-chk-border: 1.5px solid #b5ab9a;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #7a7062;
+      --w-indicator-color: #7a7062;
+      --w-tab-color: #8c8273;
+      --w-tab-active-color: #2d2b28;
+    }
+
+    /* 10. Swiss Typography (Grid & Helvetica) */
+    .theme-10 {
+      --w-bg: #ffffff;
+      --w-text: #000000;
+      --w-border: 2px solid #000000;
+      --w-shadow: none;
+      --w-radius: 0px;
+      --w-accent: #ff0000;
+      --w-divider: 1px solid #000000;
+      --w-chk-border: 2px solid #000000;
+      --w-chk-radius: 0%;
+      --w-chk-checked-bg: #000000;
+      --w-indicator-color: #ff0000;
+      --w-tab-color: #555555;
+      --w-tab-active-color: #000000;
+    }
+
+    /* 11. Stripe Modern Dashboard */
+    .theme-11 {
+      --w-bg: #f8fafc;
+      --w-text: #0f172a;
+      --w-border: 1px solid #e2e8f0;
+      --w-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --w-radius: 10px;
+      --w-accent: #635bff;
+      --w-divider: 1px solid #f1f5f9;
+      --w-chk-border: 1.8px solid #cbd5e1;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #635bff;
+      --w-indicator-color: #635bff;
+      --w-tab-color: #64748b;
+      --w-tab-active-color: #0f172a;
+    }
+
+    /* 12. Vercel / Geist Minimal */
+    .theme-12 {
+      --w-bg: #ffffff;
+      --w-text: #000000;
+      --w-border: 1px solid #eaeaea;
+      --w-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --w-radius: 6px;
+      --w-accent: #000000;
+      --w-divider: 1px solid #eaeaea;
+      --w-chk-border: 1.5px solid #999999;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #000000;
+      --w-indicator-color: #000000;
+      --w-tab-color: #666666;
+      --w-tab-active-color: #000000;
+    }
+
+    /* 13. Arc Browser Light Float */
+    .theme-13 {
+      --w-bg: #fdfbf7;
+      --w-text: #2c2523;
+      --w-border: 1px solid #e8e4de;
+      --w-shadow: 0 14px 40px rgba(80, 60, 40, 0.08);
+      --w-radius: 18px;
+      --w-accent: #ff6b6b;
+      --w-divider: 1px solid #f4efe8;
+      --w-chk-border: 2px solid #d4cdc5;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #ff6b6b;
+      --w-indicator-color: #ff6b6b;
+      --w-tab-color: #8c827a;
+      --w-tab-active-color: #2c2523;
+    }
+
+    /* 14. GitHub Modern Light */
+    .theme-14 {
+      --w-bg: #ffffff;
+      --w-text: #1f2328;
+      --w-border: 1px solid #d0d7de;
+      --w-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+      --w-radius: 8px;
+      --w-accent: #1a7f37;
+      --w-divider: 1px solid #d8dee4;
+      --w-chk-border: 1.8px solid #afb8c1;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #1a7f37;
+      --w-indicator-color: #1a7f37;
+      --w-tab-color: #656d76;
+      --w-tab-active-color: #1f2328;
+    }
+
+    /* 15. Todoist Modern Light */
+    .theme-15 {
+      --w-bg: #ffffff;
+      --w-text: #202020;
+      --w-border: 1px solid #f0f0f0;
+      --w-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --w-radius: 10px;
+      --w-accent: #e44332;
+      --w-divider: 1px solid #f5f5f5;
+      --w-chk-border: 2px solid #808080;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #e44332;
+      --w-indicator-color: #e44332;
+      --w-tab-color: #666666;
+      --w-tab-active-color: #202020;
+    }
+
+    /* 16. Editorial Monocle Magazine */
+    .theme-16 {
+      --w-bg: #fcfbf9;
+      --w-text: #222220;
+      --w-border: 1px solid #e5e2dc;
+      --w-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      --w-radius: 4px;
+      --w-accent: #a33327;
+      --w-divider: 1px solid #ede9e3;
+      --w-chk-border: 1.5px solid #a8a49d;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #a33327;
+      --w-indicator-color: #a33327;
+      --w-tab-color: #706e69;
+      --w-tab-active-color: #222220;
+      --w-font: var(--font-serif);
+    }
+
+    /* 17. Soft Neo-Brutalism Light */
+    .theme-17 {
+      --w-bg: #fffdf9;
+      --w-text: #18181b;
+      --w-border: 2px solid #18181b;
+      --w-shadow: 4px 4px 0px #18181b;
+      --w-radius: 10px;
+      --w-accent: #f59e0b;
+      --w-divider: 1.5px solid #18181b;
+      --w-chk-border: 2px solid #18181b;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #18181b;
+      --w-indicator-color: #18181b;
+      --w-tab-color: #71717a;
+      --w-tab-active-color: #18181b;
+    }
+
+    /* 18. Nordic Hygge White */
+    .theme-18 {
+      --w-bg: #f5f6f8;
+      --w-text: #24292f;
+      --w-border: 1px solid #e5e7eb;
+      --w-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      --w-radius: 12px;
+      --w-accent: #2e6f5e;
+      --w-divider: 1px solid #e5e7eb;
+      --w-chk-border: 1.8px solid #9ca3af;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #2e6f5e;
+      --w-indicator-color: #2e6f5e;
+      --w-tab-color: #6b7280;
+      --w-tab-active-color: #24292f;
+    }
+
+    /* 19. Substack Clean Reader */
+    .theme-19 {
+      --w-bg: #ffffff;
+      --w-text: #222222;
+      --w-border: 1px solid #f1f1f1;
+      --w-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --w-radius: 8px;
+      --w-accent: #ff6719;
+      --w-divider: 1px solid #f4f4f4;
+      --w-chk-border: 1.8px solid #bbbbbb;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #ff6719;
+      --w-indicator-color: #ff6719;
+      --w-tab-color: #777777;
+      --w-tab-active-color: #222222;
+    }
+
+    /* 20. Superhuman Minimalist */
+    .theme-20 {
+      --w-bg: #ffffff;
+      --w-text: #111827;
+      --w-border: 1px solid #e2e8f0;
+      --w-shadow: 0 12px 32px rgba(2, 132, 199, 0.08);
+      --w-radius: 6px;
+      --w-accent: #0284c7;
+      --w-divider: 1px solid #f1f5f9;
+      --w-chk-border: 1.8px solid #94a3b8;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #0284c7;
+      --w-indicator-color: #0284c7;
+      --w-tab-color: #64748b;
+      --w-tab-active-color: #111827;
+    }
+
+    /* 21. macOS Frosted Glass Light */
+    .theme-21 {
+      --w-bg: rgba(255, 255, 255, 0.82);
+      --w-text: #1d1d1f;
+      --w-border: 1px solid rgba(255, 255, 255, 0.6);
+      --w-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      --w-radius: 14px;
+      --w-accent: #0071e3;
+      --w-divider: 1px solid rgba(0, 0, 0, 0.06);
+      --w-chk-border: 1.8px solid #a1a1a6;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #0071e3;
+      --w-indicator-color: #0071e3;
+      --w-tab-color: #86868b;
+      --w-tab-active-color: #1d1d1f;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    /* 22. Monochrome High-Contrast Ink */
+    .theme-22 {
+      --w-bg: #ffffff;
+      --w-text: #000000;
+      --w-border: 1.5px solid #000000;
+      --w-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      --w-radius: 4px;
+      --w-accent: #000000;
+      --w-divider: 1px solid #e0e0e0;
+      --w-chk-border: 2px solid #000000;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #000000;
+      --w-indicator-color: #000000;
+      --w-indicator-h: 3px;
+      --w-tab-color: #777777;
+      --w-tab-active-color: #000000;
+    }
+
+    /* 23. Sage & Matcha Pastel */
+    .theme-23 {
+      --w-bg: #f4f6f4;
+      --w-text: #213527;
+      --w-border: 1px solid #dce4dc;
+      --w-shadow: 0 8px 24px rgba(45, 75, 50, 0.06);
+      --w-radius: 10px;
+      --w-accent: #3d5a45;
+      --w-divider: 1px solid #e6ede6;
+      --w-chk-border: 1.8px solid #9db3a0;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #3d5a45;
+      --w-indicator-color: #3d5a45;
+      --w-tab-color: #637866;
+      --w-tab-active-color: #213527;
+    }
+
+    /* 24. Warm Sand & Terracotta */
+    .theme-24 {
+      --w-bg: #faf6f0;
+      --w-text: #3c2f25;
+      --w-border: 1px solid #e8decb;
+      --w-shadow: 0 8px 24px rgba(80, 50, 20, 0.06);
+      --w-radius: 10px;
+      --w-accent: #c2593f;
+      --w-divider: 1px solid #eee5d4;
+      --w-chk-border: 1.8px solid #c2b59f;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #c2593f;
+      --w-indicator-color: #c2593f;
+      --w-tab-color: #8c7d6e;
+      --w-tab-active-color: #3c2f25;
+    }
+
+    /* 25. Lavender Focus Studio */
+    .theme-25 {
+      --w-bg: #fbf9ff;
+      --w-text: #262135;
+      --w-border: 1px solid #eee8fc;
+      --w-shadow: 0 8px 24px rgba(124, 58, 237, 0.06);
+      --w-radius: 12px;
+      --w-accent: #7c3aed;
+      --w-divider: 1px solid #f3effe;
+      --w-chk-border: 1.8px solid #c4b5fd;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #7c3aed;
+      --w-indicator-color: #7c3aed;
+      --w-tab-color: #797191;
+      --w-tab-active-color: #262135;
+    }
+
+    /* 26. Architectural Blueprint White */
+    .theme-26 {
+      --w-bg: #f9fafb;
+      --w-text: #111827;
+      --w-border: 1px solid #d1d5db;
+      --w-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      --w-radius: 4px;
+      --w-accent: #2563eb;
+      --w-divider: 1px solid #e5e7eb;
+      --w-chk-border: 1.5px solid #9ca3af;
+      --w-chk-radius: 2px;
+      --w-chk-checked-bg: #2563eb;
+      --w-indicator-color: #2563eb;
+      --w-tab-color: #6b7280;
+      --w-tab-active-color: #111827;
+      --w-font: var(--font-mono);
+    }
+
+    /* 27. Obsidian Minimal Light */
+    .theme-27 {
+      --w-bg: #f8f9fa;
+      --w-text: #212529;
+      --w-border: 1px solid #e9ecef;
+      --w-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      --w-radius: 8px;
+      --w-accent: #705dcf;
+      --w-divider: 1px solid #f1f3f5;
+      --w-chk-border: 1.8px solid #ced4da;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #705dcf;
+      --w-indicator-color: #705dcf;
+      --w-tab-color: #6c757d;
+      --w-tab-active-color: #212529;
+    }
+
+    /* 28. Medium Story Minimal */
+    .theme-28 {
+      --w-bg: #ffffff;
+      --w-text: #242424;
+      --w-border: 1px solid #f2f2f2;
+      --w-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --w-radius: 8px;
+      --w-accent: #0f730c;
+      --w-divider: 1px solid #f5f5f5;
+      --w-chk-border: 1.8px solid #b3b3b3;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #0f730c;
+      --w-indicator-color: #0f730c;
+      --w-tab-color: #6b6b6b;
+      --w-tab-active-color: #242424;
+    }
+
+    /* 29. Minimalist Wireframe Blueprint */
+    .theme-29 {
+      --w-bg: #fdfdfd;
+      --w-text: #1e293b;
+      --w-border: 1px dashed #cbd5e1;
+      --w-shadow: none;
+      --w-radius: 6px;
+      --w-accent: #475569;
+      --w-divider: 1px dashed #e2e8f0;
+      --w-chk-border: 1.8px dashed #64748b;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #475569;
+      --w-indicator-color: #475569;
+      --w-tab-color: #64748b;
+      --w-tab-active-color: #1e293b;
+    }
+
+    /* 30. Compact Floating Island */
+    .theme-30 {
+      --w-bg: #ffffff;
+      --w-text: #0f172a;
+      --w-border: 1px solid #edf2f7;
+      --w-shadow: 0 20px 50px rgba(0, 0, 0, 0.14);
+      --w-radius: 20px;
+      --w-accent: #3b82f6;
+      --w-divider: 1px solid #f8fafc;
+      --w-chk-border: 2px solid #cbd5e1;
+      --w-chk-radius: 50%;
+      --w-chk-checked-bg: #3b82f6;
+      --w-indicator-color: #3b82f6;
+      --w-tab-color: #94a3b8;
+      --w-tab-active-color: #0f172a;
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP HEADER CONTROLLER BAR -->
-  <header class="preview-header">
-    <div class="preview-brand">
-      <h1>Preview Prototipe To-Do List (In-Page Overlay)</h1>
-      <span class="badge-tag">Pilih & Uji Langsung</span>
-    </div>
-
-    <div class="preview-controls">
-      <span class="style-picker-label">Pilih Gaya Desain:</span>
-      <div class="picker-btn-group">
-        <button class="picker-btn active" onclick="switchTheme('slate', this)">Opsi 1: Modern Slate</button>
-        <button class="picker-btn" onclick="switchTheme('glass', this)">Opsi 2: Frosted Glass</button>
-        <button class="picker-btn" onclick="switchTheme('raycast', this)">Opsi 3: Raycast Minimalist</button>
+  <!-- TOP MASTER CONTROLLER -->
+  <header class="top-controller-bar">
+    <div class="controller-left">
+      <div class="controller-title">
+        <span>To-Do Overlay</span>
+        <span class="badge-30">30 Desain Minimalis Terang</span>
       </div>
 
-      <button class="btn-toggle-drawer" onclick="toggleDrawer()">
-        <span>Toggle Panel (Buka/Tutup)</span>
-      </button>
+      <div class="view-mode-switch">
+        <button class="btn-view-mode active" id="btn-mode-insitu" onclick="setViewMode('insitu')">
+          Live Top-Right (Browser)
+        </button>
+        <button class="btn-view-mode" id="btn-mode-grid" onclick="setViewMode('grid')">
+          Galeri 30 Grid (Bandingkan)
+        </button>
+      </div>
+    </div>
+
+    <div class="controller-center">
+      <select class="category-filter-select" id="categoryFilter" onchange="filterCategory()">
+        <option value="all">Semua Kategori (30 Desain)</option>
+        <option value="productivity">Productivity Giants (Things, Notion, Linear, Craft, Apple)</option>
+        <option value="modern-web">Modern Web & Social (X, Vercel, Stripe, GitHub, Arc)</option>
+        <option value="paper-zen">Paper & Editorial (Muji Zen, Swiss, Monocle, Nordic)</option>
+        <option value="aesthetic">Aesthetic & Accents (Neo-Brutal, Frosted, Sage, Sand, Lavender)</option>
+      </select>
+
+      <select class="theme-dropdown-select" id="themeSelect" onchange="selectTheme(this.value)">
+        <!-- Generated via JS -->
+      </select>
+    </div>
+
+    <div class="controller-right">
+      <button class="btn-quick-nav" onclick="prevTheme()">◀ Sebelumnya</button>
+      <button class="btn-quick-nav" onclick="nextTheme()">Berikutnya ▶</button>
     </div>
   </header>
 
-  <!-- SIMULATED HOST WEBPAGE IN BACKGROUND -->
-  <main class="mock-webpage">
-    <div class="article-tag">Simulasi Halaman Web Host</div>
-    <h2>Membangun Browser Extension Modern dengan Manifest V3</h2>
-    <p>
-      Halaman ini mensimulasikan konten website aktif tempat ekstensi To-Do List Anda bekerja. Saat ekstensi diaktifkan melalui toolbar atau floating button di pojok kanan bawah, panel overlay akan meluncur masuk menimpa layar tanpa merusak layout website ini.
-    </p>
-    <p>
-      Silakan klik tombol <strong>"Toggle Panel"</strong> di header atau tombol bulat biru di kanan bawah untuk membuka/menutup panel. Anda dapat mencoba mengetik tugas baru, mencentang checkbox untuk melihat animasi coret, memfilter status (Semua / Aktif / Selesai), serta mengganti tema tampilan di atas secara langsung.
-    </p>
-
-    <div class="mock-card-grid">
-      <div class="mock-card">
-        <h3>🛡️ Terisolasi via Shadow DOM</h3>
-        <p>Gaya tampilan To-Do List tidak akan pernah terpengaruh oleh CSS website host (seperti Bootstrap, Tailwind, atau warna global website).</p>
+  <!-- VIEW 1: LIVE IN-SITU BROWSER SCREEN (MATCHING USER SCREENSHOT) -->
+  <main id="view-insitu">
+    <!-- BROWSER CHROME FRAME -->
+    <div class="simulated-browser-bar">
+      <div class="browser-tabs">
+        <div class="sim-tab">
+          <span>Google</span>
+          <span>✕</span>
+        </div>
       </div>
-      <div class="mock-card">
-        <h3>⚡ Cepat & Ringan</h3>
-        <p>100% Vanilla JS dan CSS modern tanpa dependency atau bundle overhead, menjamin response time instan.</p>
+      <div class="browser-nav-row">
+        <span>◀</span>
+        <span>▶</span>
+        <span>↻</span>
+        <div class="url-bar-sim">
+          <span>🔒</span>
+          <span>https://www.google.com</span>
+        </div>
+        <div class="ext-icons-row">
+          <div class="ext-icon-badge" title="Ekstensi To-Do List Aktif">
+            <span>A</span>
+            <span class="ext-badge-num" id="live-badge-count">2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOGLE CANVAS BACKGROUND -->
+    <div class="simulated-google-page">
+      <div class="google-logo-sim">Google</div>
+      <div class="google-search-sim">
+        <span>🔍</span>
+        <span>Telusuri Google atau ketik URL</span>
+      </div>
+      <div class="google-shortcuts-sim">
+        <div class="shortcut-item">
+          <div class="shortcut-circle">G</div>
+          <span class="shortcut-name">Gemini</span>
+        </div>
+        <div class="shortcut-item">
+          <div class="shortcut-circle">M</div>
+          <span class="shortcut-name">Gmail</span>
+        </div>
+        <div class="shortcut-item">
+          <div class="shortcut-circle">Y</div>
+          <span class="shortcut-name">YouTube</span>
+        </div>
+      </div>
+
+      <!-- LIVE TOP-RIGHT WIDGET (SEPERTI WIREFRAME PENGGUNA) -->
+      <div class="topright-widget-anchor">
+        <div class="current-theme-pill-tag" id="live-theme-tag">01. Things 3 Clean White</div>
+
+        <!-- THE WIDGET -->
+        <div class="todo-widget theme-01" id="liveWidget">
+          <!-- Header Bar -->
+          <div class="todo-widget-header">
+            <div class="brand-logo-area">
+              <div class="brand-logo-symbol">▲</div>
+            </div>
+            <nav class="widget-tabs-nav" role="tablist">
+              <button class="widget-tab-btn active" onclick="switchWidgetTab('task', this)">Task</button>
+              <button class="widget-tab-btn" onclick="switchWidgetTab('calender', this)">Calender</button>
+              <button class="widget-tab-btn" onclick="switchWidgetTab('new-task', this)">New Task</button>
+            </nav>
+            <button class="widget-btn-close" title="Tutup">✕</button>
+          </div>
+
+          <!-- Body Panels -->
+          <div class="widget-content-body">
+            <!-- TAB PANEL 1: TASK LIST -->
+            <div class="tab-panel-view active" id="tab-panel-task">
+              <ul class="task-items-list" id="live-task-ul">
+                <!-- Rendered dynamically -->
+              </ul>
+              <div class="widget-meta-footer">
+                <span id="live-task-count">2 tugas belum selesai</span>
+                <button class="btn-inline-add" onclick="switchWidgetTabByName('new-task')">+ Tambah</button>
+              </div>
+            </div>
+
+            <!-- TAB PANEL 2: CALENDER -->
+            <div class="tab-panel-view" id="tab-panel-calender">
+              <div class="calender-mini-view">
+                <div class="calender-header-month">
+                  <span>November 2026</span>
+                  <span>Minggu ke-45</span>
+                </div>
+                <div class="calender-strip-row">
+                  <div class="cal-day-cell">Sen<br><strong>09</strong></div>
+                  <div class="cal-day-cell active-today">Sel<br><strong>10</strong></div>
+                  <div class="cal-day-cell">Rab<br><strong>11</strong></div>
+                  <div class="cal-day-cell">Kam<br><strong>12</strong></div>
+                  <div class="cal-day-cell">Jum<br><strong>13</strong></div>
+                  <div class="cal-day-cell">Sab<br><strong>14</strong></div>
+                  <div class="cal-day-cell">Min<br><strong>15</strong></div>
+                </div>
+                <div class="cal-agenda-list">
+                  <div class="cal-agenda-item">
+                    <span>📌 Hari ini: Review Dokumen MD</span>
+                    <strong>14:00</strong>
+                  </div>
+                  <div class="cal-agenda-item">
+                    <span>📌 Besok: Testing Manifest V3</span>
+                    <strong>09:30</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB PANEL 3: NEW TASK -->
+            <div class="tab-panel-view" id="tab-panel-new-task">
+              <form class="new-task-form-panel" onsubmit="handleAddTask(event)">
+                <input 
+                  type="text" 
+                  class="new-task-input" 
+                  id="newTaskInput" 
+                  placeholder="Ketik tugas baru lalu tekan Enter..." 
+                  autocomplete="off" 
+                  required
+                />
+                <button type="submit" class="btn-create-task">Simpan Tugas</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
-  <!-- FLOATING TRIGGER BUTTON (SEPERTI DI WEBPAGE) -->
-  <button class="floating-ext-trigger" onclick="toggleDrawer()" title="Buka To-Do List Overlay">
-    <span>✓</span>
-    <span class="floating-ext-badge" id="floating-badge-count">2</span>
-  </button>
-
-  <!-- BACKDROP OVERLAY -->
-  <div class="overlay-backdrop open" id="backdrop" onclick="toggleDrawer()"></div>
-
-  <!-- THE OVERLAY DRAWER PANEL (SHADOW SIMULATOR) -->
-  <aside class="drawer-container theme-slate open" id="drawer">
-    <!-- Header -->
-    <div class="drawer-header">
-      <div class="header-title-box">
-        <div class="app-icon">✓</div>
-        <span class="header-title">Tugas Saya</span>
-        <span class="badge-counter" id="active-counter-text">2 aktif</span>
-      </div>
-      <button class="btn-close" onclick="toggleDrawer()" title="Tutup panel (Esc)">✕</button>
+  <!-- VIEW 2: 30-GRID SHOWCASE (SIDE-BY-SIDE GALLERY) -->
+  <section id="view-grid">
+    <div class="grid-intro-header">
+      <h2>Katalog 30 Desain Minimalis Terang (Side-by-Side Comparison)</h2>
+      <p>Klik tombol <strong>"Terapkan ke Live Widget"</strong> pada kartu mana pun untuk langsung melihatnya melayang di browser.</p>
     </div>
 
-    <!-- Quick Add Input -->
-    <div class="input-section">
-      <div class="input-box">
-        <input 
-          type="text" 
-          id="todo-input" 
-          placeholder="Tulis tugas baru lalu tekan Enter..." 
-          autocomplete="off"
-        />
-      </div>
-    </div>
-
-    <!-- Filter Bar -->
-    <div class="filter-bar">
-      <button class="tab-btn active" data-filter="all" onclick="setFilter('all', this)">Semua</button>
-      <button class="tab-btn" data-filter="active" onclick="setFilter('active', this)">Aktif</button>
-      <button class="tab-btn" data-filter="completed" onclick="setFilter('completed', this)">Selesai</button>
-    </div>
-
-    <!-- Task Scroll Area -->
-    <div class="task-scroll-area" id="task-container">
+    <div class="showcase-cards-grid" id="gridCardsContainer">
       <!-- Generated via JS -->
     </div>
+  </section>
 
-    <!-- Empty State -->
-    <div class="empty-state" id="empty-state">
-      <div class="empty-state-icon">📝</div>
-      <div class="empty-state-text">Tidak ada tugas pada filter ini</div>
-    </div>
-
-    <!-- Footer Stats & Hint -->
-    <div class="drawer-footer">
-      <span>Tekan <code>Esc</code> untuk menutup</span>
-      <button class="btn-clear" onclick="clearCompleted()">Hapus selesai</button>
-    </div>
-  </aside>
-
-  <!-- JAVASCRIPT LOGIC UNTUK DEMO & INTERAKSI -->
+  <!-- SCRIPT LOGIC -->
   <script>
-    // Initial Mock State
-    let todos = [
-      { id: 1, text: "Review arsitektur Manifest V3 untuk Chrome Extension", completed: false },
-      { id: 2, text: "Uji coba transisi animasi Shadow DOM drawer", completed: false },
-      { id: 3, text: "Konfigurasi local storage chrome.storage.local", completed: true }
+    // 30 THEMES METADATA
+    const themes = [
+      { id: "01", name: "Things 3 Clean White", cat: "productivity", tags: "Apple Ecosystem, Ultra Clean, Soft Blue" },
+      { id: "02", name: "Notion Workspace Light", cat: "productivity", tags: "Structured, Subtle Warm Border, Modern Serif" },
+      { id: "03", name: "Linear Clean Light", cat: "productivity", tags: "Engineering Precision, Crisp Borders, Indigo Accent" },
+      { id: "04", name: "Apple Reminders Light", cat: "productivity", tags: "macOS Sequoia, Vibrant Circular Check, Clean Typography" },
+      { id: "05", name: "Craft.do Document Card", cat: "productivity", tags: "Deep Elevation Shadow, Rounded Corners, Subtle Slate" },
+      { id: "06", name: "Bear Notes Warm Paper", cat: "productivity", tags: "Cream Paper, Sepia Undertones, Crimson Accent" },
+      { id: "07", name: "X (Twitter) Light Minimal", cat: "modern-web", tags: "Pure White, High-Contrast Black, Sky Blue" },
+      { id: "08", name: "Raycast Quick Light", cat: "modern-web", tags: "Productivity Popover, Keycap Hints, Coral Accent" },
+      { id: "09", name: "Muji / Japanese Zen Paper", cat: "paper-zen", tags: "Warm Ivory, Charcoal Stroke, Natural Quiet Calm" },
+      { id: "10", name: "Swiss Typography (Grid)", cat: "paper-zen", tags: "International Typographic Style, Strict 1px Black, Heavy Sans" },
+      { id: "11", name: "Stripe Modern Dashboard", cat: "modern-web", tags: "Refined Slate, Hairline Borders, Blurple Accent" },
+      { id: "12", name: "Vercel / Geist Minimal", cat: "modern-web", tags: "Stark Pure White, Monochrome Focus, Precise Radius" },
+      { id: "13", name: "Arc Browser Light Float", cat: "modern-web", tags: "Playful Rounded, Warm Off-White, Coral Pill" },
+      { id: "14", name: "GitHub Modern Light", cat: "modern-web", tags: "Slate Canvas, Developer Green Accent, Structured" },
+      { id: "15", name: "Todoist Modern Light", cat: "productivity", tags: "Signature Energetic Red, Friendly Circular Radio" },
+      { id: "16", name: "Editorial Monocle Magazine", cat: "paper-zen", tags: "Classic Serif Type, Book Hairlines, Understated Luxury" },
+      { id: "17", name: "Soft Neo-Brutalism Light", cat: "aesthetic", tags: "Bold 2px Stroke, Offset Shadow, Modern Amber" },
+      { id: "18", name: "Nordic Hygge White", cat: "paper-zen", tags: "Glacial Pine Accent, Cool Light Slate, Peaceful" },
+      { id: "19", name: "Substack Clean Reader", cat: "modern-web", tags: "Signature Substack Orange, Reader Friendly" },
+      { id: "20", name: "Superhuman Minimalist", cat: "productivity", tags: "Blazing Fast Feel, Cyan Accent, High Density" },
+      { id: "21", name: "macOS Frosted Glass Light", cat: "aesthetic", tags: "Translucent White, 24px Blur, Subtle Glass Sheen" },
+      { id: "22", name: "Monochrome High-Contrast Ink", cat: "aesthetic", tags: "Absolute Black & White, Thick Underline Indicator" },
+      { id: "23", name: "Sage & Matcha Pastel", cat: "aesthetic", tags: "Natural Earthy Green, Calming Forest Accent" },
+      { id: "24", name: "Warm Sand & Terracotta", cat: "aesthetic", tags: "Earthy Desert Sand, Mediterranean Terracotta" },
+      { id: "25", name: "Lavender Focus Studio", cat: "aesthetic", tags: "Lilac-Tinted White, Iris Blue-Purple, Calm Mind" },
+      { id: "26", name: "Architectural Blueprint White", cat: "paper-zen", tags: "Technical Drafting Grid, Monospace Numbers" },
+      { id: "27", name: "Obsidian Minimal Light", cat: "productivity", tags: "Knowledge Base Clean, Purple Graphite Accent" },
+      { id: "28", name: "Medium Story Minimal", cat: "modern-web", tags: "Essay Typography, Emerald Green Check" },
+      { id: "29", name: "Minimalist Wireframe Blueprint", cat: "aesthetic", tags: "Subtle Dashed Borders, Hollow Circular Check" },
+      { id: "30", name: "Compact Floating Island", cat: "aesthetic", tags: "Floating Pill Dock, 20px Corner, Soft Elevation" }
     ];
 
-    let currentFilter = 'all';
+    // Shared Tasks State
+    let taskData = [
+      { id: 1, text: "read the md", completed: false },
+      { id: 2, text: "read the md", completed: false },
+      { id: 3, text: "test manifest v3 overlay in browser", completed: true }
+    ];
 
-    const drawer = document.getElementById('drawer');
-    const backdrop = document.getElementById('backdrop');
-    const inputEl = document.getElementById('todo-input');
-    const taskContainer = document.getElementById('task-container');
-    const emptyState = document.getElementById('empty-state');
-    const activeCounterText = document.getElementById('active-counter-text');
-    const floatingBadgeCount = document.getElementById('floating-badge-count');
+    let currentThemeIndex = 0;
 
-    // Switch between the 3 visual themes
-    function switchTheme(themeName, btn) {
-      drawer.classList.remove('theme-slate', 'theme-glass', 'theme-raycast');
-      drawer.classList.add('theme-' + themeName);
+    // DOM Elements
+    const liveWidget = document.getElementById("liveWidget");
+    const liveThemeTag = document.getElementById("liveThemeTag");
+    const themeSelect = document.getElementById("themeSelect");
+    const liveTaskUl = document.getElementById("liveTaskUl");
+    const liveTaskCount = document.getElementById("liveTaskCount");
+    const liveBadgeCount = document.getElementById("liveBadgeCount");
+    const gridCardsContainer = document.getElementById("gridCardsContainer");
 
-      document.querySelectorAll('.picker-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
+    // Populate theme dropdown
+    function initThemeDropdown() {
+      themeSelect.innerHTML = "";
+      themes.forEach((t, index) => {
+        const opt = document.createElement("option");
+        opt.value = index;
+        opt.textContent = `${t.id}. ${t.name}`;
+        themeSelect.appendChild(opt);
+      });
     }
 
-    // Toggle drawer open/close
-    function toggleDrawer() {
-      const isOpen = drawer.classList.contains('open');
-      if (isOpen) {
-        drawer.classList.remove('open');
-        backdrop.classList.remove('open');
-      } else {
-        drawer.classList.add('open');
-        backdrop.classList.add('open');
-        setTimeout(() => inputEl.focus(), 250);
+    // Select theme
+    function selectTheme(index) {
+      currentThemeIndex = parseInt(index);
+      const theme = themes[currentThemeIndex];
+
+      // Remove existing theme classes
+      for (let i = 1; i <= 30; i++) {
+        const padded = i < 10 ? "0" + i : "" + i;
+        liveWidget.classList.remove("theme-" + padded);
       }
+
+      liveWidget.classList.add("theme-" + theme.id);
+      liveThemeTag.textContent = `${theme.id}. ${theme.name} (${theme.tags})`;
+      themeSelect.value = currentThemeIndex;
     }
 
-    // Render task items
-    function renderTasks() {
-      taskContainer.innerHTML = '';
+    function prevTheme() {
+      const newIdx = (currentThemeIndex - 1 + themes.length) % themes.length;
+      selectTheme(newIdx);
+    }
+
+    function nextTheme() {
+      const newIdx = (currentThemeIndex + 1) % themes.length;
+      selectTheme(newIdx);
+    }
+
+    // Filter by Category
+    function filterCategory() {
+      const cat = document.getElementById("categoryFilter").value;
+      themeSelect.innerHTML = "";
       
-      const filtered = todos.filter(t => {
-        if (currentFilter === 'active') return !t.completed;
-        if (currentFilter === 'completed') return t.completed;
-        return true;
+      const filtered = themes.filter(t => cat === "all" || t.cat === cat);
+      filtered.forEach(t => {
+        const actualIndex = themes.findIndex(item => item.id === t.id);
+        const opt = document.createElement("option");
+        opt.value = actualIndex;
+        opt.textContent = `${t.id}. ${t.name}`;
+        themeSelect.appendChild(opt);
       });
 
-      if (filtered.length === 0) {
-        emptyState.classList.add('show');
-      } else {
-        emptyState.classList.remove('show');
+      if (filtered.length > 0) {
+        selectTheme(themes.findIndex(item => item.id === filtered[0].id));
       }
 
-      filtered.forEach(todo => {
-        const item = document.createElement('div');
-        item.className = 'task-item' + (todo.completed ? ' completed' : '');
+      renderGridCards(cat);
+    }
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'custom-checkbox';
-        checkbox.checked = todo.completed;
-        checkbox.addEventListener('change', () => toggleTodo(todo.id));
+    // Switch View Mode: In-Situ vs Grid
+    function setViewMode(mode) {
+      const inSitu = document.getElementById("view-insitu");
+      const grid = document.getElementById("view-grid");
+      const btnInSitu = document.getElementById("btn-mode-insitu");
+      const btnGrid = document.getElementById("btn-mode-grid");
 
-        const textSpan = document.createElement('span');
-        textSpan.className = 'task-text';
-        textSpan.textContent = todo.text;
+      if (mode === "insitu") {
+        inSitu.style.display = "flex";
+        grid.style.display = "none";
+        btnInSitu.classList.add("active");
+        btnGrid.classList.remove("active");
+      } else {
+        inSitu.style.display = "none";
+        grid.style.display = "block";
+        btnInSitu.classList.remove("active");
+        btnGrid.classList.add("active");
+      }
+    }
 
-        const delBtn = document.createElement('button');
-        delBtn.className = 'btn-delete-task';
-        delBtn.innerHTML = '✕';
-        delBtn.title = 'Hapus tugas';
-        delBtn.addEventListener('click', (e) => {
+    // Tab Switcher inside widget
+    function switchWidgetTab(tabName, btn) {
+      document.querySelectorAll(".widget-tab-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+
+      document.querySelectorAll(".tab-panel-view").forEach(p => p.classList.remove("active"));
+      const target = document.getElementById("tab-panel-" + tabName);
+      if (target) target.classList.add("active");
+    }
+
+    function switchWidgetTabByName(tabName) {
+      const btns = document.querySelectorAll(".widget-tab-btn");
+      btns.forEach(b => {
+        if (b.textContent.toLowerCase().includes(tabName.replace("-", " "))) {
+          switchWidgetTab(tabName, b);
+        }
+      });
+    }
+
+    // Render Tasks for Live Widget
+    function renderLiveTasks() {
+      liveTaskUl.innerHTML = "";
+      taskData.forEach(task => {
+        const li = document.createElement("li");
+        li.className = "task-item-row" + (task.completed ? " completed" : "");
+
+        const label = document.createElement("label");
+        label.className = "circle-checkbox-wrapper";
+
+        const chk = document.createElement("input");
+        chk.type = "checkbox";
+        chk.checked = task.completed;
+        chk.addEventListener("change", () => toggleTask(task.id));
+
+        const customSpan = document.createElement("span");
+        customSpan.className = "circle-checkbox-custom";
+
+        label.appendChild(chk);
+        label.appendChild(customSpan);
+
+        const textSpan = document.createElement("span");
+        textSpan.className = "task-text-label";
+        textSpan.textContent = task.text;
+        textSpan.addEventListener("click", () => toggleTask(task.id));
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn-row-del";
+        delBtn.innerHTML = "✕";
+        delBtn.title = "Hapus";
+        delBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          deleteTodo(todo.id);
+          deleteTask(task.id);
         });
 
-        item.appendChild(checkbox);
-        item.appendChild(textSpan);
-        item.appendChild(delBtn);
+        li.appendChild(label);
+        li.appendChild(textSpan);
+        li.appendChild(delBtn);
 
-        taskContainer.appendChild(item);
+        liveTaskUl.appendChild(li);
       });
 
-      updateBadgeCounters();
+      const activeCount = taskData.filter(t => !t.completed).length;
+      liveTaskCount.textContent = `${activeCount} tugas belum selesai`;
+      liveBadgeCount.textContent = activeCount;
     }
 
-    function updateBadgeCounters() {
-      const activeCount = todos.filter(t => !t.completed).length;
-      activeCounterText.textContent = `${activeCount} aktif`;
-      floatingBadgeCount.textContent = activeCount;
+    function toggleTask(id) {
+      taskData = taskData.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+      renderLiveTasks();
     }
 
-    function toggleTodo(id) {
-      todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
-      renderTasks();
+    function deleteTask(id) {
+      taskData = taskData.filter(t => t.id !== id);
+      renderLiveTasks();
     }
 
-    function deleteTodo(id) {
-      todos = todos.filter(t => t.id !== id);
-      renderTasks();
-    }
-
-    function clearCompleted() {
-      todos = todos.filter(t => !t.completed);
-      renderTasks();
-    }
-
-    function setFilter(filter, btn) {
-      currentFilter = filter;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      renderTasks();
-    }
-
-    // Input Enter listener
-    inputEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const val = inputEl.value.trim();
-        if (val) {
-          todos.unshift({
-            id: Date.now(),
-            text: val,
-            completed: false
-          });
-          inputEl.value = '';
-          renderTasks();
-        }
+    function handleAddTask(e) {
+      e.preventDefault();
+      const input = document.getElementById("newTaskInput");
+      const text = input.value.trim();
+      if (text) {
+        taskData.unshift({
+          id: Date.now(),
+          text: text,
+          completed: false
+        });
+        input.value = "";
+        renderLiveTasks();
+        switchWidgetTabByName("task");
       }
-    });
+    }
 
-    // Escape listener
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && drawer.classList.contains('open')) {
-        toggleDrawer();
-      }
-    });
+    // Render All 30 Cards in Grid View
+    function renderGridCards(filterCat = "all") {
+      gridCardsContainer.innerHTML = "";
+      const filtered = themes.filter(t => filterCat === "all" || t.cat === filterCat);
 
-    // Initial render
-    renderTasks();
+      filtered.forEach((t, index) => {
+        const actualIdx = themes.findIndex(item => item.id === t.id);
+
+        const cardWrap = document.createElement("div");
+        cardWrap.className = "grid-card-wrapper";
+
+        cardWrap.innerHTML = `
+          <div class="grid-card-header-info">
+            <div class="grid-card-num-title">
+              <span class="grid-num-badge">${t.id}</span>
+              <span>${t.name}</span>
+            </div>
+            <button class="btn-apply-theme" onclick="applyAndSwitchToLive(${actualIdx})">Terapkan ke Live</button>
+          </div>
+          <div class="grid-card-tags">${t.tags}</div>
+          <div class="todo-widget theme-${t.id}">
+            <div class="todo-widget-header">
+              <div class="brand-logo-area">
+                <div class="brand-logo-symbol">▲</div>
+              </div>
+              <nav class="widget-tabs-nav">
+                <span class="widget-tab-btn active">Task</span>
+                <span class="widget-tab-btn">Calender</span>
+                <span class="widget-tab-btn">New Task</span>
+              </nav>
+              <span style="font-size:12px; opacity:0.5;">✕</span>
+            </div>
+            <div class="widget-content-body">
+              <ul class="task-items-list">
+                <li class="task-item-row">
+                  <label class="circle-checkbox-wrapper">
+                    <input type="checkbox" />
+                    <span class="circle-checkbox-custom"></span>
+                  </label>
+                  <span class="task-text-label">read the md</span>
+                </li>
+                <li class="task-item-row">
+                  <label class="circle-checkbox-wrapper">
+                    <input type="checkbox" />
+                    <span class="circle-checkbox-custom"></span>
+                  </label>
+                  <span class="task-text-label">read the md</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        `;
+
+        gridCardsContainer.appendChild(cardWrap);
+      });
+    }
+
+    function applyAndSwitchToLive(themeIdx) {
+      selectTheme(themeIdx);
+      setViewMode("insitu");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Initial setup
+    initThemeDropdown();
+    selectTheme(0);
+    renderLiveTasks();
+    renderGridCards();
   </script>
 </body>
 </html>

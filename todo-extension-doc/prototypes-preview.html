@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preview Interaktif To-Do List: 4 Pola UX & 30 Desain Minimalis</title>
+  <title>Penyempurnaan UX 3: To-Do Overlay (Dual Tab & Inline Add)</title>
   <style>
     :root {
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -27,7 +27,7 @@
       overflow-x: hidden;
     }
 
-    /* TOP MASTER CONTROLLER BAR */
+    /* TOP CONTROLLER BAR */
     .top-controller-bar {
       background: #111827;
       border-bottom: 1px solid #1f2937;
@@ -40,14 +40,13 @@
       z-index: 999;
       box-shadow: 0 4px 16px rgba(0,0,0,0.5);
       color: #f1f5f9;
-      flex-wrap: wrap;
       gap: 12px;
     }
 
     .controller-section {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .controller-title {
@@ -66,34 +65,6 @@
       font-weight: 700;
       padding: 2px 7px;
       border-radius: 999px;
-    }
-
-    /* UX PICKER BUTTONS */
-    .ux-picker-group {
-      display: flex;
-      background: #030712;
-      padding: 3px;
-      border-radius: 8px;
-      border: 1px solid #1f2937;
-      gap: 2px;
-    }
-
-    .btn-ux-picker {
-      background: transparent;
-      border: none;
-      color: #9ca3af;
-      padding: 5px 11px;
-      font-size: 12px;
-      font-weight: 500;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .btn-ux-picker.active {
-      background: #2563eb;
-      color: #ffffff;
-      font-weight: 600;
     }
 
     .select-dropdown {
@@ -125,7 +96,7 @@
       background: #374151;
     }
 
-    /* SIMULATED BROWSER CANVAS */
+    /* BROWSER CANVAS */
     #browser-canvas {
       flex: 1;
       display: flex;
@@ -270,7 +241,7 @@
       color: #bdc1c6;
     }
 
-    /* TOP-RIGHT ANCHOR (MATCHING USER SCREENSHOT) */
+    /* TOP-RIGHT ANCHOR */
     .topright-widget-anchor {
       position: absolute;
       top: 14px;
@@ -294,25 +265,231 @@
     }
 
     /* ============================================================== */
-    /* THE WIDGET CONTAINER & REUSABLE COMPONENTS                     */
+    /* ENRICHED UX 3 WIDGET (DUAL TAB + INLINE QUICK ADD)             */
     /* ============================================================== */
     .todo-widget {
-      width: 350px;
-      border-radius: var(--w-radius, 8px);
+      width: 360px;
+      border-radius: var(--w-radius, 12px);
       background-color: var(--w-bg, #ffffff);
       border: var(--w-border, 1px solid #e2e8f0);
-      box-shadow: var(--w-shadow, 0 10px 30px rgba(0, 0, 0, 0.12));
+      box-shadow: var(--w-shadow, 0 14px 40px rgba(0, 0, 0, 0.1));
       color: var(--w-text, #1e293b);
       overflow: hidden;
       transition: all 0.2s ease;
       font-family: var(--w-font, var(--font-sans));
     }
 
-    /* Circular Checkbox (As seen in User Screenshot) */
+    /* HEADER */
+    .widget-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 8px;
+      border-bottom: var(--w-header-border, 1px solid #f1f5f9);
+    }
+
+    .brand-logo-symbol {
+      width: 22px;
+      height: 22px;
+      background: var(--w-logo-bg, #f1f5f9);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--w-accent, #3b82f6);
+    }
+
+    /* DUAL TABS (TASK & CALENDER ONLY) */
+    .dual-tabs-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dual-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--w-tab-color, #64748b);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 6px 2px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+
+    .dual-tab-btn:hover {
+      color: var(--w-text, #0f172a);
+    }
+
+    .dual-tab-btn.active {
+      color: var(--w-tab-active-color, var(--w-accent, #0f172a));
+      font-weight: 700;
+    }
+
+    .dual-tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--w-indicator-color, var(--w-accent, #0f172a));
+      border-radius: 2px;
+    }
+
+    .tab-counter-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: var(--w-badge-bg, #f1f5f9);
+      color: var(--w-badge-text, var(--w-accent, #3b82f6));
+    }
+
+    .header-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-pill-compact {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--w-progress-bg, #f1f5f9);
+      color: var(--w-progress-color, #334155);
+    }
+
+    .btn-close-widget {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px;
+    }
+
+    .btn-close-widget:hover {
+      color: #ef4444;
+    }
+
+    /* INLINE QUICK-ADD INPUT (MENGHAPUS TAB NEW TASK) */
+    .inline-quick-add-section {
+      padding: 10px 16px 8px;
+      border-bottom: var(--w-divider, 1px solid #f1f5f9);
+    }
+
+    .inline-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--w-input-bg, #f8fafc);
+      border: 1px solid var(--w-input-border, #e2e8f0);
+      border-radius: 7px;
+      padding: 8px 12px;
+      transition: all 0.15s;
+    }
+
+    .inline-input-wrapper:focus-within {
+      border-color: var(--w-accent, #3b82f6);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .inline-input-wrapper .plus-icon {
+      font-size: 14px;
+      color: var(--w-accent, #3b82f6);
+      font-weight: 700;
+    }
+
+    .inline-input-wrapper input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: var(--w-text, #0f172a);
+      font-family: inherit;
+    }
+
+    .inline-input-wrapper input::placeholder {
+      color: #94a3b8;
+    }
+
+    .enter-badge-hint {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #94a3b8;
+      background: var(--w-badge-bg, #f1f5f9);
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* FILTER BAR */
+    .filter-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-bottom: var(--w-divider, 1px solid #f1f5f9);
+    }
+
+    .filter-chip-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--w-tab-color, #64748b);
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-chip-btn.active {
+      background: var(--w-chip-active-bg, var(--w-accent, #0f172a));
+      color: var(--w-chip-active-color, #ffffff);
+      font-weight: 600;
+    }
+
+    /* TASK LIST ITEMS */
+    .task-scroll-body {
+      padding: 4px 16px;
+      max-height: 270px;
+      overflow-y: auto;
+    }
+
+    .task-items-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .task-item-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 4px;
+      border-bottom: var(--w-divider, 1px solid #f1f5f9);
+      gap: 12px;
+      transition: background 0.15s;
+    }
+
+    .task-item-row:last-child {
+      border-bottom: none;
+    }
+
     .circle-checkbox-wrapper {
       position: relative;
-      width: var(--w-chk-size, 18px);
-      height: var(--w-chk-size, 18px);
+      width: 18px;
+      height: 18px;
       flex-shrink: 0;
       cursor: pointer;
     }
@@ -330,9 +507,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: var(--w-chk-radius, 50%);
+      border-radius: 50%;
       border: var(--w-chk-border, 1.8px solid #94a3b8);
-      background: var(--w-chk-bg, transparent);
+      background: transparent;
       transition: all 0.15s ease;
       display: flex;
       align-items: center;
@@ -346,38 +523,41 @@
 
     .circle-checkbox-wrapper input:checked ~ .circle-checkbox-custom::after {
       content: "✓";
-      color: var(--w-chk-check-color, #ffffff);
+      color: #ffffff;
       font-size: 11px;
       font-weight: 800;
     }
 
-    .task-item-row {
+    .task-title-group {
+      flex: 1;
       display: flex;
       align-items: center;
-      padding: var(--w-row-pad, 10px 4px);
-      border-bottom: var(--w-divider, 1px solid #e2e8f0);
-      gap: 12px;
-      transition: background 0.15s;
-    }
-
-    .task-item-row:last-child {
-      border-bottom: var(--w-last-divider, var(--w-divider, 1px solid #e2e8f0));
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
     }
 
     .task-text-label {
-      flex: 1;
-      font-size: var(--w-text-size, 13.5px);
+      font-size: 13px;
       color: var(--w-text, #1e293b);
       line-height: 1.4;
-      cursor: pointer;
       user-select: none;
       transition: all 0.15s;
     }
 
     .task-item-row.completed .task-text-label {
-      text-decoration: var(--w-strike, line-through);
-      color: var(--w-completed-color, #94a3b8);
-      opacity: var(--w-completed-opacity, 0.7);
+      text-decoration: line-through;
+      color: #94a3b8;
+      opacity: 0.7;
+    }
+
+    .task-due-tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--w-tag-bg, #f1f5f9);
+      color: var(--w-tag-color, #64748b);
+      white-space: nowrap;
     }
 
     .btn-row-del {
@@ -399,471 +579,178 @@
       color: #ef4444;
     }
 
-    /* ============================================================== */
-    /* UX 1: INSTANT INLINE (THINGS 3 / LINEAR STYLE)                 */
-    /* ============================================================== */
-    .ux1-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .ux1-header {
+    /* FOOTER */
+    .widget-footer-bar {
+      padding: 10px 16px;
+      border-top: var(--w-divider, 1px solid #f1f5f9);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px 10px;
-      border-bottom: var(--w-header-border, 1px solid #f1f5f9);
-    }
-
-    .ux1-brand-title {
-      font-size: 14.5px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .ux1-progress-pill {
       font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--w-pill-bg, #f1f5f9);
-      color: var(--w-pill-color, var(--w-accent, #3b82f6));
+      color: #94a3b8;
     }
 
-    .ux1-input-section {
-      padding: 10px 16px;
-      border-bottom: var(--w-divider, 1px solid #f1f5f9);
-    }
-
-    .ux1-input-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--w-input-bg, #f8fafc);
-      border: 1px solid var(--w-input-border, #e2e8f0);
-      border-radius: 6px;
-      padding: 8px 12px;
-    }
-
-    .ux1-input-box input {
-      flex: 1;
+    .btn-clear-completed {
       background: transparent;
       border: none;
-      outline: none;
-      color: var(--w-text, #0f172a);
-      font-size: 13px;
-      font-family: inherit;
-    }
-
-    .ux1-filter-bar {
-      display: flex;
-      gap: 6px;
-      padding: 8px 16px;
-      border-bottom: var(--w-divider, 1px solid #f1f5f9);
-    }
-
-    .ux1-filter-chip {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--w-tab-color, #64748b);
-      font-size: 11.5px;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 999px;
+      color: #94a3b8;
+      font-size: 11px;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: color 0.15s;
     }
 
-    .ux1-filter-chip.active {
-      background: var(--w-chip-active-bg, var(--w-accent, #0f172a));
-      color: var(--w-chip-active-color, #ffffff);
-      font-weight: 600;
+    .btn-clear-completed:hover {
+      color: #ef4444;
     }
 
-    .ux1-task-body {
-      padding: 6px 16px 12px;
-      max-height: 280px;
-      overflow-y: auto;
+    /* CALENDAR PANEL */
+    .calender-panel-view {
+      display: none;
+      padding: 14px 16px;
     }
 
-    /* ============================================================== */
-    /* UX 2: INTEGRATED CALENDAR & TASK STRIP (APPLE / NOTION)        */
-    /* ============================================================== */
-    .ux2-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .ux2-header {
+    .cal-header-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px 8px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--w-text, #0f172a);
     }
 
-    .ux2-calendar-strip {
+    .cal-week-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 4px;
-      padding: 0 16px 12px;
-      border-bottom: var(--w-divider, 1px solid #f1f5f9);
+      text-align: center;
+      margin-bottom: 14px;
     }
 
-    .ux2-day-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .cal-day-box {
       padding: 6px 2px;
-      border-radius: 8px;
+      border-radius: 7px;
+      font-size: 10.5px;
+      background: var(--w-cal-bg, #f8fafc);
       cursor: pointer;
-      font-size: 10px;
-      color: var(--w-tab-color, #64748b);
       transition: all 0.15s;
     }
 
-    .ux2-day-card strong {
-      font-size: 13px;
-      margin-top: 2px;
-    }
-
-    .ux2-day-card.active {
+    .cal-day-box.active-day {
       background: var(--w-accent, #3b82f6);
       color: #ffffff;
+      font-weight: 700;
     }
 
-    .ux2-quick-add {
-      padding: 8px 16px;
+    .agenda-timeline {
       display: flex;
+      flex-direction: column;
       gap: 8px;
-      border-bottom: var(--w-divider, 1px solid #f1f5f9);
     }
 
-    .ux2-quick-add input {
-      flex: 1;
-      border: 1px solid var(--w-input-border, #e2e8f0);
+    .agenda-card {
+      padding: 8px 10px;
+      border-radius: 7px;
       background: var(--w-input-bg, #f8fafc);
-      padding: 7px 10px;
-      border-radius: 6px;
-      font-size: 12.5px;
-      outline: none;
-    }
-
-    /* ============================================================== */
-    /* UX 3: REFINED 3-TAB (ORIGINAL WIREFRAME ENHANCED)              */
-    /* ============================================================== */
-    .ux3-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .ux3-header {
+      border: 1px solid var(--w-divider, #f1f5f9);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px 8px;
-      border-bottom: var(--w-header-border, 1px solid transparent);
-    }
-
-    .ux3-tabs-nav {
-      display: flex;
-      gap: 16px;
-    }
-
-    .ux3-tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--w-tab-color, #64748b);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 6px 2px;
-      position: relative;
-    }
-
-    .ux3-tab-btn.active {
-      color: var(--w-tab-active-color, var(--w-accent, #0f172a));
-      font-weight: 700;
-    }
-
-    .ux3-tab-btn.active::after {
-      content: "";
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--w-indicator-color, var(--w-accent, #0f172a));
-    }
-
-    .ux3-body {
-      padding: 10px 16px 14px;
-    }
-
-    /* ============================================================== */
-    /* UX 4: COMPACT FOCUS CAPSULE (RAYCAST MINIMALIST)               */
-    /* ============================================================== */
-    .ux4-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .ux4-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border-bottom: var(--w-divider, 1px solid #f1f5f9);
       font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
-    .ux4-body {
-      padding: 8px 12px;
-    }
-
-    .ux4-inline-form {
-      display: flex;
-      gap: 6px;
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: var(--w-divider, 1px solid #f1f5f9);
-    }
-
-    .ux4-inline-form input {
-      flex: 1;
-      padding: 6px 8px;
-      border: 1px solid var(--w-input-border, #e2e8f0);
-      border-radius: 4px;
-      font-size: 12px;
-      outline: none;
-    }
-
-    .ux4-inline-form button {
-      background: var(--w-accent, #0f172a);
-      color: white;
-      border: none;
-      padding: 0 10px;
-      border-radius: 4px;
-      font-size: 11px;
+    .agenda-time {
+      font-size: 10.5px;
       font-weight: 600;
-      cursor: pointer;
+      color: var(--w-accent, #3b82f6);
     }
 
     /* ============================================================== */
-    /* 30 LIGHT MINIMALIST DESIGN TOKENS (SAMPLED PRESETS)            */
+    /* 30 DESIGN THEMES (SAME RICH TOKENS)                             */
     /* ============================================================== */
     .theme-01 { /* Things 3 */
       --w-bg: #ffffff; --w-text: #1c1c1e; --w-border: 1px solid #e5e5ea;
       --w-shadow: 0 14px 40px rgba(0,0,0,0.08); --w-radius: 12px; --w-accent: #007aff;
       --w-divider: 1px solid #f2f2f7; --w-chk-border: 1.8px solid #c7c7cc;
-      --w-chip-active-bg: #007aff; --w-pill-bg: #e5f1ff; --w-pill-color: #007aff;
+      --w-chip-active-bg: #007aff; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #e5f1ff; --w-badge-text: #007aff;
     }
     .theme-02 { /* Notion */
       --w-bg: #ffffff; --w-text: #37352f; --w-border: 1px solid #e9e9e7;
       --w-shadow: 0 8px 24px rgba(15,15,15,0.06); --w-radius: 6px; --w-accent: #37352f;
       --w-divider: 1px solid #f1f1ef; --w-chk-border: 1.8px solid #d3d3d0;
-      --w-chip-active-bg: #37352f; --w-pill-bg: #f1f1ef; --w-pill-color: #37352f;
+      --w-chip-active-bg: #37352f; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #f1f1ef; --w-badge-text: #37352f;
     }
     .theme-03 { /* Linear */
       --w-bg: #fcfcfc; --w-text: #1b1c1d; --w-border: 1px solid #e2e4e9;
       --w-shadow: 0 6px 20px rgba(0,0,0,0.05); --w-radius: 8px; --w-accent: #5e6ad2;
       --w-divider: 1px solid #f0f1f4; --w-chk-border: 1.8px solid #d0d3dc;
-      --w-chip-active-bg: #5e6ad2; --w-pill-bg: #f0f1fa; --w-pill-color: #5e6ad2;
+      --w-chip-active-bg: #5e6ad2; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #f0f1fa; --w-badge-text: #5e6ad2;
     }
     .theme-04 { /* Apple Reminders */
       --w-bg: #fdfdfd; --w-text: #000000; --w-border: 1px solid #e5e5ea;
       --w-shadow: 0 12px 36px rgba(0,0,0,0.08); --w-radius: 14px; --w-accent: #007aff;
       --w-divider: 1px solid #e5e5ea; --w-chk-border: 2px solid #007aff;
-      --w-chip-active-bg: #007aff; --w-pill-bg: #e5f1ff; --w-pill-color: #007aff;
-    }
-    .theme-05 { /* Craft.do */
-      --w-bg: #ffffff; --w-text: #1a1a1a; --w-border: 1px solid #ebebeb;
-      --w-shadow: 0 16px 44px rgba(0,0,0,0.09); --w-radius: 16px; --w-accent: #2563eb;
-      --w-divider: 1px solid #f5f5f5; --w-chk-border: 1.8px solid #cccccc;
-      --w-chip-active-bg: #2563eb; --w-pill-bg: #eff6ff; --w-pill-color: #2563eb;
-    }
-    .theme-06 { /* Bear Notes */
-      --w-bg: #faf8f5; --w-text: #3e3832; --w-border: 1px solid #ebdccb;
-      --w-shadow: 0 8px 24px rgba(110,85,55,0.07); --w-radius: 8px; --w-accent: #d9534f;
-      --w-divider: 1px solid #f0e6d8; --w-chk-border: 1.8px solid #cbb8a2;
-      --w-chip-active-bg: #d9534f; --w-pill-bg: #faeaea; --w-pill-color: #d9534f;
+      --w-chip-active-bg: #007aff; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #e5f1ff; --w-badge-text: #007aff;
     }
     .theme-07 { /* X (Twitter) */
       --w-bg: #ffffff; --w-text: #0f1419; --w-border: 1px solid #eff3f4;
       --w-shadow: 0 8px 28px rgba(0,0,0,0.08); --w-radius: 16px; --w-accent: #1d9bf0;
       --w-divider: 1px solid #eff3f4; --w-chk-border: 2px solid #536471;
-      --w-chip-active-bg: #1d9bf0; --w-pill-bg: #e8f5fd; --w-pill-color: #1d9bf0;
+      --w-chip-active-bg: #1d9bf0; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #e8f5fd; --w-badge-text: #1d9bf0;
     }
     .theme-08 { /* Raycast */
       --w-bg: #f8f9fa; --w-text: #1f2328; --w-border: 1px solid #dce0e5;
       --w-shadow: 0 10px 32px rgba(0,0,0,0.1); --w-radius: 10px; --w-accent: #ff6363;
       --w-divider: 1px solid #e9ecef; --w-chk-border: 1.8px solid #adb5bd;
-      --w-chip-active-bg: #ff6363; --w-pill-bg: #ffebeb; --w-pill-color: #ff6363;
-    }
-    .theme-09 { /* Muji Zen */
-      --w-bg: #faf7f2; --w-text: #2d2b28; --w-border: 1px solid #e6ded1;
-      --w-shadow: 0 4px 16px rgba(0,0,0,0.04); --w-radius: 4px; --w-accent: #7a7062;
-      --w-divider: 1px solid #ede5d8; --w-chk-border: 1.5px solid #b5ab9a;
-      --w-chip-active-bg: #7a7062; --w-pill-bg: #f0eae1; --w-pill-color: #7a7062;
-    }
-    .theme-10 { /* Swiss Grid */
-      --w-bg: #ffffff; --w-text: #000000; --w-border: 2px solid #000000;
-      --w-shadow: none; --w-radius: 0px; --w-accent: #ff0000;
-      --w-divider: 1px solid #000000; --w-chk-border: 2px solid #000000;
-      --w-chip-active-bg: #000000; --w-pill-bg: #000000; --w-pill-color: #ffffff;
+      --w-chip-active-bg: #ff6363; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #ffebeb; --w-badge-text: #ff6363;
     }
     .theme-11 { /* Stripe */
       --w-bg: #f8fafc; --w-text: #0f172a; --w-border: 1px solid #e2e8f0;
       --w-shadow: 0 10px 30px rgba(0,0,0,0.06); --w-radius: 10px; --w-accent: #635bff;
       --w-divider: 1px solid #f1f5f9; --w-chk-border: 1.8px solid #cbd5e1;
-      --w-chip-active-bg: #635bff; --w-pill-bg: #f0effe; --w-pill-color: #635bff;
-    }
-    .theme-12 { /* Vercel Geist */
-      --w-bg: #ffffff; --w-text: #000000; --w-border: 1px solid #eaeaea;
-      --w-shadow: 0 4px 20px rgba(0,0,0,0.08); --w-radius: 6px; --w-accent: #000000;
-      --w-divider: 1px solid #eaeaea; --w-chk-border: 1.5px solid #999999;
-      --w-chip-active-bg: #000000; --w-pill-bg: #f4f4f4; --w-pill-color: #000000;
-    }
-    .theme-13 { /* Arc Browser */
-      --w-bg: #fdfbf7; --w-text: #2c2523; --w-border: 1px solid #e8e4de;
-      --w-shadow: 0 14px 40px rgba(80,60,40,0.08); --w-radius: 18px; --w-accent: #ff6b6b;
-      --w-divider: 1px solid #f4efe8; --w-chk-border: 2px solid #d4cdc5;
-      --w-chip-active-bg: #ff6b6b; --w-pill-bg: #fdeded; --w-pill-color: #ff6b6b;
-    }
-    .theme-14 { /* GitHub */
-      --w-bg: #ffffff; --w-text: #1f2328; --w-border: 1px solid #d0d7de;
-      --w-shadow: 0 8px 24px rgba(140,149,159,0.2); --w-radius: 8px; --w-accent: #1a7f37;
-      --w-divider: 1px solid #d8dee4; --w-chk-border: 1.8px solid #afb8c1;
-      --w-chip-active-bg: #1a7f37; --w-pill-bg: #dafbe1; --w-pill-color: #1a7f37;
-    }
-    .theme-15 { /* Todoist */
-      --w-bg: #ffffff; --w-text: #202020; --w-border: 1px solid #f0f0f0;
-      --w-shadow: 0 10px 30px rgba(0,0,0,0.08); --w-radius: 10px; --w-accent: #e44332;
-      --w-divider: 1px solid #f5f5f5; --w-chk-border: 2px solid #808080;
-      --w-chip-active-bg: #e44332; --w-pill-bg: #fde8e6; --w-pill-color: #e44332;
-    }
-    .theme-16 { /* Editorial Monocle */
-      --w-bg: #fcfbf9; --w-text: #222220; --w-border: 1px solid #e5e2dc;
-      --w-shadow: 0 6px 20px rgba(0,0,0,0.05); --w-radius: 4px; --w-accent: #a33327;
-      --w-divider: 1px solid #ede9e3; --w-chk-border: 1.5px solid #a8a49d;
-      --w-chip-active-bg: #a33327; --w-pill-bg: #f7ebe9; --w-pill-color: #a33327;
-      --w-font: var(--font-serif);
-    }
-    .theme-17 { /* Neo-Brutalism */
-      --w-bg: #fffdf9; --w-text: #18181b; --w-border: 2px solid #18181b;
-      --w-shadow: 4px 4px 0px #18181b; --w-radius: 10px; --w-accent: #f59e0b;
-      --w-divider: 1.5px solid #18181b; --w-chk-border: 2px solid #18181b;
-      --w-chip-active-bg: #18181b; --w-pill-bg: #fef3c7; --w-pill-color: #b45309;
-    }
-    .theme-18 { /* Nordic Hygge */
-      --w-bg: #f5f6f8; --w-text: #24292f; --w-border: 1px solid #e5e7eb;
-      --w-shadow: 0 8px 24px rgba(0,0,0,0.04); --w-radius: 12px; --w-accent: #2e6f5e;
-      --w-divider: 1px solid #e5e7eb; --w-chk-border: 1.8px solid #9ca3af;
-      --w-chip-active-bg: #2e6f5e; --w-pill-bg: #e6f0ed; --w-pill-color: #2e6f5e;
-    }
-    .theme-19 { /* Substack */
-      --w-bg: #ffffff; --w-text: #222222; --w-border: 1px solid #f1f1f1;
-      --w-shadow: 0 10px 30px rgba(0,0,0,0.06); --w-radius: 8px; --w-accent: #ff6719;
-      --w-divider: 1px solid #f4f4f4; --w-chk-border: 1.8px solid #bbbbbb;
-      --w-chip-active-bg: #ff6719; --w-pill-bg: #fff0e8; --w-pill-color: #ff6719;
-    }
-    .theme-20 { /* Superhuman */
-      --w-bg: #ffffff; --w-text: #111827; --w-border: 1px solid #e2e8f0;
-      --w-shadow: 0 12px 32px rgba(2,132,199,0.08); --w-radius: 6px; --w-accent: #0284c7;
-      --w-divider: 1px solid #f1f5f9; --w-chk-border: 1.8px solid #94a3b8;
-      --w-chip-active-bg: #0284c7; --w-pill-bg: #e0f2fe; --w-pill-color: #0284c7;
+      --w-chip-active-bg: #635bff; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #f0effe; --w-badge-text: #635bff;
     }
     .theme-21 { /* macOS Frosted Glass */
       --w-bg: rgba(255,255,255,0.85); --w-text: #1d1d1f; --w-border: 1px solid rgba(255,255,255,0.6);
       --w-shadow: 0 16px 40px rgba(0,0,0,0.12); --w-radius: 14px; --w-accent: #0071e3;
       --w-divider: 1px solid rgba(0,0,0,0.06); --w-chk-border: 1.8px solid #a1a1a6;
-      --w-chip-active-bg: #0071e3; --w-pill-bg: #e8f2fd; --w-pill-color: #0071e3;
+      --w-chip-active-bg: #0071e3; --w-chip-active-color: #ffffff;
+      --w-badge-bg: #e8f2fd; --w-badge-text: #0071e3;
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-    }
-    .theme-22 { /* Monochrome Ink */
-      --w-bg: #ffffff; --w-text: #000000; --w-border: 1.5px solid #000000;
-      --w-shadow: 0 6px 18px rgba(0,0,0,0.1); --w-radius: 4px; --w-accent: #000000;
-      --w-divider: 1px solid #e0e0e0; --w-chk-border: 2px solid #000000;
-      --w-chip-active-bg: #000000; --w-pill-bg: #f0f0f0; --w-pill-color: #000000;
-    }
-    .theme-23 { /* Sage Pastel */
-      --w-bg: #f4f6f4; --w-text: #213527; --w-border: 1px solid #dce4dc;
-      --w-shadow: 0 8px 24px rgba(45,75,50,0.06); --w-radius: 10px; --w-accent: #3d5a45;
-      --w-divider: 1px solid #e6ede6; --w-chk-border: 1.8px solid #9db3a0;
-      --w-chip-active-bg: #3d5a45; --w-pill-bg: #e3eae4; --w-pill-color: #3d5a45;
-    }
-    .theme-24 { /* Warm Sand */
-      --w-bg: #faf6f0; --w-text: #3c2f25; --w-border: 1px solid #e8decb;
-      --w-shadow: 0 8px 24px rgba(80,50,20,0.06); --w-radius: 10px; --w-accent: #c2593f;
-      --w-divider: 1px solid #eee5d4; --w-chk-border: 1.8px solid #c2b59f;
-      --w-chip-active-bg: #c2593f; --w-pill-bg: #f7ebe7; --w-pill-color: #c2593f;
-    }
-    .theme-25 { /* Lavender Studio */
-      --w-bg: #fbf9ff; --w-text: #262135; --w-border: 1px solid #eee8fc;
-      --w-shadow: 0 8px 24px rgba(124,58,237,0.06); --w-radius: 12px; --w-accent: #7c3aed;
-      --w-divider: 1px solid #f3effe; --w-chk-border: 1.8px solid #c4b5fd;
-      --w-chip-active-bg: #7c3aed; --w-pill-bg: #f1ebfd; --w-pill-color: #7c3aed;
-    }
-    .theme-26 { /* Blueprint */
-      --w-bg: #f9fafb; --w-text: #111827; --w-border: 1px solid #d1d5db;
-      --w-shadow: 0 4px 16px rgba(0,0,0,0.05); --w-radius: 4px; --w-accent: #2563eb;
-      --w-divider: 1px solid #e5e7eb; --w-chk-border: 1.5px solid #9ca3af;
-      --w-chip-active-bg: #2563eb; --w-pill-bg: #eff6ff; --w-pill-color: #2563eb;
-      --w-font: var(--font-mono);
-    }
-    .theme-27 { /* Obsidian */
-      --w-bg: #f8f9fa; --w-text: #212529; --w-border: 1px solid #e9ecef;
-      --w-shadow: 0 8px 24px rgba(0,0,0,0.05); --w-radius: 8px; --w-accent: #705dcf;
-      --w-divider: 1px solid #f1f3f5; --w-chk-border: 1.8px solid #ced4da;
-      --w-chip-active-bg: #705dcf; --w-pill-bg: #f1effa; --w-pill-color: #705dcf;
-    }
-    .theme-28 { /* Medium */
-      --w-bg: #ffffff; --w-text: #242424; --w-border: 1px solid #f2f2f2;
-      --w-shadow: 0 10px 30px rgba(0,0,0,0.06); --w-radius: 8px; --w-accent: #0f730c;
-      --w-divider: 1px solid #f5f5f5; --w-chk-border: 1.8px solid #b3b3b3;
-      --w-chip-active-bg: #0f730c; --w-pill-bg: #eaf6ea; --w-pill-color: #0f730c;
-    }
-    .theme-29 { /* Wireframe */
-      --w-bg: #fdfdfd; --w-text: #1e293b; --w-border: 1px dashed #cbd5e1;
-      --w-shadow: none; --w-radius: 6px; --w-accent: #475569;
-      --w-divider: 1px dashed #e2e8f0; --w-chk-border: 1.8px dashed #64748b;
-      --w-chip-active-bg: #475569; --w-pill-bg: #f1f5f9; --w-pill-color: #475569;
-    }
-    .theme-30 { /* Floating Island */
-      --w-bg: #ffffff; --w-text: #0f172a; --w-border: 1px solid #edf2f7;
-      --w-shadow: 0 20px 50px rgba(0,0,0,0.14); --w-radius: 20px; --w-accent: #3b82f6;
-      --w-divider: 1px solid #f8fafc; --w-chk-border: 2px solid #cbd5e1;
-      --w-chip-active-bg: #3b82f6; --w-pill-bg: #eff6ff; --w-pill-color: #3b82f6;
     }
   </style>
 </head>
 <body>
 
-  <!-- MASTER CONTROLLER BAR -->
+  <!-- TOP MASTER CONTROLLER -->
   <header class="top-controller-bar">
     <div class="controller-section">
       <div class="controller-title">
         <span>To-Do Overlay</span>
-        <span class="badge-tag">UX & Design Studio</span>
+        <span class="badge-tag">Penyempurnaan UX 3</span>
       </div>
-
-      <!-- UX STRUCTURE PICKER -->
-      <div class="ux-picker-group">
-        <button class="btn-ux-picker active" onclick="setUXLayout('ux1', this)">UX 1: Instant Inline (Things 3)</button>
-        <button class="btn-ux-picker" onclick="setUXLayout('ux2', this)">UX 2: Calendar Strip (Apple)</button>
-        <button class="btn-ux-picker" onclick="setUXLayout('ux3', this)">UX 3: 3-Tab Wireframe</button>
-        <button class="btn-ux-picker" onclick="setUXLayout('ux4', this)">UX 4: Focus Capsule (Raycast)</button>
-      </div>
+      <span style="font-size:12px; color:#94a3b8;">(Dual Tab: Task & Calender + Inline Add)</span>
     </div>
 
-    <!-- DESIGN THEME PICKER -->
+    <!-- THEME SELECTION -->
     <div class="controller-section">
+      <span style="font-size:12px; color:#94a3b8;">Gaya Desain:</span>
       <select class="select-dropdown" id="themeSelect" onchange="selectTheme(this.value)">
-        <!-- Generated via JS -->
+        <option value="01">01. Things 3 Clean White (Apple Ecosystem)</option>
+        <option value="02">02. Notion Workspace Light</option>
+        <option value="03">03. Linear Clean Light (Engineering)</option>
+        <option value="04">04. Apple Reminders Light (macOS Sequoia)</option>
+        <option value="07">07. X (Twitter) Light Minimal</option>
+        <option value="08">08. Raycast Quick Light</option>
+        <option value="11">11. Stripe Modern Dashboard</option>
+        <option value="21">21. macOS Frosted Glass Light</option>
       </select>
       <button class="btn-nav" onclick="prevTheme()">◀</button>
       <button class="btn-nav" onclick="nextTheme()">▶</button>
@@ -904,134 +791,103 @@
 
       <!-- FLOATING WIDGET AT TOP-RIGHT -->
       <div class="topright-widget-anchor">
-        <div class="info-tag-floating" id="liveThemeTag">UX 1: Instant Inline | 01. Things 3 Clean White</div>
+        <div class="info-tag-floating" id="liveThemeTag">UX 3 Refined | 01. Things 3 Clean White</div>
 
-        <!-- CORE WIDGET SHELL -->
+        <!-- REFINED UX 3 WIDGET -->
         <div class="todo-widget theme-01" id="mainWidget">
 
-          <!-- ============================================== -->
-          <!-- UX 1: INSTANT INLINE (RECOMMENDED)             -->
-          <!-- ============================================== -->
-          <div class="ux-view" id="view-ux1">
-            <div class="ux1-header">
-              <div class="ux1-brand-title">
-                <span>✓</span>
-                <span>Tugas Saya</span>
-              </div>
-              <span class="ux1-progress-pill" id="ux1-badge-pill">2 aktif</span>
-            </div>
+          <!-- 1. HEADER (BRAND LOGO + 2 TABS + PROGRESS PILL + CLOSE) -->
+          <div class="widget-header-row">
+            <div class="brand-logo-symbol">▲</div>
 
-            <div class="ux1-input-section">
-              <form onsubmit="handleAddTask(event, 'ux1-input')">
-                <div class="ux1-input-box">
-                  <span>+</span>
-                  <input type="text" id="ux1-input" placeholder="Tulis tugas baru lalu tekan Enter..." autocomplete="off" required />
+            <nav class="dual-tabs-nav">
+              <button class="dual-tab-btn active" id="tab-btn-task" onclick="switchTab('task')">
+                <span>Task</span>
+                <span class="tab-counter-badge" id="task-tab-badge">2</span>
+              </button>
+              <button class="dual-tab-btn" id="tab-btn-calender" onclick="switchTab('calender')">
+                <span>Calender</span>
+              </button>
+            </nav>
+
+            <div class="header-actions-right">
+              <span class="progress-pill-compact" id="progress-percent-pill">50% selesai</span>
+              <button class="btn-close-widget" title="Tutup">✕</button>
+            </div>
+          </div>
+
+          <!-- 2. TAB PANEL: TASK (DENGAN INLINE QUICK ADD) -->
+          <div id="panel-task-view">
+            <!-- Inline Quick Add Input (Menggantikan Tab New Task) -->
+            <div class="inline-quick-add-section">
+              <form onsubmit="handleAddTask(event)">
+                <div class="inline-input-wrapper">
+                  <span class="plus-icon">+</span>
+                  <input 
+                    type="text" 
+                    id="quickTaskInput" 
+                    placeholder="Tulis tugas baru lalu tekan Enter..." 
+                    autocomplete="off" 
+                    required 
+                  />
+                  <span class="enter-badge-hint">↵ Enter</span>
                 </div>
               </form>
             </div>
 
-            <div class="ux1-filter-bar">
-              <button class="ux1-filter-chip active" onclick="setFilter('all', this)">Semua</button>
-              <button class="ux1-filter-chip" onclick="setFilter('active', this)">Aktif</button>
-              <button class="ux1-filter-chip" onclick="setFilter('completed', this)">Selesai</button>
+            <!-- Filter Status Chips -->
+            <div class="filter-chips-row">
+              <button class="filter-chip-btn active" onclick="setFilter('all', this)">Semua</button>
+              <button class="filter-chip-btn" onclick="setFilter('active', this)">Aktif</button>
+              <button class="filter-chip-btn" onclick="setFilter('completed', this)">Selesai</button>
             </div>
 
-            <div class="ux1-task-body">
-              <ul class="task-items-list" id="ux1-task-ul"></ul>
-            </div>
-          </div>
-
-          <!-- ============================================== -->
-          <!-- UX 2: INTEGRATED CALENDAR STRIP (APPLE/NOTION) -->
-          <!-- ============================================== -->
-          <div class="ux-view" id="view-ux2" style="display:none;">
-            <div class="ux2-header">
-              <div class="ux1-brand-title">
-                <span>📅</span>
-                <span>Agenda Mingguan</span>
-              </div>
-              <span class="ux1-progress-pill">Nov 2026</span>
+            <!-- Task List Rows -->
+            <div class="task-scroll-body">
+              <ul class="task-items-list" id="task-list-ul">
+                <!-- Rendered dynamically -->
+              </ul>
             </div>
 
-            <div class="ux2-calendar-strip">
-              <div class="ux2-day-card">Sen<strong>09</strong></div>
-              <div class="ux2-day-card active">Sel<strong>10</strong></div>
-              <div class="ux2-day-card">Rab<strong>11</strong></div>
-              <div class="ux2-day-card">Kam<strong>12</strong></div>
-              <div class="ux2-day-card">Jum<strong>13</strong></div>
-              <div class="ux2-day-card">Sab<strong>14</strong></div>
-              <div class="ux2-day-card">Min<strong>15</strong></div>
-            </div>
-
-            <div class="ux2-quick-add">
-              <form onsubmit="handleAddTask(event, 'ux2-input')" style="width:100%; display:flex;">
-                <input type="text" id="ux2-input" placeholder="+ Tambah tugas hari ini..." autocomplete="off" required />
-              </form>
-            </div>
-
-            <div class="ux1-task-body">
-              <ul class="task-items-list" id="ux2-task-ul"></ul>
+            <!-- Footer Stats -->
+            <div class="widget-footer-bar">
+              <span id="footer-count-text">2 tugas tersisa</span>
+              <button class="btn-clear-completed" onclick="clearCompleted()">Hapus selesai</button>
             </div>
           </div>
 
-          <!-- ============================================== -->
-          <!-- UX 3: REFINED 3-TAB (ORIGINAL WIREFRAME)       -->
-          <!-- ============================================== -->
-          <div class="ux-view" id="view-ux3" style="display:none;">
-            <div class="ux3-header">
-              <div class="ux1-brand-title">▲</div>
-              <nav class="ux3-tabs-nav">
-                <button class="ux3-tab-btn active" onclick="switchUX3Tab('task', this)">Task</button>
-                <button class="ux3-tab-btn" onclick="switchUX3Tab('calender', this)">Calender</button>
-                <button class="ux3-tab-btn" onclick="switchUX3Tab('new-task', this)">New Task</button>
-              </nav>
-              <span style="font-size:12px; opacity:0.5; cursor:pointer;">✕</span>
+          <!-- 3. TAB PANEL: CALENDER -->
+          <div id="panel-calender-view" class="calender-panel-view">
+            <div class="cal-header-row">
+              <span>November 2026</span>
+              <span style="font-size:11px; color:#94a3b8;">Minggu ke-45</span>
             </div>
 
-            <div class="ux3-body">
-              <!-- Tab Panel Task -->
-              <div id="ux3-panel-task">
-                <ul class="task-items-list" id="ux3-task-ul"></ul>
-                <div style="font-size:11px; opacity:0.7; margin-top:10px; display:flex; justify-content:space-between;">
-                  <span id="ux3-counter-text">2 aktif</span>
-                  <button style="background:none; border:none; color:var(--w-accent,#3b82f6); cursor:pointer; font-weight:600;" onclick="switchUX3TabByName('new-task')">+ Baru</button>
+            <div class="cal-week-grid">
+              <div class="cal-day-box">Sen<br><strong>09</strong></div>
+              <div class="cal-day-box active-day">Sel<br><strong>10</strong></div>
+              <div class="cal-day-box">Rab<br><strong>11</strong></div>
+              <div class="cal-day-box">Kam<br><strong>12</strong></div>
+              <div class="cal-day-box">Jum<br><strong>13</strong></div>
+              <div class="cal-day-box">Sab<br><strong>14</strong></div>
+              <div class="cal-day-box">Min<br><strong>15</strong></div>
+            </div>
+
+            <div class="agenda-timeline">
+              <div class="agenda-card">
+                <div>
+                  <strong>Review Dokumen MD</strong>
+                  <div style="font-size:10.5px; color:#94a3b8;">Hari ini, Siang</div>
                 </div>
+                <span class="agenda-time">14:00</span>
               </div>
-
-              <!-- Tab Panel Calender -->
-              <div id="ux3-panel-calender" style="display:none;">
-                <div style="font-size:12px; padding:8px 0;">
-                  <p><strong>Hari ini, 10 Nov:</strong></p>
-                  <p style="opacity:0.8; margin-top:4px;">• Review Manifest V3 Architecture</p>
-                  <p style="opacity:0.8; margin-top:4px;">• Finalisasi UI To-Do</p>
+              <div class="agenda-card">
+                <div>
+                  <strong>Rilis Chrome Extension MV3</strong>
+                  <div style="font-size:10.5px; color:#94a3b8;">Besok Pagi</div>
                 </div>
+                <span class="agenda-time">09:30</span>
               </div>
-
-              <!-- Tab Panel New Task -->
-              <div id="ux3-panel-new-task" style="display:none;">
-                <form onsubmit="handleAddTask(event, 'ux3-input')" style="display:flex; flex-direction:column; gap:8px;">
-                  <input type="text" id="ux3-input" placeholder="Tulis nama tugas..." style="padding:8px 10px; border-radius:6px; border:1px solid #ccc; font-size:13px;" required />
-                  <button type="submit" style="align-self:flex-end; padding:6px 12px; background:var(--w-accent,#0f172a); color:white; border:none; border-radius:5px; font-size:12px; cursor:pointer;">Simpan</button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          <!-- ============================================== -->
-          <!-- UX 4: COMPACT FOCUS CAPSULE (RAYCAST)          -->
-          <!-- ============================================== -->
-          <div class="ux-view" id="view-ux4" style="display:none;">
-            <div class="ux4-header">
-              <span>Fokus Hari Ini</span>
-              <span style="color:var(--w-accent,#3b82f6);" id="ux4-counter">2 Sisa</span>
-            </div>
-
-            <div class="ux4-body">
-              <ul class="task-items-list" id="ux4-task-ul"></ul>
-              <form class="ux4-inline-form" onsubmit="handleAddTask(event, 'ux4-input')">
-                <input type="text" id="ux4-input" placeholder="Tambah cepat..." autocomplete="off" required />
-                <button type="submit">+</button>
-              </form>
             </div>
           </div>
 
@@ -1040,242 +896,168 @@
     </div>
   </main>
 
-  <!-- JAVASCRIPT STATE & CONTROLLERS -->
+  <!-- JAVASCRIPT STATE & LOGIC -->
   <script>
-    const themes = [
-      { id: "01", name: "Things 3 Clean White", cat: "Productivity" },
-      { id: "02", name: "Notion Workspace Light", cat: "Productivity" },
-      { id: "03", name: "Linear Clean Light", cat: "Productivity" },
-      { id: "04", name: "Apple Reminders Light", cat: "Productivity" },
-      { id: "05", name: "Craft.do Document Card", cat: "Productivity" },
-      { id: "06", name: "Bear Notes Warm Paper", cat: "Productivity" },
-      { id: "07", name: "X (Twitter) Light Minimal", cat: "Modern Web" },
-      { id: "08", name: "Raycast Quick Light", cat: "Modern Web" },
-      { id: "09", name: "Muji / Japanese Zen Paper", cat: "Zen Paper" },
-      { id: "10", name: "Swiss Typography (Grid)", cat: "Zen Paper" },
-      { id: "11", name: "Stripe Modern Dashboard", cat: "Modern Web" },
-      { id: "12", name: "Vercel / Geist Minimal", cat: "Modern Web" },
-      { id: "13", name: "Arc Browser Light Float", cat: "Modern Web" },
-      { id: "14", name: "GitHub Modern Light", cat: "Modern Web" },
-      { id: "15", name: "Todoist Modern Light", cat: "Productivity" },
-      { id: "16", name: "Editorial Monocle Magazine", cat: "Zen Paper" },
-      { id: "17", name: "Soft Neo-Brutalism Light", cat: "Aesthetic" },
-      { id: "18", name: "Nordic Hygge White", cat: "Zen Paper" },
-      { id: "19", name: "Substack Clean Reader", cat: "Modern Web" },
-      { id: "20", name: "Superhuman Minimalist", cat: "Productivity" },
-      { id: "21", name: "macOS Frosted Glass Light", cat: "Aesthetic" },
-      { id: "22", name: "Monochrome High-Contrast Ink", cat: "Aesthetic" },
-      { id: "23", name: "Sage & Matcha Pastel", cat: "Aesthetic" },
-      { id: "24", name: "Warm Sand & Terracotta", cat: "Aesthetic" },
-      { id: "25", name: "Lavender Focus Studio", cat: "Aesthetic" },
-      { id: "26", name: "Architectural Blueprint White", cat: "Zen Paper" },
-      { id: "27", name: "Obsidian Minimal Light", cat: "Productivity" },
-      { id: "28", name: "Medium Story Minimal", cat: "Modern Web" },
-      { id: "29", name: "Minimalist Wireframe Blueprint", cat: "Aesthetic" },
-      { id: "30", name: "Compact Floating Island", cat: "Aesthetic" }
-    ];
-
     let taskData = [
-      { id: 1, text: "read the md", completed: false },
-      { id: 2, text: "read the md", completed: false },
-      { id: 3, text: "final review chrome extension", completed: true }
+      { id: 1, text: "read the md", tag: "Hari ini", completed: false },
+      { id: 2, text: "read the md", tag: "Penting", completed: false },
+      { id: 3, text: "review manifest v3 architecture", tag: "Selesai", completed: true },
+      { id: 4, text: "setup shadow dom drawer injection", tag: "Selesai", completed: true }
     ];
 
-    let currentUX = "ux1";
-    let currentThemeIdx = 0;
     let currentFilter = "all";
-
     const mainWidget = document.getElementById("mainWidget");
     const liveThemeTag = document.getElementById("liveThemeTag");
     const themeSelect = document.getElementById("themeSelect");
+    const taskListUl = document.getElementById("task-list-ul");
     const liveBadgeCount = document.getElementById("liveBadgeCount");
+    const taskTabBadge = document.getElementById("task-tab-badge");
+    const progressPercentPill = document.getElementById("progress-percent-pill");
+    const footerCountText = document.getElementById("footer-count-text");
 
-    // Initialize Dropdown
-    function initThemeDropdown() {
-      themeSelect.innerHTML = "";
-      themes.forEach((t, idx) => {
-        const opt = document.createElement("option");
-        opt.value = idx;
-        opt.textContent = `${t.id}. ${t.name} (${t.cat})`;
-        themeSelect.appendChild(opt);
-      });
+    function switchTab(tabName) {
+      document.getElementById("tab-btn-task").classList.toggle("active", tabName === "task");
+      document.getElementById("tab-btn-calender").classList.toggle("active", tabName === "calender");
+
+      document.getElementById("panel-task-view").style.display = tabName === "task" ? "block" : "none";
+      document.getElementById("panel-calender-view").style.display = tabName === "calender" ? "block" : "none";
     }
 
-    // UX Layout Switcher
-    function setUXLayout(uxId, btn) {
-      currentUX = uxId;
-      document.querySelectorAll(".btn-ux-picker").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-
-      document.querySelectorAll(".ux-view").forEach(v => v.style.display = "none");
-      const targetView = document.getElementById("view-" + uxId);
-      if (targetView) targetView.style.display = "block";
-
-      updateTagInfo();
-      renderAllUXTasks();
-    }
-
-    // Theme Switcher
-    function selectTheme(idx) {
-      currentThemeIdx = parseInt(idx);
-      const theme = themes[currentThemeIdx];
-
+    function selectTheme(themeId) {
       for (let i = 1; i <= 30; i++) {
         const padded = i < 10 ? "0" + i : "" + i;
         mainWidget.classList.remove("theme-" + padded);
       }
-
-      mainWidget.classList.add("theme-" + theme.id);
-      themeSelect.value = currentThemeIdx;
-      updateTagInfo();
+      mainWidget.classList.add("theme-" + themeId);
+      themeSelect.value = themeId;
+      const opt = themeSelect.options[themeSelect.selectedIndex];
+      liveThemeTag.textContent = `UX 3 Refined | ${opt.textContent}`;
     }
 
     function prevTheme() {
-      const newIdx = (currentThemeIdx - 1 + themes.length) % themes.length;
-      selectTheme(newIdx);
+      let idx = themeSelect.selectedIndex - 1;
+      if (idx < 0) idx = themeSelect.options.length - 1;
+      selectTheme(themeSelect.options[idx].value);
     }
 
     function nextTheme() {
-      const newIdx = (currentThemeIdx + 1) % themes.length;
-      selectTheme(newIdx);
+      let idx = (themeSelect.selectedIndex + 1) % themeSelect.options.length;
+      selectTheme(themeSelect.options[idx].value);
     }
 
-    function updateTagInfo() {
-      const theme = themes[currentThemeIdx];
-      const uxNames = {
-        ux1: "UX 1: Instant Inline",
-        ux2: "UX 2: Calendar Strip",
-        ux3: "UX 3: 3-Tab Wireframe",
-        ux4: "UX 4: Focus Capsule"
-      };
-      liveThemeTag.textContent = `${uxNames[currentUX]} | ${theme.id}. ${theme.name}`;
-    }
+    function renderTasks() {
+      taskListUl.innerHTML = "";
 
-    // Render tasks for active UX
-    function renderAllUXTasks() {
       const filtered = taskData.filter(t => {
         if (currentFilter === "active") return !t.completed;
         if (currentFilter === "completed") return t.completed;
         return true;
       });
 
-      ["ux1", "ux2", "ux3", "ux4"].forEach(uxId => {
-        const ul = document.getElementById(uxId + "-task-ul");
-        if (!ul) return;
-        ul.innerHTML = "";
+      filtered.forEach(task => {
+        const li = document.createElement("li");
+        li.className = "task-item-row" + (task.completed ? " completed" : "");
 
-        filtered.forEach(task => {
-          const li = document.createElement("li");
-          li.className = "task-item-row" + (task.completed ? " completed" : "");
+        const chkLabel = document.createElement("label");
+        chkLabel.className = "circle-checkbox-wrapper";
 
-          const label = document.createElement("label");
-          label.className = "circle-checkbox-wrapper";
+        const chk = document.createElement("input");
+        chk.type = "checkbox";
+        chk.checked = task.completed;
+        chk.addEventListener("change", () => toggleTask(task.id));
 
-          const chk = document.createElement("input");
-          chk.type = "checkbox";
-          chk.checked = task.completed;
-          chk.addEventListener("change", () => toggleTask(task.id));
+        const circleSpan = document.createElement("span");
+        circleSpan.className = "circle-checkbox-custom";
 
-          const circleSpan = document.createElement("span");
-          circleSpan.className = "circle-checkbox-custom";
+        chkLabel.appendChild(chk);
+        chkLabel.appendChild(circleSpan);
 
-          label.appendChild(chk);
-          label.appendChild(circleSpan);
+        const titleGroup = document.createElement("div");
+        titleGroup.className = "task-title-group";
+        titleGroup.addEventListener("click", () => toggleTask(task.id));
 
-          const titleSpan = document.createElement("span");
-          titleSpan.className = "task-text-label";
-          titleSpan.textContent = task.text;
-          titleSpan.addEventListener("click", () => toggleTask(task.id));
+        const textSpan = document.createElement("span");
+        textSpan.className = "task-text-label";
+        textSpan.textContent = task.text;
 
-          const delBtn = document.createElement("button");
-          delBtn.className = "btn-row-del";
-          delBtn.innerHTML = "✕";
-          delBtn.title = "Hapus";
-          delBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            deleteTask(task.id);
-          });
+        const tagSpan = document.createElement("span");
+        tagSpan.className = "task-due-tag";
+        tagSpan.textContent = task.tag || "Hari ini";
 
-          li.appendChild(label);
-          li.appendChild(titleSpan);
-          li.appendChild(delBtn);
+        titleGroup.appendChild(textSpan);
+        titleGroup.appendChild(tagSpan);
 
-          ul.appendChild(li);
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn-row-del";
+        delBtn.innerHTML = "✕";
+        delBtn.title = "Hapus";
+        delBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteTask(task.id);
         });
+
+        li.appendChild(chkLabel);
+        li.appendChild(titleGroup);
+        li.appendChild(delBtn);
+
+        taskListUl.appendChild(li);
       });
 
+      updateStats();
+    }
+
+    function updateStats() {
+      const total = taskData.length;
       const activeCount = taskData.filter(t => !t.completed).length;
+      const completedCount = total - activeCount;
+      const percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+
       liveBadgeCount.textContent = activeCount;
-
-      const pill1 = document.getElementById("ux1-badge-pill");
-      if (pill1) pill1.textContent = `${activeCount} aktif`;
-
-      const c3 = document.getElementById("ux3-counter-text");
-      if (c3) c3.textContent = `${activeCount} aktif`;
-
-      const c4 = document.getElementById("ux4-counter");
-      if (c4) c4.textContent = `${activeCount} Sisa`;
+      taskTabBadge.textContent = activeCount;
+      progressPercentPill.textContent = `${percent}% selesai`;
+      footerCountText.textContent = `${activeCount} tugas tersisa`;
     }
 
     function toggleTask(id) {
       taskData = taskData.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
-      renderAllUXTasks();
+      renderTasks();
     }
 
     function deleteTask(id) {
       taskData = taskData.filter(t => t.id !== id);
-      renderAllUXTasks();
+      renderTasks();
     }
 
-    function handleAddTask(e, inputId) {
+    function handleAddTask(e) {
       e.preventDefault();
-      const input = document.getElementById(inputId);
-      const text = input.value.trim();
-      if (text) {
+      const input = document.getElementById("quickTaskInput");
+      const val = input.value.trim();
+      if (val) {
         taskData.unshift({
           id: Date.now(),
-          text: text,
+          text: val,
+          tag: "Baru",
           completed: false
         });
         input.value = "";
-        renderAllUXTasks();
-
-        if (inputId === "ux3-input") {
-          switchUX3TabByName("task");
-        }
+        renderTasks();
       }
     }
 
     function setFilter(filter, btn) {
       currentFilter = filter;
-      document.querySelectorAll(".ux1-filter-chip").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".filter-chip-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
-      renderAllUXTasks();
+      renderTasks();
     }
 
-    // UX3 Tabs
-    function switchUX3Tab(tabName, btn) {
-      document.querySelectorAll(".ux3-tab-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-
-      ["task", "calender", "new-task"].forEach(name => {
-        const p = document.getElementById("ux3-panel-" + name);
-        if (p) p.style.display = name === tabName ? "block" : "none";
-      });
-    }
-
-    function switchUX3TabByName(tabName) {
-      document.querySelectorAll(".ux3-tab-btn").forEach(b => {
-        if (b.textContent.toLowerCase().includes(tabName.replace("-", " "))) {
-          switchUX3Tab(tabName, b);
-        }
-      });
+    function clearCompleted() {
+      taskData = taskData.filter(t => !t.completed);
+      renderTasks();
     }
 
     // Init
-    initThemeDropdown();
-    selectTheme(0);
-    renderAllUXTasks();
+    renderTasks();
   </script>
 </body>
 </html>

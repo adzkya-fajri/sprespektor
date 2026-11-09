@@ -4,6 +4,21 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-09] - Penyempurnaan UX 3: Eliminasi Tab "New Task" & Peningkatan Kepadatan Visual
+
+### Masukan Pengguna (User Feedback)
+- Evaluasi pengguna: *"yang ux 3 lumayan tapi terlihat sepi dan untuk New Task kita hapus"*.
+- Keputusan UX:
+  1. **Menghapus Tab "New Task"**: Alur penambahan tugas dipindahkan menjadi *inline quick-add input* langsung di dalam tab `Task` (cukup ketik lalu tekan `Enter`).
+  2. **Menghilangkan Kesan "Sepi" (Visual Enrichment & Life):**
+     - Menambahkan indikator progres harian visual (*progress meter / completion ring* `2/4 selesai`).
+     - Menyematkan filter chip status (*Semua*, *Aktif*, *Selesai*).
+     - Menambahkan tag konteks/waktu opsional pada item tugas (*Hari ini*, *Penting*).
+     - Memperkaya tab `Calender` dengan visual mini kalender tanggal & timeline agenda yang fungsional.
+     - Menghadirkan micro-interactions, badge counter pada tab `Task (2)`, dan footer ringkas.
+
+---
+
 ## [2026-11-09] - Eksplorasi & Evolusi UX (4 Pola Tata Letak Interaktif)
 
 ### Masukan Pengguna (User Request)

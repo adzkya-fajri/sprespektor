@@ -18,8 +18,19 @@ Atas arahan pengguna bahwa UX dapat diubah dan dioptimalkan, kami merancang 4 pa
   - Bagian Atas: *Mini Date Strip* mingguan horizontal (Senin - Minggu) dengan indikator dot hari ini. Mengklik hari otomatis memfilter tugas untuk tanggal tersebut.
   - Bagian Bawah: Daftar tugas untuk tanggal yang dipilih + input cepat.
 
-### 1.3. Pola UX 3: Refined 3-Tab Wireframe (Penyempurnaan Wireframe Awal)
-- **Karakter Alur Kerja:** Mempertahankan tata letak 3 tab (`Task`, `Calender`, `New Task`) dari sketsa pengguna namun disempurnakan dengan animasi transisi underline dan validasi instan.
+### 1.3. Pola UX 3: Refined Dual-Tab (Task & Calender - Terpilih & Disempurnakan)
+- **Karakter Alur Kerja:** Menggabungkan kesederhanaan wireframe pengguna dengan kepadatan informasi produktivitas yang dinamis dan hidup (tidak terasa sepi).
+- **Struktur Header:**
+  - Kiri: Logo brand (▲) + Status hari/tanggal.
+  - Tengah: Dua tab fungsional: **`Task`** (dengan badge counter real-time `Task (2)`) dan **`Calender`**. Tab `New Task` dieliminasi untuk memangkas *frictional cost*.
+  - Kanan: Progress meter visual (*completion percentage*) + tombol tutup `✕`.
+- **Komponen Tab `Task`:**
+  - **Inline Quick-Add Input:** Terintegrasi tepat di bawah tab (*"Tulis tugas baru... tekan Enter ↵"*). Menambah tugas instan tanpa harus berpindah tab.
+  - **Filter Chip:** `Semua`, `Aktif`, `Selesai` untuk organisasi cepat.
+  - **Task List Rows:** Checkbox lingkaran (*circular check*), teks tugas dengan animasi coret (*strikethrough*), tag konteks waktu (*Hari ini*), dan tombol aksi hapus/prioritas saat hover.
+  - **Footer:** Tombol *Bersihkan Selesai* dan pintasan shortcut `Esc`.
+- **Komponen Tab `Calender`:**
+  - Mini kalender grid interaktif mingguan/bulanan dan timeline agenda tugas berdasarkan tanggal jatuh tempo.
 
 ### 1.4. Pola UX 4: Compact Focus Capsule (Gaya Raycast)
 - **Karakter Alur Kerja:** Hemat ruang maksimal untuk browsing santai.

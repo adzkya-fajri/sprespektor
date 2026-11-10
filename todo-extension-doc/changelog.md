@@ -4,6 +4,23 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Implementasi Resmi Standar Action Popup (Mempertahankan 100% Desain & UX Kartu)
+
+### Masukan Pengguna (User Request)
+- Persetujuan pengguna: *"oke, karena dilarang kita pakai yang biasa saja, tapi untuk ux nya jika bisa di pertahankan, hanya posisinya saja"*.
+- Mengalihkan arsitektur ke standar resmi Chrome Action Popup (`default_popup: "popup.html"`), dengan syarat:
+  - **Seluruh UX dipertahankan 100%**: Tabs `Task` & `Calender`, tombol `+` dengan animasi rotasi, expandable form drawer, tombol input tanggal **Shadcn/UI Date Picker**, checkbox bulat (*circular checkbox*), lencana hari relatif dinamis, dan basis data **IndexedDB**.
+  - **Hanya posisinya yang berpindah**: Dari melayang di dalam halaman web menjadi muncul langsung di bawah ikon toolbar saat diklik.
+
+### Hasil Rekayasa
+1. `manifest.json`: Menggunakan `"default_popup": "popup.html"` resmi.
+2. `popup.html`: Memuat struktur kartu To-Do List yang sama persis tanpa banner atau elemen luar yang mengganggu.
+3. `popup.css`: Mempertahankan 100% styling Light Minimalist, font, warna, border, dan interaksi.
+4. `popup.js`: Menyambungkan langsung ke `db.js` (IndexedDB `TodoAppDB`), Shadcn/ui Date Picker popover, agenda kalender mingguan interaktif, dan penghitung badge toolbar Chrome.
+5. **Keuntungan:** Berfungsi mulus di semua tab (termasuk `chrome://extensions` dan `chrome://newtab`) tanpa peringatan `!`, tanpa error, dan tanpa membuka tab baru.
+
+---
+
 ## [2026-11-10] - Penghapusan Total Pembuatan Tab Baru (Strict Zero New Tab Policy)
 
 ### Masukan Pengguna (User Request)

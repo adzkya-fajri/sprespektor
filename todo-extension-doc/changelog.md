@@ -360,3 +360,16 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
   1. *Option 1 - Modern Slate Card Deck:* Kontras solid (#0f172a / #1e293b / #3b82f6), kartu tugas terstruktur, chip filter dinamis.
   2. *Option 2 - Translucent Frosted Glass:* Efek glassmorphism semi-transparan dengan backdrop blur dan border halus.
   3. *Option 3 - Raycast / Linear Minimalist:* Gaya obsidian gelap (#090d16), densitas tinggi, pemisah garis tipis, dan micro-badges.
+
+---
+
+## [2026-11-10] Dokumentasi Komprehensif: Modul Penjelasan Lengkap (Arsitektur, Kode & Database)
+
+### Ditambahkan
+- **`todo-extension-doc/MODUL_PENJELASAN_LENGKAP.md`**: Modul panduan teknis mendalam yang mencakup:
+  1. **Arsitektur Ekstensi Chrome Manifest V3**: Penjelasan transisi dari injection overlay ke Action Popup resmi (`default_popup`), eliminasi error `chrome://` URL, dan diagram alir sistem.
+  2. **Bedah Kode Lengkap & Penjelasan Fungsi Setiap File**: Penjelasan mendalam baris demi baris untuk `manifest.json`, `background.js`, `db.js`, `popup.html`, `popup.css`, dan `popup.js`.
+  3. **Cara Kerja Database (IndexedDB) Secara Mendalam**: Struktur object store (`todos`, `settings`), primary key, indexing (`idx_dueDate`, `idx_completed`, `idx_createdAt`), siklus transaksi (`readonly` vs `readwrite`), dan perbandingan dengan LocalStorage/SQLite.
+  4. **Panduan Modifikasi & Kustomisasi**: Skenario penambahan field prioritas/kategori, migrasi versi skema dengan `onupgradeneeded`, penggantian storage engine (REST API, `chrome.storage.local`, SQLite WASM), integrasi Chrome Side Panel API, dan Dark Mode otomatis.
+  5. **Analisis Masalah, Edge Cases & Troubleshooting**: Solusi error message port hang (`return false;`), pencegahan data loss pada popup transient, kode backup/restore (Export & Import JSON), serta Cursor Pagination untuk data besar.
+

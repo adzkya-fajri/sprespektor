@@ -20,10 +20,10 @@ Atas arahan pengguna bahwa UX dapat diubah dan dioptimalkan, kami merancang 4 pa
 
 ### 1.3. Pola UX 3: Refined Dual-Tab (Task & Calender - Terpilih & Disempurnakan)
 - **Karakter Alur Kerja:** Menggabungkan kesederhanaan wireframe pengguna dengan kepadatan informasi produktivitas yang dinamis dan hidup (tidak terasa sepi).
-- **Struktur Header Simetris & Rata (Aligned Layout):**
-  - Kiri: Logo brand (▲) yang sejajar vertikal secara presisi dengan teks tab.
-  - Tengah: Dua tab fungsional terdistribusi rata: **`Task`** (dengan badge counter real-time `Task 2`) dan **`Calender`**, dengan garis indikator bawah yang rapi.
-  - Kanan: Tombol aksi **`+`** (tambah tugas cepat) di pojok kanan. Tombol `✕` telah dihapus total untuk menjaga kemurnian estetika minimalis.
+- **Struktur Header Simetris & Rata (Ultra-Minimalist):**
+  - Kiri: Langsung menampilkan navigasi tab yang bersih: **`Task`** (dengan badge counter real-time `Task 2`) dan **`Calender`** (icon logo `▲` telah dihapus).
+  - Kanan: Tombol aksi **`+`** (tambah tugas cepat) di pojok kanan.
+  - Tampilan sangat bersih, lapang, dan berfokus langsung pada konten tugas.
 - **Interaksi Expandable Input (Tombol `+`) & Penjadwalan Waktu:**
   - Input field tersembunyi secara default untuk menjaga tampilan tetap lega.
   - Saat tombol `+` di header diklik, area input meluncur terbuka halus (*smooth slide-down transition*) dengan autofocus kursor langsung aktif.

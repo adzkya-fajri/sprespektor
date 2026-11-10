@@ -896,21 +896,17 @@
         <!-- REFINED UX 3 WIDGET -->
         <div class="todo-widget theme-01" id="mainWidget">
 
-          <!-- 1. PERFECTLY ALIGNED HEADER -->
+          <!-- 1. ULTRA-MINIMALIST HEADER (TABS DI KIRI, TOMBOL "+" DI KANAN) -->
           <div class="widget-header-row">
-            <div class="header-left-group">
-              <div class="brand-logo-symbol">▲</div>
-
-              <nav class="dual-tabs-nav">
-                <button class="dual-tab-btn active" id="tab-btn-task" onclick="switchTab('task')">
-                  <span>Task</span>
-                  <span class="tab-counter-badge" id="task-tab-badge">2</span>
-                </button>
-                <button class="dual-tab-btn" id="tab-btn-calender" onclick="switchTab('calender')">
-                  <span>Calender</span>
-                </button>
-              </nav>
-            </div>
+            <nav class="dual-tabs-nav">
+              <button class="dual-tab-btn active" id="tab-btn-task" onclick="switchTab('task')">
+                <span>Task</span>
+                <span class="tab-counter-badge" id="task-tab-badge">2</span>
+              </button>
+              <button class="dual-tab-btn" id="tab-btn-calender" onclick="switchTab('calender')">
+                <span>Calender</span>
+              </button>
+            </nav>
 
             <!-- "+" TOGGLE BUTTON -->
             <button class="btn-add-toggle" id="btnAddToggle" onclick="toggleInputDrawer()" title="Tambah tugas baru (+)">+</button>

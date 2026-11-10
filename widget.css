@@ -54,7 +54,7 @@
 }
 
 /* ============================================================== */
-/* 1. HEADER (SIMETRIS & RATA: LOGO, TABS, DAN TOMBOL "+")        */
+/* 1. HEADER (ULTRA-MINIMALIST: TABS DI KIRI, TOMBOL "+" DI KANAN)*/
 /* ============================================================== */
 .widget-header {
   display: flex;
@@ -64,26 +64,6 @@
   border-bottom: 1px solid #f1f5f9;
   min-height: 48px;
   background: #ffffff;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.brand-icon {
-  width: 26px;
-  height: 26px;
-  background: #f1f5f9;
-  color: #2563eb;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 13px;
-  flex-shrink: 0;
 }
 
 .nav-tabs {

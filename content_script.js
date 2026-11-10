@@ -54,20 +54,17 @@
 
   wrapper.innerHTML = `
     <div class="todo-card">
-      <!-- 1. HEADER (SIMETRIS: LOGO, TABS, DAN TOMBOL "+") -->
+      <!-- 1. HEADER (SIMETRIS: TABS DI KIRI, TOMBOL "+" DI KANAN) -->
       <header class="widget-header">
-        <div class="header-left">
-          <div class="brand-icon">▲</div>
-          <nav class="nav-tabs" role="tablist">
-            <button class="tab-btn active" id="btn-tab-task">
-              <span>Task</span>
-              <span class="tab-count-badge" id="badge-tab-count">0</span>
-            </button>
-            <button class="tab-btn" id="btn-tab-calender">
-              <span>Calender</span>
-            </button>
-          </nav>
-        </div>
+        <nav class="nav-tabs" role="tablist">
+          <button class="tab-btn active" id="btn-tab-task">
+            <span>Task</span>
+            <span class="tab-count-badge" id="badge-tab-count">0</span>
+          </button>
+          <button class="tab-btn" id="btn-tab-calender">
+            <span>Calender</span>
+          </button>
+        </nav>
         <button class="btn-toggle-add" id="btn-toggle-add" title="Tambah tugas baru (+)">+</button>
       </header>
 

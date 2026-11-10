@@ -4,6 +4,16 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Penghapusan Ikon Logo "▲" untuk Estetika Ultra-Minimalis
+
+### Masukan Pengguna (User Request)
+- Evaluasi pengguna: *"untuk bagian ▲ kita hapus saja"*.
+- Perubahan yang diterapkan:
+  - Menghapus elemen icon logo `▲` dari header widget.
+  - Header kini menampilkan langsung navigasi tab (**`Task 2`** dan **`Calender`**) di sisi kiri dan tombol **`+`** di sisi kanan, memberikan tampilan yang jauh lebih bersih, modern, dan luas.
+
+---
+
 ## [2026-11-10] - Kalender Interaktif Penuh (Klik Tanggal, Navigasi Minggu & Filter Agenda)
 
 ### Masukan Pengguna (User Request)

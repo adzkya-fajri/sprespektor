@@ -1,17 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "Minimalist To-Do List",
+  "name": "Minimalist To-Do List Overlay",
   "version": "1.0.0",
-  "description": "Ekstensi To-Do List minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
+  "description": "Ekstensi To-Do List overlay minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab",
+    "scripting"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Buka To-Do List",
-    "default_popup": "popup.html",
+    "default_title": "Buka To-Do List Overlay",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -22,5 +23,23 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["db.js", "content_script.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "widget.css",
+        "icons/icon16.png",
+        "icons/icon48.png",
+        "icons/icon128.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

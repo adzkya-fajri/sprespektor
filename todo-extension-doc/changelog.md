@@ -4,6 +4,23 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Restorasi Penuh UI/UX Floating In-Page Overlay Widget (Shadow DOM) & Penghapusan Total Localhost
+
+### Masukan Pengguna (User Request)
+- Evaluasi pengguna: *"lah ui ux nya kenapa berubah?"*.
+- Klarifikasi kebutuhan: Pengguna menginginkan antarmuka asli berupa **In-Page Floating Overlay Widget** yang melayang di pojok kanan layar website (Shadow DOM), bukan popup toolbar kecil, dan tanpa membuka server eksternal `localhost:3333`.
+
+### Tindakan Rekayasa & Solusi
+1. **Mengembalikan Format Floating Overlay (Shadow DOM):**
+   - Mengembalikan arsitektur `content_script.js` dan `widget.css` sebagai antarmuka utama.
+   - Widget kembali melayang di pojok kanan atas halaman (`top: 16px; right: 20px;`) dengan animasi *slide down*, dual tab (**`Task`** dan **`Calender`**), expandable drawer **`+`**, tombol input tanggal **Shadcn/UI Date Picker**, dan checkbox bulat.
+2. **Penghapusan Total Ketergantungan Localhost (`localhost:3333`):**
+   - Tidak ada lagi server lokal atau port 3333 yang dijalankan.
+   - Jika pengguna mengeklik ikon toolbar saat berada di tab internal browser yang tidak mengizinkan injeksi (seperti `chrome://extensions`), ekstensi membuka halaman mandiri internal ekstensi: `chrome-extension://<id>/app.html`.
+   - Halaman `app.html` berjalan 100% offline dan native di dalam browser Chrome tanpa membutuhkan server apa pun.
+
+---
+
 ## [2026-11-10] - Migrasi Arsitektur Penuh ke Native Chrome Action Popup (Bebas Localhost 100%)
 
 ### Masukan Pengguna (User Request)

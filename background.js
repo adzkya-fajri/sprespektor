@@ -35,8 +35,9 @@ chrome.action.onClicked.addListener(async (tab) => {
     url.includes("chromewebstore.google.com");
 
   if (isRestrictedUrl) {
-    console.warn("Ekstensi tidak dapat berjalan di tab internal peramban (chrome:// atau New Tab kosong). Silakan buka halaman web biasa (misal: http://localhost:3333/prototypes-preview.html atau situs publik).");
-    showRestrictedWarning(tab.id);
+    console.warn("Ekstensi tidak dapat berjalan di tab internal peramban (chrome:// atau New Tab kosong). Membuka tab aplikasi To-Do...");
+    // Fallback cerdas: Jika diklik di halaman internal chrome://, buka tab aplikasi To-Do lokal agar pengguna tidak mengalami jalan buntu
+    chrome.tabs.create({ url: "http://localhost:3333/prototypes-preview.html" });
     return;
   }
 
@@ -61,8 +62,8 @@ chrome.action.onClicked.addListener(async (tab) => {
     } catch (injectError) {
       const errMsg = injectError.message || String(injectError);
       if (errMsg.includes("chrome://") || errMsg.includes("Cannot access")) {
-        console.warn("Halaman dibatasi oleh kebijakan keamanan browser (chrome://):", errMsg);
-        showRestrictedWarning(tab.id);
+        console.warn("Halaman dibatasi oleh kebijakan keamanan browser (chrome://). Membuka tab aplikasi To-Do...");
+        chrome.tabs.create({ url: "http://localhost:3333/prototypes-preview.html" });
       } else {
         console.error("Gagal menginjeksi content script:", errMsg);
       }

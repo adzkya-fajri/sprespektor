@@ -4,6 +4,13 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Auto-Fallback Buka Tab To-Do saat Diklik di Halaman Internal (chrome://)
+
+### Peningkatan UX (User Experience Improvement)
+- Menambahkan fallback otomatis: jika ekstensi diklik pada tab internal browser (`chrome://extensions`, `chrome://newtab`, dll.) yang dibatasi oleh Chromium, ekstensi tidak memunculkan error melainkan langsung membuka halaman aplikasi To-Do lokal (`http://localhost:3333/prototypes-preview.html`) di tab baru secara mulus.
+
+---
+
 ## [2026-11-10] - Pencegahan & Penanganan Error Akses Halaman Internal Browser (chrome://)
 
 ### Masukan Pengguna (User Request)

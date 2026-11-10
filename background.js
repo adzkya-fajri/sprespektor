@@ -18,9 +18,19 @@ chrome.action.onClicked.addListener(async (tab) => {
     url.startsWith("view-source:") ||
     url.includes("chromewebstore.google.com");
 
-  // Jika pengguna mengklik di halaman sistem browser (chrome://), buka tab internal ekstensi (100% OFFLINE, BEBAS LOCALHOST)
+  // Jika pengguna mengklik di halaman sistem browser (chrome://), jangan buka tab baru, cukup beri indikasi visual
   if (isRestrictedUrl) {
-    chrome.tabs.create({ url: chrome.runtime.getURL("app.html") });
+    console.warn("Ekstensi overlay tidak dapat disuntikkan ke dalam halaman internal browser (chrome://). Silakan buka di halaman website biasa.");
+    chrome.action.setBadgeText({ tabId: tab.id, text: "!" });
+    chrome.action.setBadgeBackgroundColor({ tabId: tab.id, color: "#e11d48" });
+    chrome.action.setTitle({
+      tabId: tab.id,
+      title: "Buka website biasa (misal: google.com) untuk menampilkan widget overlay"
+    });
+    setTimeout(() => {
+      chrome.action.setBadgeText({ tabId: tab.id, text: "" });
+      chrome.action.setTitle({ tabId: tab.id, title: "Buka To-Do List Overlay" });
+    }, 3000);
     return;
   }
 
@@ -42,8 +52,7 @@ chrome.action.onClicked.addListener(async (tab) => {
         }
       }, 100);
     } catch (injectError) {
-      console.warn("Halaman tidak mengizinkan injeksi content script. Membuka tab aplikasi internal ekstensi...");
-      chrome.tabs.create({ url: chrome.runtime.getURL("app.html") });
+      console.warn("Halaman tidak mengizinkan injeksi content script:", injectError);
     }
   }
 });

@@ -4,6 +4,23 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Penghapusan Total Pembuatan Tab Baru (Strict Zero New Tab Policy)
+
+### Masukan Pengguna (User Request)
+- Evaluasi & pertanyaan pengguna: *"mengapa selalu menggunakan tab baru?"*.
+- Konfirmasi kebutuhan: Pengguna tidak ingin ekstensi membuka tab baru sama sekali. Pengguna ingin widget overlay muncul langsung di halaman aktif saat ikon toolbar diklik.
+
+### Analisa & Tindakan Rekayasa
+- **Akar Masalah:** Di file `background.js`, terdapat baris `chrome.tabs.create(...)` yang memicu pembukaan tab baru jika ekstensi diklik saat pengguna sedang berada di tab `chrome://extensions`.
+- **Perbaikan:**
+  1. Menghapus seluruh pemanggilan `chrome.tabs.create(...)` dari `background.js`.
+  2. Menghapus file `app.html`.
+  3. Ekstensi kini **100% TIDAK PERNAH membuka tab baru**.
+  4. Ketika diklik di halaman web biasa, widget overlay langsung muncul meluncur di pojok kanan atas halaman aktif.
+  5. Jika pengguna tidak sengaja mengeklik saat berada di tab `chrome://`, ekstensi hanya memberikan indikasi lencana badge merah **`!`** selama 3 detik tanpa pernah membuka tab baru.
+
+---
+
 ## [2026-11-10] - Restorasi Penuh UI/UX Floating In-Page Overlay Widget (Shadow DOM) & Penghapusan Total Localhost
 
 ### Masukan Pengguna (User Request)

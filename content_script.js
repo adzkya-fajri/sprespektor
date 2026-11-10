@@ -51,11 +51,9 @@
   shadow.appendChild(styleLink);
 
   // Buat Kontainer Utama Widget
-  const isExtensionPage = window.location.protocol === "chrome-extension:";
   const wrapper = document.createElement("div");
   wrapper.className = "overlay-wrapper";
-  wrapper.style.display = isExtensionPage ? "block" : "none"; // Langsung tampil jika dibuka di tab internal ekstensi
-  state.isOpen = isExtensionPage;
+  wrapper.style.display = "none"; // Default tersembunyi hingga ikon toolbar diklik
 
   wrapper.innerHTML = `
     <div class="todo-card">

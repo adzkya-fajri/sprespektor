@@ -4,6 +4,23 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Pencegahan & Penanganan Error Akses Halaman Internal Browser (chrome://)
+
+### Masukan Pengguna (User Request)
+- Error saat ekstensi diklik pada tab internal: `Gagal menginjeksi content script: Error: Cannot access a chrome:// URL`.
+
+### Akar Masalah & Kebijakan Browser (Root Cause & Policy)
+- Google Chrome memberlakukan kebijakan keamanan mutlak (**Chromium Security Sandbox Policy**) di mana ekstensi peramban dilarang keras membaca atau menginjeksi skrip ke halaman sistem internal browser (`chrome://extensions`, `chrome://newtab`, `chrome://settings`, dll.).
+- Tanpa izin `tabs`, properti `tab.url` disembunyikan / bernilai `undefined` oleh browser pada halaman internal, sehingga verifikasi URL sebelumnya tidak terpicu.
+
+### Solusi & Peningkatan Visual
+1. **Validasi URL Komprehensif di `background.js`:**
+   - Memeriksa `tab.url` maupun `tab.pendingUrl`. Jika kosong/undefined atau mengarah ke skema `chrome://`, `chrome-extension://`, `about:`, atau `devtools://`, injeksi dibatalkan secara aman tanpa memicu crash console.
+2. **Indikator Visual Badge Kustom (`!`):**
+   - Jika pengguna tidak sengaja mengeklik ikon ekstensi saat berada di tab `chrome://`, ekstensi kini menampilkan lencana badge berwarna merah **`!`** dengan tooltip peringatan yang menjelaskan bahwa ekstensi harus dibuka di tab web biasa, dan otomatis di-reset setelah 3.5 detik.
+
+---
+
 ## [2026-11-10] - Integrasi Komponen Date Picker Berbasis Desain Shadcn/UI & Perbaikan Injeksi Content Script
 
 ### Masukan Pengguna (User Request)

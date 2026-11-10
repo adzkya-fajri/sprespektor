@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimalist To-Do List</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="todo-popup-card">
+    <!-- 1. HEADER (DUAL TABS & TOMBOL "+") -->
+    <header class="widget-header">
+      <nav class="nav-tabs" role="tablist">
+        <button type="button" class="tab-btn active" id="btn-tab-task">
+          <span>Task</span>
+          <span class="tab-count-badge" id="badge-tab-count">0</span>
+        </button>
+        <button type="button" class="tab-btn" id="btn-tab-calender">
+          <span>Calender</span>
+        </button>
+      </nav>
+      <button type="button" class="btn-toggle-add" id="btn-toggle-add" title="Tambah tugas baru (+)">+</button>
+    </header>
+
+    <!-- 2. EXPANDABLE INPUT FORM (MUNCUL SAAT "+" DIKLIK) -->
+    <section class="expandable-drawer" id="expandable-drawer">
+      <form id="add-task-form">
+        <div class="input-row">
+          <input 
+            type="text" 
+            id="task-title-input" 
+            placeholder="Tulis tugas baru lalu tekan Enter..." 
+            autocomplete="off" 
+          />
+          <span class="badge-hint-enter">↵ Enter</span>
+        </div>
+
+        <!-- SHADCN/UI DATE PICKER (TRIGGER & FLOATING POPOVER) -->
+        <div class="shadcn-datepicker-wrap" id="shadcn-datepicker-wrap">
+          <button type="button" class="shadcn-date-trigger" id="shadcn-date-trigger">
+            <svg class="shadcn-cal-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+              <line x1="16" x2="16" y1="2" y2="6"/>
+              <line x1="8" x2="8" y1="2" y2="6"/>
+              <line x1="3" x2="21" y1="10" y2="10"/>
+            </svg>
+            <span id="shadcn-trigger-label">Hari ini, 10 Nov</span>
+            <span class="shadcn-relative-badge" id="shadcn-rel-badge">Hari ini</span>
+          </button>
+          <input type="hidden" id="task-date-picker" />
+
+          <!-- Shadcn Floating Popover Calendar -->
+          <div class="shadcn-popover" id="shadcn-popover" style="display: none;">
+            <div class="shadcn-popover-header">
+              <button type="button" class="shadcn-nav-arrow" id="shadcn-btn-prev" title="Bulan sebelumnya">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <span class="shadcn-month-title" id="shadcn-month-title">November 2026</span>
+              <button type="button" class="shadcn-nav-arrow" id="shadcn-btn-next" title="Bulan berikutnya">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+
+            <!-- Day of Week Row -->
+            <div class="shadcn-weekdays-row">
+              <span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+            </div>
+
+            <!-- Month Day Grid -->
+            <div class="shadcn-days-grid" id="shadcn-days-grid"></div>
+
+            <!-- Presets / Quick Actions -->
+            <div class="shadcn-presets-row">
+              <button type="button" class="shadcn-chip" id="shadcn-preset-today">Hari ini</button>
+              <button type="button" class="shadcn-chip" id="shadcn-preset-tomorrow">Besok</button>
+              <button type="button" class="shadcn-chip" id="shadcn-preset-nextweek">+7 Hari</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- 3. TAB PANEL: TASK -->
+    <div id="panel-task-view">
+      <!-- Filter Bar -->
+      <nav class="filter-bar">
+        <button type="button" class="chip-btn active" data-filter="all">Semua</button>
+        <button type="button" class="chip-btn" data-filter="active">Aktif</button>
+        <button type="button" class="chip-btn" data-filter="completed">Selesai</button>
+      </nav>
+
+      <!-- Task List Scroll Area -->
+      <main class="task-scroll-container">
+        <ul class="task-list" id="task-list-ul"></ul>
+        <div class="empty-state-box" id="empty-state-view" style="display:none;">
+          <div class="empty-state-icon">📝</div>
+          <p class="empty-state-text">Tidak ada tugas pada filter ini.</p>
+        </div>
+      </main>
+
+      <!-- Footer Bar -->
+      <footer class="widget-footer">
+        <span id="footer-summary-text">0 tugas tersisa</span>
+        <button type="button" class="btn-clear-done" id="btn-clear-done">Hapus selesai</button>
+      </footer>
+    </div>
+
+    <!-- 4. TAB PANEL: CALENDER -->
+    <div id="panel-calender-view" class="calender-panel" style="display:none;">
+      <div class="calender-header-meta">
+        <span class="cal-month-title" id="cal-month-title">November 2026</span>
+        <div class="cal-nav-buttons">
+          <button type="button" class="btn-cal-nav" id="btn-cal-prev" title="Minggu sebelumnya">◀</button>
+          <button type="button" class="btn-cal-nav" id="btn-cal-today-shortcut" title="Kembali ke hari ini">Hari Ini</button>
+          <button type="button" class="btn-cal-nav" id="btn-cal-next" title="Minggu berikutnya">▶</button>
+        </div>
+      </div>
+
+      <!-- Grid 7 Hari Mingguan Interaktif -->
+      <div class="cal-week-grid" id="cal-week-grid"></div>
+
+      <!-- Agenda untuk Tanggal yang Dipilih -->
+      <div class="agenda-section-title">
+        <span id="agenda-date-heading">Agenda</span>
+        <span class="agenda-count-badge" id="agenda-count-heading">0 tugas</span>
+      </div>
+      <div class="agenda-cards-list" id="cal-agenda-list"></div>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

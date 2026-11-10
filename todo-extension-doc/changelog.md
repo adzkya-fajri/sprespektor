@@ -4,6 +4,31 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Migrasi Arsitektur Penuh ke Native Chrome Action Popup (Bebas Localhost 100%)
+
+### Masukan Pengguna (User Request)
+- Evaluasi & instruksi pengguna: *"lah masih muncul ke halaman http://localhost:3333/prototypes-preview.html, mengapa ini bisa terjadi, tolong di analisa agar hanya membuka extention nya saja tanpa local host"*.
+
+### Analisa Akar Masalah (Root Cause Analysis)
+1. **Ketergantungan Ekstensi Sebelumnya:** Ekstensi awalnya dirancang menggunakan model *in-page content script injection*. Saat pengguna mengklik toolbar icon pada tab internal seperti `chrome://extensions` (di mana injeksi content script diblokir oleh Chromium), skrip `background.js` secara otomatis membuka URL tab baru ke `http://localhost:3333/prototypes-preview.html`.
+2. **Kelemahan Model Tersebut:** Ekstensi Chrome yang berkualitas tinggi seharusnya **100% mandiri (*self-contained*), offline, dan tidak boleh bergantung pada server lokal (`localhost:3333`)** ataupun membuka tab web baru saat ikon toolbar diklik.
+
+### Solusi Arsitektur Standar Manifest V3
+1. **Adopsi Native Chrome Action Popup (`default_popup: "popup.html"`):**
+   - Mengubah deklarasi di `manifest.json`: menambahkan `"default_popup": "popup.html"`.
+   - Mengeliminasi kebutuhan permission `"activeTab"` dan `"scripting"` yang rawan konflik keamanan URL.
+2. **Implementasi Jendela Popup Ekstensi Mandiri:**
+   - `popup.html`: Memuat antarmuka To-Do List modern secara utuh di dalam jendela popup Chrome native (Width 370px, Height ~520px).
+   - `popup.css`: Styling modern Light Minimalist yang dirancang khusus untuk container popup extension.
+   - `popup.js`: Menghubungkan antarmuka secara langsung ke basis data **IndexedDB (`TodoAppDB`)**, mendukung dual tab (`Task 2`, `Calender`), form expandable `+`, dan komponen kalender melayang **Shadcn/UI Date Picker**.
+3. **Hasil & Keuntungan:**
+   - **Bebas Localhost:** Tidak memerlukan server terminal apa pun (`http://localhost:3333` dihapus total).
+   - **Bisa Dibuka di Tab Mana Pun:** Berfungsi normal di halaman `chrome://extensions`, `chrome://newtab`, `https://google.com`, dokumen PDF, maupun saat offline.
+   - **Bebas Error URL Security:** Tidak ada lagi error `Cannot access a chrome:// URL`.
+   - **IndexedDB Asli:** Data tersimpan permanen di sandbox penyimpanan native ekstensi (`chrome-extension://`).
+
+---
+
 ## [2026-11-10] - Auto-Fallback Buka Tab To-Do saat Diklik di Halaman Internal (chrome://)
 
 ### Peningkatan UX (User Experience Improvement)

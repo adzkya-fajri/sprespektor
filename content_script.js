@@ -23,6 +23,9 @@
     return new Date(y, m - 1, d);
   }
 
+  // Inisialisasi Tanggal Hari Ini di Scope Teratas
+  const todayDateStr = toISODateString(new Date());
+
   // State memori lokal dalam tab
   let state = {
     todos: [],
@@ -80,12 +83,46 @@
             />
             <span class="badge-hint-enter">↵ Enter</span>
           </div>
-          <div class="date-picker-row">
-            <span style="color:#64748b;">📅</span>
-            <input type="date" id="task-date-picker" class="date-input-field" />
-            <button type="button" class="shortcut-date-btn" id="btn-shortcut-today">Hari ini</button>
-            <button type="button" class="shortcut-date-btn" id="btn-shortcut-tomorrow">Besok</button>
-            <span class="date-preview-label" id="date-preview-label">(Hari ini)</span>
+          <div class="shadcn-datepicker-wrap" id="shadcn-datepicker-wrap">
+            <button type="button" class="shadcn-date-trigger" id="shadcn-date-trigger">
+              <svg class="shadcn-cal-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                <line x1="16" x2="16" y1="2" y2="6"/>
+                <line x1="8" x2="8" y1="2" y2="6"/>
+                <line x1="3" x2="21" y1="10" y2="10"/>
+              </svg>
+              <span id="shadcn-trigger-label">Hari ini, 10 Nov</span>
+              <span class="shadcn-relative-badge" id="shadcn-rel-badge">Hari ini</span>
+            </button>
+            <input type="hidden" id="task-date-picker" />
+
+            <!-- Shadcn Floating Popover Calendar -->
+            <div class="shadcn-popover" id="shadcn-popover" style="display: none;">
+              <div class="shadcn-popover-header">
+                <button type="button" class="shadcn-nav-arrow" id="shadcn-btn-prev" title="Bulan sebelumnya">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <span class="shadcn-month-title" id="shadcn-month-title">November 2026</span>
+                <button type="button" class="shadcn-nav-arrow" id="shadcn-btn-next" title="Bulan berikutnya">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+
+              <!-- Day of Week Row -->
+              <div class="shadcn-weekdays-row">
+                <span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+              </div>
+
+              <!-- Month Day Grid -->
+              <div class="shadcn-days-grid" id="shadcn-days-grid"></div>
+
+              <!-- Presets / Quick Actions -->
+              <div class="shadcn-presets-row">
+                <button type="button" class="shadcn-chip" id="shadcn-preset-today">Hari ini</button>
+                <button type="button" class="shadcn-chip" id="shadcn-preset-tomorrow">Besok</button>
+                <button type="button" class="shadcn-chip" id="shadcn-preset-nextweek">+7 Hari</button>
+              </div>
+            </div>
           </div>
         </form>
       </section>
@@ -146,9 +183,19 @@
   const addTaskForm = shadow.getElementById("add-task-form");
   const taskTitleInput = shadow.getElementById("task-title-input");
   const taskDatePicker = shadow.getElementById("task-date-picker");
-  const btnShortcutToday = shadow.getElementById("btn-shortcut-today");
-  const btnShortcutTomorrow = shadow.getElementById("btn-shortcut-tomorrow");
-  const datePreviewLabel = shadow.getElementById("date-preview-label");
+  const shadcnDatepickerWrap = shadow.getElementById("shadcn-datepicker-wrap");
+  const shadcnDateTrigger = shadow.getElementById("shadcn-date-trigger");
+  const shadcnTriggerLabel = shadow.getElementById("shadcn-trigger-label");
+  const shadcnRelBadge = shadow.getElementById("shadcn-rel-badge");
+  const shadcnPopover = shadow.getElementById("shadcn-popover");
+  const shadcnBtnPrev = shadow.getElementById("shadcn-btn-prev");
+  const shadcnBtnNext = shadow.getElementById("shadcn-btn-next");
+  const shadcnMonthTitle = shadow.getElementById("shadcn-month-title");
+  const shadcnDaysGrid = shadow.getElementById("shadcn-days-grid");
+  const shadcnPresetToday = shadow.getElementById("shadcn-preset-today");
+  const shadcnPresetTomorrow = shadow.getElementById("shadcn-preset-tomorrow");
+  const shadcnPresetNextweek = shadow.getElementById("shadcn-preset-nextweek");
+
   const panelTaskView = shadow.getElementById("panel-task-view");
   const panelCalenderView = shadow.getElementById("panel-calender-view");
   const taskListUl = shadow.getElementById("task-list-ul");
@@ -160,8 +207,8 @@
   const calAgendaList = shadow.getElementById("cal-agenda-list");
 
   // Inisialisasi Tanggal Hari Ini
-  const todayDateStr = toISODateString(new Date());
   taskDatePicker.value = todayDateStr;
+  let popoverViewDate = parseISODateString(todayDateStr);
 
   /**
    * Menghitung Badge Hari Relatif (-9 hr, Hari ini, Besok, +N hr)
@@ -189,9 +236,119 @@
     }
   }
 
+  function formatShadcnDateLabel(isoStr) {
+    if (!isoStr) return "Pilih tanggal";
+    const [y, m, d] = isoStr.split("-").map(Number);
+    const monthShort = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"][m - 1];
+    return `${d} ${monthShort} ${y}`;
+  }
+
+  function updateShadcnTrigger() {
+    const iso = taskDatePicker.value || todayDateStr;
+    const rel = calculateRelativeBadge(iso, false);
+    if (shadcnTriggerLabel) shadcnTriggerLabel.textContent = formatShadcnDateLabel(iso);
+    if (shadcnRelBadge) {
+      shadcnRelBadge.textContent = rel.label;
+      shadcnRelBadge.className = `shadcn-relative-badge ${rel.cls}`;
+    }
+  }
+
+  function renderShadcnPopoverGrid() {
+    if (!shadcnDaysGrid || !shadcnMonthTitle) return;
+    shadcnDaysGrid.innerHTML = "";
+
+    const monthNames = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    const viewYear = popoverViewDate.getFullYear();
+    const viewMonth = popoverViewDate.getMonth();
+
+    shadcnMonthTitle.textContent = `${monthNames[viewMonth]} ${viewYear}`;
+
+    // Hari pertama dalam bulan
+    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    // Total hari dalam bulan saat ini
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    // Total hari dalam bulan sebelumnya
+    const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
+
+    // Hari padding dari bulan sebelumnya
+    for (let p = firstDay - 1; p >= 0; p--) {
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "shadcn-day-cell outside";
+      cell.textContent = String(daysInPrevMonth - p);
+      shadcnDaysGrid.appendChild(cell);
+    }
+
+    // Hari-hari dalam bulan saat ini
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cell = document.createElement("button");
+      cell.type = "button";
+      const mStr = String(viewMonth + 1).padStart(2, "0");
+      const dStr = String(day).padStart(2, "0");
+      const iso = `${viewYear}-${mStr}-${dStr}`;
+
+      const isToday = iso === todayDateStr;
+      const isSelected = iso === taskDatePicker.value;
+
+      cell.className = `shadcn-day-cell ${isToday ? "today" : ""} ${isSelected ? "selected" : ""}`;
+      cell.textContent = String(day);
+
+      cell.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setPickedDate(iso);
+        closeShadcnPopover();
+      });
+
+      shadcnDaysGrid.appendChild(cell);
+    }
+
+    // Hari padding penutup agar grid simetris 7 kolom
+    const totalRendered = firstDay + daysInMonth;
+    const remaining = (7 - (totalRendered % 7)) % 7;
+    for (let r = 1; r <= remaining; r++) {
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "shadcn-day-cell outside";
+      cell.textContent = String(r);
+      shadcnDaysGrid.appendChild(cell);
+    }
+  }
+
+  function setPickedDate(iso) {
+    taskDatePicker.value = iso;
+    popoverViewDate = parseISODateString(iso);
+    updateShadcnTrigger();
+  }
+
+  function toggleShadcnPopover(e) {
+    if (e) e.stopPropagation();
+    const isVisible = shadcnPopover && shadcnPopover.style.display !== "none";
+    if (isVisible) {
+      closeShadcnPopover();
+    } else {
+      openShadcnPopover();
+    }
+  }
+
+  function openShadcnPopover() {
+    if (!shadcnPopover) return;
+    popoverViewDate = parseISODateString(taskDatePicker.value || todayDateStr);
+    renderShadcnPopoverGrid();
+    shadcnPopover.style.display = "block";
+    shadcnDateTrigger.classList.add("open");
+  }
+
+  function closeShadcnPopover() {
+    if (shadcnPopover) shadcnPopover.style.display = "none";
+    if (shadcnDateTrigger) shadcnDateTrigger.classList.remove("open");
+  }
+
   function updateDatePreview() {
-    const rel = calculateRelativeBadge(taskDatePicker.value, false);
-    datePreviewLabel.textContent = `(${rel.label})`;
+    updateShadcnTrigger();
   }
 
   /**
@@ -354,8 +511,7 @@
       emptyDiv.querySelector("#btn-add-for-this-date").addEventListener("click", () => {
         switchTab("task");
         if (!state.isInputExpanded) toggleInputDrawer();
-        taskDatePicker.value = state.calSelectedDate;
-        updateDatePreview();
+        setPickedDate(state.calSelectedDate);
         setTimeout(() => taskTitleInput.focus(), 150);
       });
     } else {
@@ -528,10 +684,11 @@
     if (state.isInputExpanded) {
       switchTab("task");
       taskDatePicker.value = todayDateStr;
-      updateDatePreview();
+      updateShadcnTrigger();
       setTimeout(() => taskTitleInput.focus(), 150);
     } else {
       taskTitleInput.blur();
+      closeShadcnPopover();
     }
   }
 
@@ -539,6 +696,7 @@
     state.isInputExpanded = false;
     expandableDrawer.classList.remove("open");
     btnToggleAdd.classList.remove("active");
+    closeShadcnPopover();
   }
 
   function switchTab(tabName) {
@@ -560,17 +718,60 @@
   btnTabCalender.addEventListener("click", () => switchTab("calender"));
   btnToggleAdd.addEventListener("click", toggleInputDrawer);
   addTaskForm.addEventListener("submit", handleCreateTask);
-  taskDatePicker.addEventListener("change", updateDatePreview);
+  taskDatePicker.addEventListener("change", updateShadcnTrigger);
 
-  btnShortcutToday.addEventListener("click", () => {
-    taskDatePicker.value = todayDateStr;
-    updateDatePreview();
-  });
+  // Bind Shadcn Date Picker
+  if (shadcnDateTrigger) {
+    shadcnDateTrigger.addEventListener("click", toggleShadcnPopover);
+  }
 
-  btnShortcutTomorrow.addEventListener("click", () => {
-    const tmr = new Date(Date.now() + DAY_MS);
-    taskDatePicker.value = toISODateString(tmr);
-    updateDatePreview();
+  if (shadcnBtnPrev) {
+    shadcnBtnPrev.addEventListener("click", (e) => {
+      e.stopPropagation();
+      popoverViewDate = new Date(popoverViewDate.getFullYear(), popoverViewDate.getMonth() - 1, 1);
+      renderShadcnPopoverGrid();
+    });
+  }
+
+  if (shadcnBtnNext) {
+    shadcnBtnNext.addEventListener("click", (e) => {
+      e.stopPropagation();
+      popoverViewDate = new Date(popoverViewDate.getFullYear(), popoverViewDate.getMonth() + 1, 1);
+      renderShadcnPopoverGrid();
+    });
+  }
+
+  if (shadcnPresetToday) {
+    shadcnPresetToday.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setPickedDate(todayDateStr);
+      closeShadcnPopover();
+    });
+  }
+
+  if (shadcnPresetTomorrow) {
+    shadcnPresetTomorrow.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const tmr = new Date(Date.now() + DAY_MS);
+      setPickedDate(toISODateString(tmr));
+      closeShadcnPopover();
+    });
+  }
+
+  if (shadcnPresetNextweek) {
+    shadcnPresetNextweek.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const nextWeek = new Date(Date.now() + 7 * DAY_MS);
+      setPickedDate(toISODateString(nextWeek));
+      closeShadcnPopover();
+    });
+  }
+
+  // Tutup popover saat klik di luar popover di dalam Shadow DOM
+  shadow.addEventListener("click", (e) => {
+    if (shadcnDatepickerWrap && !shadcnDatepickerWrap.contains(e.target)) {
+      closeShadcnPopover();
+    }
   });
 
   filterBtns.forEach(btn => {

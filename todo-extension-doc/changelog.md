@@ -4,6 +4,34 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Integrasi Komponen Date Picker Berbasis Desain Shadcn/UI & Perbaikan Injeksi Content Script
+
+### Masukan Pengguna (User Request)
+1. Analisis & perbaikan kendala: `console.error("Gagal menginjeksi content script:", injectError);`.
+2. Penerapan desain komponen: *"pakai ini saja https://ui.shadcn.com/docs/components/date-picker"*.
+
+### Investigasi Akar Masalah & Perbaikan (Root Cause & Fix)
+- **Akar Masalah Utama:** Variabel `todayDateStr` digunakan pada baris awal deklarasi `state` di `content_script.js` sebelum baris deklarasi `const todayDateStr` dieksekusi (Temporal Dead Zone / `ReferenceError`), menyebabkan script gagal di-parse oleh runtime browser saat diinjeksi via `chrome.scripting.executeScript`.
+- **Perbaikan Injeksi:**
+  - Memindahkan inisialisasi `todayDateStr` ke lingkup teratas di dalam IIFE sebelum inisialisasi objek `state`.
+  - Memperkuat filter URL di `background.js` agar memvalidasi URL internal browser (`chrome://`, `chrome-extension://`, `about:`, `view-source:`, dan `chromewebstore.google.com`) dan memberikan pesan peringatan yang informatif.
+
+### Penerapan Komponen Shadcn/UI Date Picker
+- **Trigger Button (`.shadcn-date-trigger`):**
+  - Desain *outline button* presisi sesuai standar `ui.shadcn.com`: border 1px `#e2e8f0`, background putih, rounded corners 6px, ikon kalender SVG minimalis di sisi kiri.
+  - Menampilkan label tanggal terformat (misal: `"10 Nov 2026"`) dan badge status hari relatif dinamis (`Hari ini`, `Besok`, `+N hr`).
+- **Floating Popover Calendar (`.shadcn-popover`):**
+  - Kotak popover melayang dengan bayangan halus (*box-shadow drop*), border 1px zinc/slate, z-index teratas.
+  - Header navigasi bulan dengan tombol panah (Prev/Next) untuk menjelajah bulan.
+  - Grid 7 hari kalender lengkap (`Min`, `Sen`, `Sel`, `Rab`, `Kam`, `Jum`, `Sab`) dengan seleksi tanggal visual:
+    - Tanggal terpilih: latar gelap `#0f172a` dengan teks putih (aksen khas Shadcn).
+    - Hari ini: garis tepi halus penanda hari ini.
+    - Tanggal di luar bulan aktif: warna muted/abu-abu halus.
+- **Shortcut Presets Bar:**
+  - Chip instan di bagian bawah popover: **"Hari ini"**, **"Besok"**, dan **"+7 Hari"** untuk input satu kali klik.
+  - Otomatis menutup popover saat tanggal dipilih atau pengguna mengklik di luar area popover.
+- **Sinkronisasi Kode:** Diterapkan identik pada `content_script.js`, `widget.css`, dan live preview `todo-extension-doc/prototypes-preview.html`.
+
 ## [2026-11-10] - Penghapusan Ikon Logo "▲" untuk Estetika Ultra-Minimalis
 
 ### Masukan Pengguna (User Request)

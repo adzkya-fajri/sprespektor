@@ -5,17 +5,20 @@
 
 // Listener saat ikon ekstensi di toolbar diklik
 chrome.action.onClicked.addListener(async (tab) => {
-  if (!tab.id) return;
+  if (!tab || !tab.id) return;
 
-  // Cek apakah halaman dapat diinjeksi (bukan chrome:// atau chrome Web Store)
-  const isRestrictedUrl = tab.url && (
-    tab.url.startsWith("chrome://") ||
-    tab.url.startsWith("edge://") ||
-    tab.url.startsWith("https://chromewebstore.google.com")
-  );
+  const url = tab.url || "";
+  // Cek apakah halaman dapat diinjeksi (bukan chrome://, edge://, file:// tanpa izin, atau chrome Web Store)
+  const isRestrictedUrl = 
+    url.startsWith("chrome://") ||
+    url.startsWith("chrome-extension://") ||
+    url.startsWith("edge://") ||
+    url.startsWith("about:") ||
+    url.startsWith("view-source:") ||
+    url.includes("chromewebstore.google.com");
 
   if (isRestrictedUrl) {
-    console.warn("Ekstensi tidak dapat berjalan di halaman internal peramban.");
+    console.warn("Ekstensi tidak dapat berjalan di halaman internal peramban atau Web Store:", url);
     return;
   }
 
@@ -38,7 +41,7 @@ chrome.action.onClicked.addListener(async (tab) => {
         }
       }, 150);
     } catch (injectError) {
-      console.error("Gagal menginjeksi content script:", injectError);
+      console.error("Gagal menginjeksi content script:", injectError.message || injectError);
     }
   }
 });

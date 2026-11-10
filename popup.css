@@ -606,25 +606,113 @@ body {
   border: 1px solid #e2e8f0;
 }
 
+.task-action-btns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.task-item:hover .task-action-btns {
+  opacity: 1;
+}
+
+.btn-edit-task,
 .btn-delete-task {
   background: transparent;
   border: none;
-  color: #cbd5e1;
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 3px 5px;
   border-radius: 4px;
-  opacity: 0;
   transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.task-item:hover .btn-delete-task {
-  opacity: 1;
+.btn-edit-task {
+  color: #64748b;
+}
+
+.btn-edit-task:hover {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.btn-delete-task {
+  color: #cbd5e1;
 }
 
 .btn-delete-task:hover {
   color: #ef4444;
   background: #fee2e2;
+}
+
+/* INLINE TASK EDIT FORM */
+.task-item.is-editing {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.task-edit-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.task-edit-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  color: #0f172a;
+  padding: 2px 4px;
+}
+
+.task-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.btn-save-edit,
+.btn-cancel-edit {
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-save-edit {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.btn-save-edit:hover {
+  background: #15803d;
+}
+
+.btn-cancel-edit {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.btn-cancel-edit:hover {
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 /* EMPTY STATE */

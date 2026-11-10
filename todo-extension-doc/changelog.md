@@ -4,6 +4,25 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Penambahan Fitur Edit Tugas (Inline Quick Edit & Tombol Pensil ✎) dan Perbaikan Port Message
+
+### Masukan Pengguna (User Request)
+1. *"kita tambahkan tombol untuk mengedit task"*
+2. Laporan baris error: `background.js:68 (anonymous function)`
+
+### Analisa & Solusi
+1. **Perbaikan Port Message `background.js`:**
+   - Pada baris penangan pesan `UPDATE_BADGE`, respons sinkron `sendResponse({ success: true })` sebelumnya mengembalikan nilai `return true` yang membuat Chrome menahan koneksi port menunggu respons asinkron yang tidak pernah datang (*The message port closed before a response was received*).
+   - Diperbaiki dengan mengembalikan `return false` untuk menutup port segera setelah pesan sinkron diproses.
+2. **Fitur Edit Tugas (Inline Quick Edit):**
+   - Menambahkan tombol edit pensil **`✎`** di samping tombol hapus **`✕`** pada setiap baris tugas (tampil halus saat hover).
+   - Pengguna juga dapat mengklik dua kali (**double-click**) pada teks tugas untuk langsung masuk ke mode edit.
+   - Kolom teks langsung berubah menjadi input aktif dengan fokus otomatis.
+   - Tekan **Enter** (atau klik tombol **`✓`**) untuk menyimpan perubahan ke basis data **IndexedDB**.
+   - Tekan **Esc** (atau klik tombol **`✕`**) untuk membatalkan pengeditan.
+
+---
+
 ## [2026-11-10] - Implementasi Resmi Standar Action Popup (Mempertahankan 100% Desain & UX Kartu)
 
 ### Masukan Pengguna (User Request)

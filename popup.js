@@ -34,6 +34,7 @@
     currentFilter: "all",
     currentTab: "task",
     isInputExpanded: false,
+    editingTaskId: null,
     calSelectedDate: todayDateStr,
     calWeekOffset: 0
   };
@@ -246,9 +247,77 @@
         chkLabel.appendChild(chk);
         chkLabel.appendChild(customSpan);
 
+        // Jika tugas sedang dalam mode edit inline
+        if (state.editingTaskId === todo.id) {
+          li.classList.add("is-editing");
+
+          const editForm = document.createElement("form");
+          editForm.className = "task-edit-form";
+          editForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            await saveEditTask(todo.id, editInput.value.trim());
+          });
+
+          const editInput = document.createElement("input");
+          editInput.type = "text";
+          editInput.className = "task-edit-input";
+          editInput.value = todo.text;
+          editInput.autocomplete = "off";
+
+          const editActions = document.createElement("div");
+          editActions.className = "task-edit-actions";
+
+          const btnSave = document.createElement("button");
+          btnSave.type = "submit";
+          btnSave.className = "btn-save-edit";
+          btnSave.title = "Simpan perubahan (Enter)";
+          btnSave.innerHTML = "✓";
+
+          const btnCancel = document.createElement("button");
+          btnCancel.type = "button";
+          btnCancel.className = "btn-cancel-edit";
+          btnCancel.title = "Batal edit (Esc)";
+          btnCancel.innerHTML = "✕";
+          btnCancel.addEventListener("click", () => {
+            state.editingTaskId = null;
+            renderTasks();
+          });
+
+          editInput.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              e.stopPropagation();
+              state.editingTaskId = null;
+              renderTasks();
+            }
+          });
+
+          editActions.appendChild(btnSave);
+          editActions.appendChild(btnCancel);
+
+          editForm.appendChild(editInput);
+          editForm.appendChild(editActions);
+
+          leftWrap.appendChild(chkLabel);
+          leftWrap.appendChild(editForm);
+
+          li.appendChild(leftWrap);
+          taskListUl.appendChild(li);
+
+          setTimeout(() => {
+            editInput.focus();
+            editInput.select();
+          }, 40);
+          return;
+        }
+
         const textSpan = document.createElement("span");
         textSpan.className = "task-text";
         textSpan.textContent = todo.text;
+        textSpan.title = "Klik 2x atau klik ikon pensil untuk mengedit";
+        textSpan.addEventListener("dblclick", () => {
+          state.editingTaskId = todo.id;
+          renderTasks();
+        });
 
         leftWrap.appendChild(chkLabel);
         leftWrap.appendChild(textSpan);
@@ -256,12 +325,27 @@
         const rightWrap = document.createElement("div");
         rightWrap.style.display = "flex";
         rightWrap.style.alignItems = "center";
-        rightWrap.style.gap = "8px";
+        rightWrap.style.gap = "6px";
 
         const rel = calculateRelativeBadge(todo.dueDate, todo.completed);
         const badgeSpan = document.createElement("span");
         badgeSpan.className = `rel-day-badge ${rel.cls}`;
         badgeSpan.textContent = rel.label;
+
+        // Container tombol aksi (muncul saat hover)
+        const actionWrap = document.createElement("div");
+        actionWrap.className = "task-action-btns";
+
+        const editBtn = document.createElement("button");
+        editBtn.type = "button";
+        editBtn.className = "btn-edit-task";
+        editBtn.innerHTML = "✎";
+        editBtn.title = "Edit tugas";
+        editBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          state.editingTaskId = todo.id;
+          renderTasks();
+        });
 
         const delBtn = document.createElement("button");
         delBtn.type = "button";
@@ -273,8 +357,11 @@
           deleteTodoItem(todo.id);
         });
 
+        actionWrap.appendChild(editBtn);
+        actionWrap.appendChild(delBtn);
+
         rightWrap.appendChild(badgeSpan);
-        rightWrap.appendChild(delBtn);
+        rightWrap.appendChild(actionWrap);
 
         li.appendChild(leftWrap);
         li.appendChild(rightWrap);
@@ -474,6 +561,28 @@
       renderCalendar();
     } catch (err) {
       console.error("Gagal mengupdate tugas di IndexedDB:", err);
+    }
+  }
+
+  async function saveEditTask(id, newText) {
+    if (!newText) {
+      state.editingTaskId = null;
+      renderTasks();
+      return;
+    }
+    const todo = state.todos.find(t => t.id === id);
+    if (!todo) return;
+
+    todo.text = newText;
+    todo.updatedAt = Date.now();
+
+    try {
+      await todoDB.updateTodo(todo);
+      state.editingTaskId = null;
+      renderTasks();
+      renderCalendar();
+    } catch (err) {
+      console.error("Gagal mengedit tugas di IndexedDB:", err);
     }
   }
 

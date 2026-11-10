@@ -33,8 +33,11 @@ Atas arahan pengguna bahwa UX dapat diubah dan dioptimalkan, kami merancang 4 pa
   - **Filter Chip:** `Semua`, `Aktif`, `Selesai` untuk organisasi cepat.
   - **Task List Rows:** Checkbox lingkaran (*circular check*), teks tugas dengan animasi coret (*strikethrough*), dan **Badge Hari Relatif Dinamis** di samping kanan (`Hari ini`, `Besok`, `-9 hr`, `+3 hr`) yang otomatis dihitung berdasarkan selisih tanggal.
   - **Footer:** Tombol *Bersihkan Selesai* dan pintasan shortcut `Esc`.
-- **Komponen Tab `Calender`:**
-  - Mini kalender grid interaktif mingguan dan timeline agenda tugas.
+- **Komponen Tab `Calender` (Interaktif Penuh):**
+  - **Navigasi Minggu:** Tombol panah `◀` dan `▶` serta judul bulan dinamis untuk menjelajahi minggu-minggu dalam bulan aktif.
+  - **Sel Tanggal Interaktif (`cal-day-cell`):** Seluruh sel tanggal (Sen - Min) dapat diklik untuk menyaring daftar agenda harian. Tanggal aktif disorot dengan warna aksen biru.
+  - **Filter Agenda Harian:** Mengklik tanggal langsung menampilkan tugas yang jatuh tempo pada hari tersebut beserta status pengerjaannya.
+  - **Shortcut Tambah:** Tombol "+ Tambah tugas pada tanggal ini" jika tanggal yang dipilih belum memiliki agenda.
 
 ### 1.4. Pola UX 4: Compact Focus Capsule (Gaya Raycast)
 - **Karakter Alur Kerja:** Hemat ruang maksimal untuk browsing santai.

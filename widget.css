@@ -483,7 +483,7 @@
 }
 
 /* ============================================================== */
-/* 5. TAB PANEL: CALENDER                                         */
+/* 5. TAB PANEL: CALENDER (INTERAKTIF PENUH)                      */
 /* ============================================================== */
 .calender-panel {
   display: none;
@@ -501,6 +501,29 @@
   color: #0f172a;
 }
 
+.cal-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cal-nav-btn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cal-nav-btn:hover {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #2563eb;
+}
+
 .calender-grid-week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -516,6 +539,20 @@
   background: #f8fafc;
   cursor: pointer;
   transition: all 0.15s;
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.cal-day-cell:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.cal-day-cell.selected-day {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
+  font-weight: 700;
 }
 
 .cal-day-cell.active-today {
@@ -524,10 +561,26 @@
   font-weight: 700;
 }
 
+.cal-day-cell.active-today.selected-day {
+  background: #1d4ed8;
+  box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+.agenda-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  color: #64748b;
+}
+
 .agenda-cards-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .agenda-item-card {
@@ -539,6 +592,51 @@
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.agenda-item-card:hover {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+.agenda-item-card.completed {
+  opacity: 0.6;
+}
+
+.agenda-item-card.completed strong {
+  text-decoration: line-through;
+}
+
+.agenda-empty-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
+  color: #94a3b8;
+  font-size: 11.5px;
+  text-align: center;
+  gap: 8px;
+}
+
+.btn-add-for-date {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-add-for-date:hover {
+  background: #2563eb;
+  color: #ffffff;
 }
 
 /* ============================================================== */

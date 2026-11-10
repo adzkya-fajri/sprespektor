@@ -4,6 +4,22 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Kalender Interaktif Penuh (Klik Tanggal, Navigasi Minggu & Filter Agenda)
+
+### Masukan Pengguna (User Request)
+- Evaluasi pengguna: *"untuk bagian dibagian calender belum bisa di klik"*.
+- Perbaikan & Peningkatan:
+  1. **Event Listener Klik Sel Tanggal (`cal-day-cell`):**
+     - Setiap sel tanggal kini interaktif: saat diklik, sel tanggal menjadi aktif (*highlighted*).
+     - Daftar agenda di bawah otomatis menyaring dan menampilkan tugas khusus untuk tanggal yang diklik tersebut.
+     - Menyediakan *empty state* yang informatif jika tanggal yang dipilih belum memiliki tugas, lengkap dengan tombol langsung tambah tugas.
+  2. **Navigasi Minggu (Previous `◀` / Next `▶`):**
+     - Menyematkan tombol navigasi minggu di header kalender untuk berpindah antar-minggu dalam bulan ini atau bulan lainnya.
+  3. **Sinkronisasi Otomatis dengan Form Tambah (`+`):**
+     - Saat sebuah tanggal dipilih di kalender, nilai input `<input type="date">` pada form `+` otomatis terisi dengan tanggal tersebut.
+
+---
+
 ## [2026-11-10] - Rilis Kode Lengkap Ekstensi Chrome Manifest V3 (Unpacked Ready)
 
 ### Ditambahkan (Added)

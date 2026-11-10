@@ -29,7 +29,9 @@
     currentFilter: "all", // 'all' | 'active' | 'completed'
     currentTab: "task",   // 'task' | 'calender'
     isOpen: false,
-    isInputExpanded: false
+    isInputExpanded: false,
+    calSelectedDate: todayDateStr,
+    calWeekOffset: 0
   };
 
   // Buat Host Element untuk Shadow DOM
@@ -119,10 +121,18 @@
       <!-- 4. TAB PANEL: CALENDER -->
       <div id="panel-calender-view" class="calender-panel">
         <div class="calender-header-meta">
-          <span id="cal-month-title">November 2026</span>
-          <span style="font-size:11px; color:#94a3b8;">Kalender Tugas</span>
+          <div class="cal-nav-group">
+            <button class="cal-nav-btn" id="btn-cal-prev" title="Minggu Sebelumnya">◀</button>
+            <span id="cal-month-title">November 2026</span>
+            <button class="cal-nav-btn" id="btn-cal-next" title="Minggu Berikutnya">▶</button>
+          </div>
+          <button class="cal-nav-btn" id="btn-cal-today-shortcut" title="Kembali ke Hari Ini">Hari ini</button>
         </div>
         <div class="calender-grid-week" id="cal-week-grid"></div>
+        <div class="agenda-title-row">
+          <span id="agenda-date-heading">Agenda Hari Ini</span>
+          <span id="agenda-count-heading">0 tugas</span>
+        </div>
         <div class="agenda-cards-list" id="cal-agenda-list"></div>
       </div>
     </div>
@@ -276,43 +286,105 @@
   }
 
   /**
-   * Render Tab Kalender
+   * Render Tab Kalender (Interaktif Penuh: Klik Tanggal & Navigasi)
    */
   function renderCalendar() {
     calWeekGrid.innerHTML = "";
     calAgendaList.innerHTML = "";
 
     const daysName = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+    const monthNames = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
     const now = new Date();
     const currDay = now.getDay();
+    // Tanggal dasar dengan offset minggu
+    const baseDate = new Date(now.getTime() + (state.calWeekOffset * 7 * DAY_MS));
+    const startOfWeek = new Date(baseDate.getTime() - (currDay * DAY_MS));
 
-    // Render 7 hari dalam minggu ini
+    // Update judul bulan kalender
+    const monthTitleEl = shadow.getElementById("cal-month-title");
+    if (monthTitleEl) {
+      monthTitleEl.textContent = `${monthNames[baseDate.getMonth()]} ${baseDate.getFullYear()}`;
+    }
+
+    // Render 7 hari dalam minggu aktif
     for (let i = 0; i < 7; i++) {
-      const d = new Date(now.getTime() + (i - currDay) * DAY_MS);
+      const d = new Date(startOfWeek.getTime() + i * DAY_MS);
       const iso = toISODateString(d);
       const isToday = iso === todayDateStr;
+      const isSelected = iso === state.calSelectedDate;
 
       const cell = document.createElement("div");
-      cell.className = `cal-day-cell ${isToday ? "active-today" : ""}`;
+      cell.className = `cal-day-cell ${isToday ? "active-today" : ""} ${isSelected ? "selected-day" : ""}`;
       cell.innerHTML = `${daysName[d.getDay()]}<br><strong>${String(d.getDate()).padStart(2, "0")}</strong>`;
+
+      // Event listener: KLIK SEL TANGGAL!
+      cell.addEventListener("click", () => {
+        state.calSelectedDate = iso;
+        renderCalendar();
+      });
+
       calWeekGrid.appendChild(cell);
     }
 
-    // Render agenda tugas
-    state.todos.slice(0, 5).forEach(todo => {
-      const card = document.createElement("div");
-      card.className = "agenda-item-card";
+    // Filter tugas khusus untuk tanggal kalender yang dipilih
+    const selectedDateTasks = state.todos.filter(t => t.dueDate === state.calSelectedDate);
 
-      const rel = calculateRelativeBadge(todo.dueDate, todo.completed);
-      card.innerHTML = `
-        <div>
-          <strong>${escapeHtml(todo.text)}</strong>
-          <div style="font-size:10.5px; color:#94a3b8;">${todo.dueDate || "Hari ini"}</div>
-        </div>
-        <span class="rel-day-badge ${rel.cls}">${rel.label}</span>
+    // Update heading tanggal agenda
+    const headingDate = shadow.getElementById("agenda-date-heading");
+    const headingCount = shadow.getElementById("agenda-count-heading");
+    if (headingDate) {
+      const rel = calculateRelativeBadge(state.calSelectedDate, false);
+      headingDate.textContent = `Agenda: ${state.calSelectedDate} (${rel.label})`;
+    }
+    if (headingCount) {
+      headingCount.textContent = `${selectedDateTasks.length} tugas`;
+    }
+
+    // Render daftar agenda atau empty state
+    if (selectedDateTasks.length === 0) {
+      const emptyDiv = document.createElement("div");
+      emptyDiv.className = "agenda-empty-box";
+      emptyDiv.innerHTML = `
+        <span>Tidak ada tugas terjadwal pada tanggal ini.</span>
+        <button class="btn-add-for-date" id="btn-add-for-this-date">+ Tambah tugas di tanggal ini</button>
       `;
-      calAgendaList.appendChild(card);
-    });
+      calAgendaList.appendChild(emptyDiv);
+
+      emptyDiv.querySelector("#btn-add-for-this-date").addEventListener("click", () => {
+        switchTab("task");
+        if (!state.isInputExpanded) toggleInputDrawer();
+        taskDatePicker.value = state.calSelectedDate;
+        updateDatePreview();
+        setTimeout(() => taskTitleInput.focus(), 150);
+      });
+    } else {
+      selectedDateTasks.forEach(todo => {
+        const card = document.createElement("div");
+        card.className = `agenda-item-card ${todo.completed ? "completed" : ""}`;
+
+        const rel = calculateRelativeBadge(todo.dueDate, todo.completed);
+        card.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px; flex:1;">
+            <span style="font-size:14px; font-weight:700; color:${todo.completed ? "#16a34a" : "#94a3b8"};">
+              ${todo.completed ? "✓" : "○"}
+            </span>
+            <strong style="font-size:13px; color:#1e293b;">${escapeHtml(todo.text)}</strong>
+          </div>
+          <span class="rel-day-badge ${rel.cls}">${rel.label}</span>
+        `;
+
+        // Klik kartu agenda untuk toggle status selesai/belum
+        card.addEventListener("click", async () => {
+          await toggleTodoStatus(todo.id);
+        });
+
+        calAgendaList.appendChild(card);
+      });
+    }
   }
 
   function escapeHtml(str) {
@@ -514,6 +586,33 @@
   });
 
   btnClearDone.addEventListener("click", clearCompletedTodos);
+
+  // Kalender Navigation Events
+  const btnCalPrev = shadow.getElementById("btn-cal-prev");
+  const btnCalNext = shadow.getElementById("btn-cal-next");
+  const btnCalToday = shadow.getElementById("btn-cal-today-shortcut");
+
+  if (btnCalPrev) {
+    btnCalPrev.addEventListener("click", () => {
+      state.calWeekOffset -= 1;
+      renderCalendar();
+    });
+  }
+
+  if (btnCalNext) {
+    btnCalNext.addEventListener("click", () => {
+      state.calWeekOffset += 1;
+      renderCalendar();
+    });
+  }
+
+  if (btnCalToday) {
+    btnCalToday.addEventListener("click", () => {
+      state.calWeekOffset = 0;
+      state.calSelectedDate = todayDateStr;
+      renderCalendar();
+    });
+  }
 
   // Keyboard shortcut Esc
   window.addEventListener("keydown", (e) => {

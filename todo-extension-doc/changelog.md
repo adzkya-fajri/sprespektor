@@ -4,6 +4,35 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Penetapan Arsitektur Database: IndexedDB Native Engine
+
+### Keputusan Arsitektur (Architectural Decision)
+- Pengguna menetapkan pilihan basis data: **IndexedDB Native Browser Engine**.
+- Menghindari keterbatasan kuota dan struktur `localStorage`, serta menjaga ekstensi tetap portabel tanpa mewajibkan pengguna menginstal atau menyalakan server eksternal.
+
+### Spesifikasi Skema IndexedDB Ditetapkan:
+- **Nama Database:** `TodoAppDB` (Versi 1)
+- **Object Store 1: `todos`** (Primary Key: `id`):
+  - Indeks 1: `idx_dueDate` (Query & sorting tanggal/kalender, `IDBKeyRange`)
+  - Indeks 2: `idx_completed` (Filter cepat aktif vs selesai)
+  - Indeks 3: `idx_createdAt` (Pengurutan kronologis pembuatan)
+- **Object Store 2: `settings`** (Primary Key: `key`):
+  - Menyimpan preferensi pengguna (tema terpilih, status filter, dll.)
+- **Modul Pembantu (Helper Class):** `IDBManager` yang membungkus IndexedDB berbasis *Promise (async/await)* untuk operasi CRUD yang bersih dan bebas *callback hell*.
+
+---
+
+## [2026-11-10] - Diskusi Arsitektur Database: Migrasi dari LocalStorage
+
+### Masukan Pengguna (User Request)
+- Evaluasi pengguna: *"untuk database saya tidak ingin yang localstorage"*.
+- Menginisiasi eksplorasi alternatif arsitektur penyimpanan data di luar `localStorage` / `chrome.storage.local`:
+  1. **IndexedDB:** Database transaksional terstruktur native di browser dengan indexing, cursor, dan kapasitas tak terbatas tanpa perlu menyalakan server backend.
+  2. **External Backend API + SQLite/PostgreSQL:** Ekstensi terhubung ke server API lokal/remote (Node.js/Python) yang menyimpan data ke basis data relasional fisik (`todos.db`).
+  3. **Cloud BaaS (Supabase / Firebase):** Sinkronisasi database cloud real-time multi-device.
+
+---
+
 ## [2026-11-10] - Dokumentasi Komprehensif Struktur Database & Model Data
 
 ### Dokumentasi & Penjelasan (Documentation Update)

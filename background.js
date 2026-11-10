@@ -48,7 +48,7 @@ chrome.action.onClicked.addListener(async (tab) => {
         try {
           await chrome.tabs.sendMessage(tab.id, { action: "TOGGLE_WIDGET" });
         } catch (e) {
-          console.error("Gagal mengirim pesan toggle:", e);
+          console.warn("Pesan toggle tidak terkirim (halaman sedang memuat):", e);
         }
       }, 100);
     } catch (injectError) {

@@ -19,19 +19,20 @@ Ekstensi browser Chrome berbasis **Manifest V3** untuk mencatat tugas (To-Do Lis
 ```
 /home/splev/Projects/UKK/
 ├── manifest.json              # Definisi Manifest V3 (permissions, action, content script, web_accessible_resources)
-├── background.js              # Background Service Worker pengatur toggle event dan update badge toolbar
-├── content_script.js          # Injeksi drawer ke host page menggunakan Shadow DOM & penanganan UI state
-├── drawer.css                 # Stylesheet terisolasi untuk drawer (CSS variables, animations, scrollbar)
-├── icons/                     # Icon ekstensi (16px, 48px, 128px)
+├── background.js              # Service Worker pengatur toggle event toolbar dan badge text
+├── db.js                      # Modul Promise-based IndexedDB Manager (TodoAppDB)
+├── content_script.js          # Injeksi drawer ke host page menggunakan Shadow DOM & penanganan state
+├── widget.css                 # Stylesheet terisolasi untuk widget Shadow DOM (Light Minimalist)
+├── icons/                     # Icon ekstensi resmi Chrome
 │   ├── icon16.png
 │   ├── icon48.png
 │   └── icon128.png
 ├── todo-extension-doc/        # Dokumentasi Wajib Sistem
 │   ├── architecture.md        # File ini: Arsitektur, tech stack, dan peta file
 │   ├── frontend.md            # Rancangan UI/UX, komponen, state, dan interaksi
-│   ├── backend.md             # Background service worker, storage model, messaging
+│   ├── backend.md             # IndexedDB schema, lifecycle CRUD, runtime messaging
 │   ├── changelog.md           # Histori perubahan, penambahan, dan revisi
-│   └── prototypes-preview.html# Showcase interaktif 3 variasi desain prototipe
+│   └── prototypes-preview.html# Showcase interaktif prototipe browser
 ```
 
 ---
@@ -45,16 +46,15 @@ sequenceDiagram
     participant Action as Chrome Action (Toolbar)
     participant BG as background.js (Service Worker)
     participant Content as content_script.js (Shadow DOM)
-    participant Storage as chrome.storage.local
+    participant IDB as IndexedDB (TodoAppDB)
 
     User->>Action: Klik ikon ekstensi di toolbar
     Action->>BG: chrome.action.onClicked trigger
-    BG->>Content: Kirim pesan "TOGGLE_DRAWER" via chrome.tabs.sendMessage
-    Content->>Content: Toggle visibilitas Shadow DOM Drawer (Slide in/out)
-    Note over Content: Saat pertama kali dibuka:
-    Content->>Storage: chrome.storage.local.get(["todos"])
-    Storage-->>Content: Kembalikan array tasks
-    Content->>Content: Render daftar tugas ke dalam Shadow DOM
-    Content->>BG: Kirim pesan "UPDATE_BADGE_COUNT" (jumlah tugas aktif)
-    BG->>Action: chrome.action.setBadgeText & setBadgeBackgroundColor
+    BG->>Content: Kirim pesan "TOGGLE_WIDGET"
+    Content->>Content: Toggle visibilitas Shadow DOM Widget (Muncul di kanan atas)
+    Content->>IDB: todoDB.getAllTodos()
+    IDB-->>Content: Kembalikan array entitas tugas
+    Content->>Content: Hitung hari relatif (-9 hr, Hari ini, Besok, +N hr) & render UI
+    Content->>BG: Kirim pesan "UPDATE_BADGE" (jumlah tugas aktif)
+    BG->>Action: chrome.action.setBadgeText(activeCount)
 ```

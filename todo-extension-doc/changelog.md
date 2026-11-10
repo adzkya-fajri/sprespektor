@@ -4,6 +4,19 @@ Seluruh histori perubahan, keputusan arsitektur, dan penambahan fitur dicatat se
 
 ---
 
+## [2026-11-10] - Rilis Kode Lengkap Ekstensi Chrome Manifest V3 (Unpacked Ready)
+
+### Ditambahkan (Added)
+- Menyusun seluruh file sumber ekstensi Chrome Manifest V3 secara utuh tanpa potongan:
+  - `manifest.json`: Manifest V3 resmi dengan permission `storage`, `activeTab`, `scripting`, background service worker, content script, dan web accessible resources.
+  - `background.js`: Service worker penangan aksi klik toolbar browser dan pembaruan badge counter real-time.
+  - `db.js`: Modul IndexedDB wrapper `TodoDatabase` (Promise-based) dengan skema Object Store `todos` & `settings` serta pengindeksan `idx_dueDate`, `idx_completed`, `idx_createdAt`.
+  - `content_script.js`: Injeksi UI melayang ke tab aktif menggunakan **Shadow DOM**, kalkulasi hari relatif presisi (`-9 hr`, `Hari ini`, `Besok`, `+N hr`), rendering kalender, dan isolasi penuh dari CSS website host.
+  - `widget.css`: Styling modern Light Minimalist lengkap dengan perataan simetris header (Logo ▲, `Task 2`, `Calender`, `+`), form input expandable, circular checkbox, dan animasi transisi halus.
+  - `icons/`: Icon resmi ekstensi beresolusi 16x16, 48x48, dan 128x128 piksel (`icon16.png`, `icon48.png`, `icon128.png`).
+
+---
+
 ## [2026-11-10] - Penetapan Arsitektur Database: IndexedDB Native Engine
 
 ### Keputusan Arsitektur (Architectural Decision)

@@ -490,7 +490,7 @@
         const seedTodos = [
           {
             id: "todo_1",
-            text: "Evaluasi UI/UX Chrome Extension To-Do List",
+            text: "Evaluasi UI/UX Chrome Extension sprespektor",
             dueDate: todayDateStr,
             completed: false,
             createdAt: Date.now() - 3600000,

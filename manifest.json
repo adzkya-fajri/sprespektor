@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Minimalist To-Do List",
+  "name": "sprespektor",
   "version": "1.0.0",
-  "description": "Ekstensi To-Do List minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
+  "description": "sprespektor - Ekstensi To-Do List minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
   "permissions": [
     "storage"
   ],
@@ -10,7 +10,7 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "To-Do List",
+    "default_title": "sprespektor",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",

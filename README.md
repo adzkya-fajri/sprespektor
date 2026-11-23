@@ -1,9 +1,9 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="icons/icon128.png">
-  <img alt="Minimalist To-Do List" src="icons/icon128.png" width="80" height="80" align="left">
+  <img alt="sprespektor" src="icons/icon128.png" width="80" height="80" align="left">
 </picture>
 
-# Minimalist To-Do List
+# sprespektor
 
 **Ekstensi Chrome To-Do List yang ringan, cepat, dan minimalis — tanpa server, tanpa login, tanpa internet.**
 
@@ -90,7 +90,7 @@ Developer mode  ──►  ON
 
 ### Langkah 5 — Ekstensi Siap!
 
-Ikon ekstensi muncul di toolbar Chrome. Klik untuk membuka To-Do List.
+Ikon ekstensi muncul di toolbar Chrome. Klik untuk membuka sprespektor.
 
 > **Pastikan** Anda memilih folder **root** proyek (tempat `manifest.json` berada), bukan subfolder di dalamnya.
 
@@ -125,7 +125,7 @@ Arahkan kursor ke tugas → klik **`✕`** di ujung kanan.
 ## Struktur Proyek
 
 ```
-📁 ukk-todo-extension/
+📁 sprespektor/
 │
 ├── 📄 manifest.json       → Konfigurasi ekstensi Chrome (Manifest V3)
 ├── 📄 background.js       → Service Worker: pengatur badge angka di toolbar
@@ -193,7 +193,7 @@ Chrome Extension APIs
 
 Karena menggunakan **IndexedDB**, Anda bisa memeriksa seluruh data tugas melalui DevTools Chrome:
 
-1. Klik ikon ekstensi di toolbar.
+1. Klik ikon ekstensi di toolbar → jendela sprespektor terbuka.
 2. **Klik kanan** di dalam popup → pilih **Inspect**.
 3. Di DevTools → tab **Application**.
 4. Panel kiri: **Storage** → **IndexedDB** → **TodoAppDB** → **`todos`**.

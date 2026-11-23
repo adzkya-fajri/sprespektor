@@ -1,7 +1,7 @@
 # MODUL LENGKAP: ARSITEKTUR, BEDAH KODE, DAN PANDUAN PENGEMBANGAN
 ## EKSTENSI CHROME "MINIMALIST TO-DO LIST" (MANIFEST V3)
 
-Dokumen ini disusun sebagai panduan teknis komprehensif untuk memahami seluruh arsitektur, cara kerja basis data (database), analisis kode per baris/fungsi, panduan modifikasi, serta skenario penanganan berbagai kendala teknis (edge cases) pada ekstensi Chrome **Minimalist To-Do List**.
+Dokumen ini disusun sebagai panduan teknis komprehensif untuk memahami seluruh arsitektur, cara kerja basis data (database), analisis kode per baris/fungsi, panduan modifikasi, serta skenario penanganan berbagai kendala teknis (edge cases) pada ekstensi Chrome **sprespektor**.
 
 ---
 
@@ -140,9 +140,9 @@ Berkas manifes adalah kontrak utama antara ekstensi dan mesin browser Chromium.
 ```json
 {
   "manifest_version": 3,
-  "name": "Minimalist To-Do List",
+  "name": "sprespektor",
   "version": "1.0.0",
-  "description": "Ekstensi To-Do List minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
+  "description": "sprespektor - Ekstensi To-Do List minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
   "permissions": [
     "storage"
   ],
@@ -150,7 +150,7 @@ Berkas manifes adalah kontrak utama antara ekstensi dan mesin browser Chromium.
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "To-Do List",
+    "default_title": "sprespektor",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",

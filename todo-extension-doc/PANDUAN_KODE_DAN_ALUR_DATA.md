@@ -1,7 +1,7 @@
 # PANDUAN LENGKAP: BEDAH DETAIL SETIAP KODE & ALUR PENGIRIMAN DATA
 ## EKSTENSI TO-DO LIST (CHROME MANIFEST V3)
 
-Dokumen ini membedah secara mendalam seluruh kode sumber, siklus pengiriman data (*data flow*), pertukaran pesan antar-komponen (*inter-process communication*), serta mekanisme internal penyimpanan data pada ekstensi **Minimalist To-Do List**.
+Dokumen ini membedah secara mendalam seluruh kode sumber, siklus pengiriman data (*data flow*), pertukaran pesan antar-komponen (*inter-process communication*), serta mekanisme internal penyimpanan data pada ekstensi **sprespektor**.
 
 ---
 
@@ -141,9 +141,9 @@ File [`manifest.json`](file:///home/splev/Projects/UKK/manifest.json) adalah ber
 ```json
 {
   "manifest_version": 3,
-  "name": "Minimalist To-Do List",
+  "name": "sprespektor",
   "version": "1.0.0",
-  "description": "Ekstensi To-Do List minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
+  "description": "sprespektor - Ekstensi To-Do List minimalis, cepat, dan modern berbasis IndexedDB dengan Shadcn/ui Date Picker.",
   "permissions": [
     "storage"
   ],
@@ -151,7 +151,7 @@ File [`manifest.json`](file:///home/splev/Projects/UKK/manifest.json) adalah ber
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "To-Do List",
+    "default_title": "sprespektor",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
